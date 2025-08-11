@@ -1,0 +1,9 @@
+declare module '../pages/CustomerManagement';
+declare module '../pages/DealManagement';
+declare module '../pages/RequirementManagement';
+declare module '../pages/QuotationManagement';
+declare module '../pages/ContractManagement';
+declare module '../pages/AcceptanceManagement';
+declare module '../pages/InvoiceManagement';
+declare module '../pages/Settings';
+declare module '../pages/Login';
