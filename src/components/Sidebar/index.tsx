@@ -45,10 +45,10 @@ const menuItems = [
     path: '/dashboard'
   },
   {
-    text: 'Khách hàng',
-    fullText: 'Khách hàng',
+    text: 'Liên hệ',
+    fullText: 'Quản lý liên hệ',
     icon: <PeopleIcon />,
-    path: '/customers'
+    path: '/contacts'
   },
   {
     text: 'Cơ hội',
@@ -91,12 +91,6 @@ const menuItems = [
     fullText: 'Hóa đơn',
     icon: <InvoiceIcon />,
     path: '/invoices'
-  },
-  {
-    text: 'Liên hệ',
-    fullText: 'Quản lý liên hệ',
-    icon: <PeopleIcon />,
-    path: '/contacts'
   }
 ];
 

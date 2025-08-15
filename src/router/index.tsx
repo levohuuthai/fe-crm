@@ -6,6 +6,8 @@ import MainLayout from '../layouts/MainLayout';
 // Lazy load components
 const Dashboard = lazy(() => import('../pages/Dashboard/index'));
 const CustomerManagement = lazy(() => import('../pages/CustomerManagement/index'));
+const Contacts = lazy(() => import('../pages/Contacts/index'));
+const Deals = lazy(() => import('../pages/Deals/index'));
 const DealManagement = lazy(() => import('../pages/DealManagement/index'));
 const RequirementManagement = lazy(() => import('../pages/RequirementManagement/index'));
 const QuotationManagement = lazy(() => import('../pages/QuotationManagement/index'));
@@ -44,15 +46,17 @@ const AppRouter = () => {
   const protectedRoutes = [
     { path: '/', element: <Navigate to="/dashboard" replace />, index: true },
     { path: 'dashboard', element: <LazyRoute element={Dashboard} /> },
+    { path: 'contacts', element: <LazyRoute element={Contacts} /> },
+    { path: 'deals', element: <LazyRoute element={Deals} /> },
     { path: 'customers', element: <LazyRoute element={CustomerManagement} /> },
-    { path: 'deals', element: <LazyRoute element={DealManagement} /> },
+    { path: 'deal-management', element: <LazyRoute element={DealManagement} /> },
     { path: 'requirements', element: <LazyRoute element={RequirementManagement} /> },
     { path: 'quotations', element: <LazyRoute element={QuotationManagement} /> },
     { path: 'contracts', element: <LazyRoute element={ContractManagement} /> },
     { path: 'contract-appendices', element: <LazyRoute element={ContractAppendices} /> },
     { path: 'acceptance', element: <LazyRoute element={AcceptanceManagement} /> },
     { path: 'invoices', element: <LazyRoute element={InvoiceManagement} /> },
-    { path: 'contacts', element: <LazyRoute element={ContactManagement} /> },
+    { path: 'contact-management', element: <LazyRoute element={ContactManagement} /> },
     { path: 'settings', element: <LazyRoute element={Settings} /> },
     { path: 'performance-test', element: <LazyRoute element={PerformanceTest} /> },
     { path: 'assistant', element: <LazyRoute element={Assistant} /> },

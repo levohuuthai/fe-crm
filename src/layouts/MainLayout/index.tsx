@@ -112,6 +112,27 @@ const MainLayout = () => {
           flexDirection: 'column',
           zIndex: 1,
           transition: 'all 0.3s ease-in-out',
+          overflow: 'auto',
+          '&::-webkit-scrollbar': {
+            width: '8px',
+            height: '8px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: alpha(theme.palette.primary.main, 0.4),
+            borderRadius: '4px',
+            border: '2px solid transparent',
+            backgroundClip: 'padding-box',
+            '&:hover': {
+              backgroundColor: alpha(theme.palette.primary.main, 0.6),
+            },
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: alpha(theme.palette.grey[300], 0.2),
+            borderRadius: '4px',
+          },
+          '&::-webkit-scrollbar-corner': {
+            backgroundColor: 'transparent',
+          },
         }}
       >
         {/* Content Wrapper with floating effect */}
@@ -132,7 +153,8 @@ const MainLayout = () => {
             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             height: `calc(100vh - ${CONTENT_MARGIN * 2}px)`,
             maxHeight: `calc(100vh - ${CONTENT_MARGIN * 2}px)`,
-            overflow: 'hidden',
+            overflow: 'hidden', /* Changed from auto to hidden to prevent double scrollbars */
+            p: CONTENT_PADDING,
             '&:hover': {
               boxShadow: '0 15px 35px -10px rgba(0,0,0,0.15)',
               transform: isScrolled ? 'translateY(8px)' : 'translateY(-2px)',
@@ -145,43 +167,14 @@ const MainLayout = () => {
             },
           }}
         >
-          {/* Scrollable content area */}
-          <Box 
-            sx={{ 
-              flex: 1,
-              overflow: 'auto',
-              p: CONTENT_PADDING,
-              position: 'relative',
-              '&::-webkit-scrollbar': {
-                width: '6px',
-                height: '6px',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                backgroundColor: alpha(theme.palette.primary.main, 0.5),
-                borderRadius: '3px',
-                '&:hover': {
-                  backgroundColor: theme.palette.primary.main,
-                },
-              },
-              '&::-webkit-scrollbar-track': {
-                backgroundColor: alpha(theme.palette.grey[300], 0.3),
-              },
-            }}
-          >
-            <Box 
-              sx={{
-                minHeight: 'min-content',
-                height: 'fit-content',
-              }}
-            >
-              <Outlet />
-            </Box>
-          </Box>
+          <Outlet />
         </Box>
       </Box>
       
-      {/* Floating AI Assistant - Available on all pages */}
-      <FloatingAIAssistant isOnDashboard={location.pathname === '/dashboard'} />
+      {/* Floating AI Assistant - Hidden on Dashboard */}
+      {location.pathname !== '/dashboard' && (
+        <FloatingAIAssistant isOnDashboard={false} />
+      )}
       
       {/* Right Sidebar - AI Assistant */}
       <Box
