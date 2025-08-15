@@ -1,6 +1,6 @@
 {
-  "homepage": "https://levohuuthai.github.io/fe-crm-itv/",
-  "name": "fe-crm-website",
+  "homepage": "https://levohuuthai.github.io/fe-crm",
+  "name": "fe-crm",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
