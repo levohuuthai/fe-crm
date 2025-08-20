@@ -37,12 +37,14 @@
     "aiAssistantMinimized": "AIアシスタント - なんでも質問してください！",
     "viewDetails": "詳細を見る",
     "edit": "編集",
+    "add": "追加",
     "delete": "削除",
     "download": "ダウンロード",
     "cancel": "キャンセル",
     "save": "保存",
     "back": "戻る",
-    "next": "次へ"
+    "next": "次へ",
+    "unknown": "不明"
   },
   "pages": {
     "dashboard": {
@@ -185,6 +187,8 @@
         "probability": "確度 (%)",
         "expectedCloseDate": "予定締結日",
         "lastActivity": "最終アクティビティ",
+        "createdAt": "作成日",
+        "deadline": "期限",
         "actions": "操作"
       },
       "validation": {
@@ -209,7 +213,17 @@
         "winRate": "受注率",
         "activeDeals": "{{count}} 件"
       },
-      "empty": "商談がまだありません"
+      "empty": "商談がまだありません",
+      "ui": {
+        "contextMenu": {
+          "duplicate": "複製",
+          "delete": "削除"
+        }
+      },
+      "pagination": {
+        "rowsPerPage": "1ページあたりの行数:",
+        "displayedRows": "{{from}}-{{to}} / {{count}}"
+      }
     }
     ,
     "assistant": {
@@ -546,8 +560,115 @@
         "rowsPerPage": "1ページあたりの行数:",
         "displayedRows": "{{from}}-{{to}} / {{count}}"
       }
-    }
-    ,
+    },
+    "requirements": {
+      "title": "要件管理",
+      "actions": {
+        "exportExcel": "Excelエクスポート",
+        "createRequirement": "要件を作成"
+      },
+      "filters": {
+        "customer": "顧客",
+        "assignee": "担当者",
+        "status": "ステータス",
+        "all": "すべて"
+      },
+      "searchPlaceholder": "要件名で検索...",
+      "list": {
+        "columns": {
+          "id": "ID",
+          "name": "要件名",
+          "type": "タイプ",
+          "customer": "顧客",
+          "assignee": "担当者",
+          "source": "ソース",
+          "createdDate": "作成日",
+          "deadline": "期限",
+          "status": "ステータス",
+          "actions": "操作"
+        },
+        "empty": "要件が見つかりません"
+      },
+      "status": {
+        "pending": "保留中",
+        "in_discussion": "協議中",
+        "confirmed": "確定"
+      },
+      "pagination": {
+        "rowsPerPage": "1ページあたりの行数:",
+        "displayedRows": "{{from}}-{{to}} / {{count}}"
+      },
+      "dialogs": {
+        "deleteConfirmTitle": "削除の確認",
+        "deleteConfirmText": "この要件を削除してもよろしいですか？"
+      },
+      "form": {
+        "title": "新規要件の作成 (AI)",
+        "steps": {
+          "step1": "基本情報の入力",
+          "step2": "作成方法の選択",
+          "indicator": "ステップ {{current}}/2"
+        },
+        "fields": {
+          "name": "要件名",
+          "type": "要件タイプ",
+          "customer": "顧客",
+          "assignee": "担当者",
+          "deadline": "期限",
+          "description": "説明"
+        },
+        "placeholders": {
+          "name": "要件名を入力",
+          "manualDescription": "例: 入出庫、最小在庫アラートを備えた在庫管理システムが必要です..."
+        },
+        "method": {
+          "group": "作成方法",
+          "manual": "説明を手動で入力",
+          "upload": "仕様ファイルをアップロード (.pdf, .docx)",
+          "uploadButton": "ファイルを選択 (.pdf, .docx)",
+          "uploadHelp": ".pdf, .docx に対応"
+        },
+        "actions": {
+          "next": "次へ",
+          "back": "戻る",
+          "generate": "自動生成 (AI)",
+          "generating": "処理中...",
+          "regenerate": "再生成",
+          "addRow": "行を追加"
+        },
+        "ai": {
+          "resultTitle": "AIの分析結果:"
+        },
+        "tabs": {
+          "functional": "機能要件",
+          "nonFunctional": "非機能要件",
+          "tests": "テスト要件",
+          "uiMockups": "UIモック/説明",
+          "dataModel": "データモデル",
+          "integration": "連携要件"
+        },
+        "tableHeaders": {
+          "feature": "機能",
+          "detail": "詳細",
+          "description": "説明",
+          "notes": "備考",
+          "requirementType": "要件種別",
+          "value": "詳細",
+          "testCase": "テストケース",
+          "condition": "条件",
+          "expectedResult": "期待結果",
+          "entity": "エンティティ",
+          "fields": "項目",
+          "modelDescription": "説明",
+          "system": "システム",
+          "method": "方式",
+          "purpose": "目的"
+        },
+        "links": {
+          "viewOnFigma": "Figmaでデザインを見る"
+        }
+      }
+    },
     "acceptance": {
       "title": "✅ 検収管理",
       "overview": {
@@ -630,6 +751,129 @@
         "appendix1": "顧客管理モジュール",
         "appendix2": "レポートモジュール"
       }
+    },
+    "invoices": {
+      "title": "請求書管理",
+      "stats": {
+        "totalInvoices": "請求書総数",
+        "totalValue": "合計金額",
+        "paid": "支払い済み",
+        "overdue": "延滞"
+      },
+      "tabs": {
+        "templates": "請求書テンプレート",
+        "invoices": "請求書"
+      },
+      "filters": {
+        "status": "ステータス",
+        "all": "すべて",
+        "templates": { "active": "有効", "inactive": "無効" },
+        "invoices": { "draft": "下書き", "sent": "送付済み", "partial": "一部入金", "paid": "支払い済み", "overdue": "延滞" }
+      },
+      "columns": {
+        "templates": {
+          "code": "コード",
+          "name": "テンプレート名",
+          "description": "説明",
+          "type": "タイプ",
+          "taxRate": "税率",
+          "usage": "使用状況",
+          "status": "ステータス",
+          "actions": "操作"
+        },
+        "invoices": {
+          "invoiceCode": "請求書ID",
+          "invoiceName": "請求書名",
+          "customer": "顧客",
+          "appendix": "付属書",
+          "issueDate": "発行日",
+          "value": "金額",
+          "paymentProgress": "支払い進捗",
+          "status": "ステータス",
+          "actions": "操作",
+          "none": "なし"
+        }
+      },
+      "ui": { "currencyUnit": "VND" },
+      "dialogs": {
+        "create": {
+          "title": "新規請求書の作成",
+          "selectTemplateLabel": "請求書テンプレート",
+          "selectTemplatePlaceholder": "請求書テンプレートを選択",
+          "acceptanceLabel": "検収書"
+        },
+        "payment": {
+          "title": "入金の記録",
+          "method": "支払い方法",
+          "methods": { "bank": "振込", "cash": "現金", "card": "クレジットカード" }
+        },
+        "actions": { "cancel": "キャンセル", "save": "保存", "saveDraft": "下書き保存", "record": "記録" }
+      }
+    },
+    "quotations": {
+      "dialogs": { "createTitle": "新規見積の作成" },
+      "tables": { "actions": "操作" },
+      "pagination": { "rowsPerPage": "1ページあたりの行数:", "displayedRows": "{{from}}-{{to}} / {{count}}" },
+      "steps": {
+        "basicInfo": "基本情報",
+        "estimationMethod": "試算方法の選択",
+        "preview": "見積プレビュー"
+      },
+      "fields": { "template": "見積テンプレート" },
+      "placeholders": { "selectTemplate": "見積テンプレートを選択" },
+      "validation": { "selectTemplate": "見積テンプレートを選択してください" },
+      "estimation": {
+        "chooseMethod": "試算方法の選択",
+        "fixed": {
+          "addRow": "行を追加",
+          "addColumn": "列を追加",
+          "newColumnPlaceholder": "新しい列名",
+          "deleteRow": "行を削除",
+          "total": "合計:",
+          "totalByPhase": "合計 - フェーズ別 (人日):"
+        }
+      },
+      "tnm": {
+        "selectRole": "役割を選択",
+        "addCustomRole": "カスタム役割を追加",
+        "roleName": "役割名",
+        "columns": {
+          "role": "役割",
+          "hoursOrMd": "時間 / 人日",
+          "unit": "単位",
+          "unitPrice": "単価",
+          "amount": "金額"
+        },
+        "units": {
+          "hour": "時間",
+          "day": "人日"
+        },
+        "perHour": "時間",
+        "perMd": "人日",
+        "hourHint": "時間単位で計算",
+        "mdHint": "1人日 = 8時間",
+        "total": "合計",
+        "totalHours": "合計時間: {{hours}}時間",
+        "messages": {
+          "roleExists": "この役割はすでに存在します"
+        }
+      },
+      "preview": {
+        "customerInfo": "顧客情報",
+        "quotationDetails": "見積詳細",
+        "table": {
+          "no": "No.",
+          "item": "項目",
+          "description": "説明",
+          "days": "日数",
+          "unitPrice": "単価",
+          "amount": "金額",
+          "total": "合計:"
+        },
+        "notes": "備考",
+        "noNotes": "備考なし"
+      },
+      "actions": { "cancel": "キャンセル", "back": "戻る", "next": "次へ", "save": "保存" }
     }
   }
 }

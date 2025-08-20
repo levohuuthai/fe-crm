@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -189,6 +190,7 @@ const statusOptions = [
 ];
 
 const QuotationManagement = () => {
+  const { t } = useTranslation();
   // Tab state
   const [currentTab, setCurrentTab] = useState<QuoteTemplateTab>('quotes');
   
@@ -403,7 +405,7 @@ const QuotationManagement = () => {
     }
     
     // Show success message
-    alert('Email đã được gửi thành công!');
+    alert(t('pages.quotations.notifications.emailSent'));
     setEmailDialogOpen(false);
   };
 
@@ -450,13 +452,13 @@ const QuotationManagement = () => {
           onSend={handleEmailSend}
           customerName={emailQuotation.customer}
           serviceName={emailQuotation.name}
-          responsiblePerson="Người phụ trách"
+          responsiblePerson={t('pages.customers.columns.owner')}
           pdfFileName={`BaoGia_${emailQuotation.id}.pdf`}
         />
       )}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
         <Typography variant="h4" component="h1">
-          Quản lý báo giá/ước tính
+          {t('pages.quotations.title')}
         </Typography>
         {currentTab === 'quotes' && (
           <Button
@@ -465,7 +467,7 @@ const QuotationManagement = () => {
             startIcon={<AddIcon />}
             onClick={handleCreateQuotation}
           >
-            Tạo báo giá mới
+            {t('pages.quotations.actions.createQuotation')}
           </Button>
         )}
       </Box>
@@ -477,8 +479,8 @@ const QuotationManagement = () => {
           onChange={handleTabChange}
           aria-label="quotation management tabs"
         >
-          <Tab label="Mẫu báo giá" value="templates" />
-          <Tab label="Báo giá" value="quotes" />
+          <Tab label={t('pages.quotations.tabs.templates')} value="templates" />
+          <Tab label={t('pages.quotations.tabs.quotes')} value="quotes" />
         </Tabs>
       </Box>
       
@@ -505,7 +507,7 @@ const QuotationManagement = () => {
           <Paper sx={{ p: 2, mb: 3 }}>
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems="center">
               <TextField
-                label="Tìm kiếm"
+                label={t('pages.quotations.searchPlaceholder')}
                 variant="outlined"
                 size="small"
                 value={searchTerm}
@@ -520,22 +522,22 @@ const QuotationManagement = () => {
                 options={fakeCustomers}
                 value={customerFilter}
                 onChange={handleCustomerFilterChange}
-                renderInput={(params) => <TextField {...params} label="Khách hàng" size="small" />}
+                renderInput={(params) => <TextField {...params} label={t('pages.quotations.fields.customer')} size="small" />}
                 sx={{ minWidth: 200 }}
               />
               
               <FormControl size="small" sx={{ minWidth: 150 }}>
-                <InputLabel id="status-filter-label">Trạng thái</InputLabel>
+                <InputLabel id="status-filter-label">{t('pages.quotations.filters.status')}</InputLabel>
                 <Select
                   labelId="status-filter-label"
                   value={statusFilter}
-                  label="Trạng thái"
+                  label={t('pages.quotations.filters.status')}
                   onChange={handleStatusFilterChange}
                 >
-                  <MenuItem value="all">Tất cả</MenuItem>
+                  <MenuItem value="all">{t('pages.quotations.filters.all')}</MenuItem>
                   {statusOptions.map(option => (
                     <MenuItem key={option.value} value={option.value}>
-                      {option.label}
+                      {t(`pages.quotations.status.${option.value}`)}
                     </MenuItem>
                   ))}
                 </Select>
@@ -546,7 +548,7 @@ const QuotationManagement = () => {
                 startIcon={<ExportIcon />}
                 onClick={() => console.log('Export data')}
               >
-                Xuất Excel
+                {t('pages.quotations.actions.exportExcel')}
               </Button>
             </Stack>
           </Paper>
@@ -566,7 +568,7 @@ const QuotationManagement = () => {
         </>
       )}
       
-      {/* Dialog tạo báo giá mới */}
+      {/* Create quotation dialog */}
       <QuotationForm
         open={createDialogOpen}
         onClose={handleCloseCreateDialog}
@@ -584,7 +586,7 @@ const QuotationManagement = () => {
         quotation={selectedQuotation}
       />
 
-      {/* Dialog xem trước và xuất PDF */}
+      {/* Preview and export PDF dialog */}
       <QuotationPreview
         open={previewDialogOpen}
         onClose={() => setPreviewDialogOpen(false)}
@@ -596,11 +598,11 @@ const QuotationManagement = () => {
           );
           setQuotations(updatedQuotations);
           setPreviewDialogOpen(false);
-          alert('Đã lưu nháp báo giá');
+          alert(t('pages.quotations.notifications.saveDraftSuccess'));
         }}
         onExportPdf={(quotation) => {
           console.log('Export PDF', quotation);
-          alert('Đã xuất file PDF báo giá');
+          alert(t('pages.quotations.notifications.exportPdfSuccess'));
         }}
         onEdit={() => {
           setPreviewDialogOpen(false);

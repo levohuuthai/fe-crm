@@ -1,682 +1,1026 @@
 {
-  "app": {
-    "title": "CRM App",
-    "welcome": "Welcome"
-  },
-  "menu": {
-    "dashboard": "Dashboard",
-    "dashboardFull": "Dashboard",
-    "contacts": "Contacts",
-    "contactsFull": "Contact Management",
-    "deals": "Deals",
-    "dealsFull": "Sales Opportunities",
-    "requirements": "Requirements",
-    "requirementsFull": "Requirements",
-    "quotations": "Quotations",
-    "quotationsFull": "Quotations / Estimates",
-    "contracts": "Contracts",
-    "contractsFull": "Contracts",
-    "appendices": "Appendices",
-    "appendicesFull": "Contract Appendices",
-    "acceptance": "Acceptance",
-    "acceptanceFull": "Acceptance Reports",
-    "invoices": "Invoices",
-    "invoicesFull": "Invoices"
-  },
-  "tooltips": {
-    "notifications": "Notifications",
-    "aiAssistant": "AI Assistant",
-    "account": "Account",
-    "language": "Language"
-  },
-  "common": {
-    "contacts": "Contacts",
-    "deals": "Deals",
-    "viewAllContacts": "View all contacts...",
-    "viewAllDeals": "View all deals...",
-    "aiAssistantMinimized": "AI Assistant - Ask anything!",
-    "viewDetails": "View details",
-    "edit": "Edit",
-    "delete": "Delete",
-    "download": "Download",
-    "cancel": "Cancel",
-    "save": "Save",
-    "back": "Back",
-    "next": "Next"
-  },
-  "pages": {
-    "dashboard": {
-      "welcomeBack": "Welcome back, Admin",
-      "smartDashboard": "Smart dashboard",
-      "searchPlaceholder": "Ask AI about business data, markets, customers...",
-      "askAssistant": "Ask CRM Assistant: \"{{query}}\"",
-      "back": "Back",
-      "searchFor": "Search for: \"{{query}}\"",
-      "aiSearchResults": "AI search results",
-      "sections": {
-        "contacts": "CONTACTS",
-        "deals": "DEALS"
-      },
-      "showMoreContacts": "Show more contacts...",
-      "showMoreDeals": "Show more deals...",
-      "footer": "© 2025 CRM Dashboard - Powered by AI Orchestration • Real-time Data • Smart Predictions"
+    "app": {
+        "title": "CRM App",
+        "welcome": "Welcome"
     },
-    "contacts": {
-      "title": "Contact Management",
-      "subtitle": "Manage potential customer information and track conversion progress",
-      "columns": {
-        "name": "Name",
-        "email": "Email",
-        "phone": "Phone",
-        "company": "Company",
-        "position": "Position",
-        "owner": "Owner",
-        "leadStatus": "Lead status",
-        "lastContact": "Last contact",
-        "value": "Potential value",
-        "actions": "Actions"
-      },
-      "validation": {
-        "emailInvalid": "Invalid email",
-        "phoneInvalid": "Invalid phone number"
-      },
-      "filters": {
-        "owner": "Contact owner",
-        "lastContact": "Last contact",
-        "leadStatus": "Lead status"
-      },
-      "views": {
-        "all": "All",
-        "my": "My contacts",
-        "unassigned": "Unassigned"
-      },
-      "empty": "No contacts yet",
-      "notifications": {
-        "createSuccess": "✅ Contact created successfully!"
-      },
-      "form": {
-        "createTitle": "Create New Contact",
-        "fields": {
-          "firstName": "First Name",
-          "lastName": "Last Name",
-          "email": "Email",
-          "phone": "Phone Number",
-          "jobTitle": "Job Title",
-          "leadStatus": "Lead Status"
-        },
-        "options": {
-          "leadStatus": {
-            "new": "New",
-            "contacted": "Contacted",
-            "qualified": "Qualified",
-            "lost": "Lost"
-          }
-        },
-        "actions": {
-          "cancel": "Cancel",
-          "save": "Save"
-        }
-      },
-      "note": {
-        "title": "Add Note",
-        "fields": {
-          "note": "Note"
-        },
-        "actions": {
-          "attachFile": "Attach File",
-          "cancel": "Cancel",
-          "save": "Save"
-        }
-      },
-      "emailWindow": {
-        "title": "New Email",
-        "tabs": {
-          "templates": "Templates",
-          "sequences": "Sequences",
-          "documents": "Documents",
-          "meetings": "Meetings",
-          "quotes": "Quotes"
-        },
-        "fields": {
-          "to": "To",
-          "from": "From",
-          "cc": "Cc",
-          "bcc": "Bcc",
-          "subject": "Subject"
-        },
-        "placeholders": {
-          "to": "recipient@example.com",
-          "subject": "Email subject",
-          "body": "Type your message here..."
-        },
-        "toolbar": {
-          "more": "More",
-          "insert": "Insert"
-        },
-        "prompts": {
-          "enterUrl": "Enter URL:"
-        },
-        "associated": "Associated with {{count}} record",
-        "actions": {
-          "send": "Send",
-          "sendLater": "Send Later",
-          "sendNow": "Send Now"
-        },
-        "messages": {
-          "missingRecipient": "Please enter a recipient email address",
-          "openedClient": "Email opened in your default mail client!"
-        },
-        "sendLater": {
-          "title": "Send later",
-          "options": {
-            "in1hour": "In 1 hour",
-            "in2hours": "In 2 hours",
-            "tomorrowMorning": "Tomorrow morning (8am)",
-            "tomorrowAfternoon": "Tomorrow afternoon (1pm)",
-            "custom": "Custom"
-          },
-          "actions": {
-            "schedule": "Schedule",
-            "cancel": "Cancel"
-          }
-        }
-      }
+    "menu": {
+        "dashboard": "Dashboard",
+        "dashboardFull": "Dashboard",
+        "contacts": "Contacts",
+        "contactsFull": "Contact Management",
+        "deals": "Deals",
+        "dealsFull": "Sales Opportunities",
+        "requirements": "Requirements",
+        "requirementsFull": "Requirements",
+        "quotations": "Quotations",
+        "quotationsFull": "Quotations / Estimates",
+        "contracts": "Contracts",
+        "contractsFull": "Contracts",
+        "appendices": "Appendices",
+        "appendicesFull": "Contract Appendices",
+        "acceptance": "Acceptance",
+        "acceptanceFull": "Acceptance Reports",
+        "invoices": "Invoices",
+        "invoicesFull": "Invoices"
     },
-    "deals": {
-      "title": "Deal Management",
-      "subtitle": "Track and manage sales opportunities from prospecting to closing",
-      "columns": {
-        "dealName": "Deal name",
-        "customer": "Customer",
-        "amount": "Amount",
-        "stage": "Stage",
-        "priority": "Priority",
-        "owner": "Owner",
-        "probability": "Probability (%)",
-        "expectedCloseDate": "Expected close date",
-        "lastActivity": "Last activity",
-        "actions": "Actions"
-      },
-      "validation": {
-        "probabilityRange": "Probability must be between 0-100%"
-      },
-      "filters": {
-        "owner": "Deal owner",
-        "expectedCloseDate": "Expected close date",
-        "lastActivity": "Last activity",
-        "amount": "Amount",
-        "stage": "Stage"
-      },
-      "views": {
-        "all": "All",
-        "my": "My deals",
-        "unassigned": "Unassigned"
-      },
-      "stats": {
-        "totalValue": "Total value",
-        "won": "Won",
-        "active": "Active",
-        "winRate": "Win rate",
-        "activeDeals": "{{count}} deals"
-      },
-      "empty": "No deals yet"
-    }
-    ,
-    "assistant": {
-      "title": "CRM Smart Assistant",
-      "greeting": "Hello! I'm the CRM virtual assistant. How can I help you?",
-      "you": "You",
-      "assistant": "AI Assistant",
-      "youCanAsk": "You can ask:",
-      "inputPlaceholder": "Type a message...",
-      "floatingInputPlaceholder": "Ask AI anything...",
-      "headerSubtitle": "Smart reports • Always ready to help",
-      "buttons": {
-        "open": "Open",
-        "task": "Task"
-      },
-      "resultsFor": "Results for \"{{query}}\"",
-      "topContacts": "Top contacts",
-      "openDeals": "Open deals",
-      "nextSuggestions": "Next suggestions",
-      "actions": {
-        "createContact": "Create contact",
-        "createDeal": "Create deal",
-        "sendDraftEmail": "Send draft email"
-      },
-      "mock": {
-        "disclaimer": "AI-generated demo content. Data is mock for preview only."
-      },
-      "quickActions": {
-        "title": "Quick actions",
-        "trendingLabel": "Trending",
-        "insightsLabel": "Insights",
-        "predictionsLabel": "Predictions",
-        "queries": {
-          "trending": "Show current market trends",
-          "insights": "Analyze business insights",
-          "predictions": "Predict potential deals"
-        }
-      },
-      "pageSuggestions": {
-        "title": "Suggestions for this page",
-        "base": {
-          "marketTrends": "Analyze current market trends",
-          "predictTopDeal": "Predict which deal is most likely to win",
-          "findProspects": "Find potential customers",
-          "createOverviewReport": "Create a business overview report"
-        },
+    "tooltips": {
+        "notifications": "Notifications",
+        "aiAssistant": "AI Assistant",
+        "account": "Account",
+        "language": "Language"
+    },
+    "header": {
+        "profile": "Profile",
+        "settings": "Settings",
+        "logout": "Logout"
+    },
+    "common": {
+        "contacts": "Contacts",
+        "deals": "Deals",
+        "viewAllContacts": "View all contacts...",
+        "viewAllDeals": "View all deals...",
+        "aiAssistantMinimized": "AI Assistant - Ask anything!",
+        "viewDetails": "View details",
+        "edit": "Edit",
+        "add": "Add",
+        "delete": "Delete",
+        "download": "Download",
+        "cancel": "Cancel",
+        "save": "Save",
+        "back": "Back",
+        "next": "Next",
+        "unknown": "Unknown"
+    },
+    "pages": {
         "dashboard": {
-          "kpiThisMonth": "Show this month's KPIs",
-          "revenueTrends": "Analyze revenue trends",
-          "top5Deals": "Top 5 potential deals"
+            "welcomeBack": "Welcome back, Admin",
+            "smartDashboard": "Smart dashboard",
+            "searchPlaceholder": "Ask AI about business data, markets, customers...",
+            "askAssistant": "Ask CRM Assistant: \"{{query}}\"",
+            "back": "Back",
+            "searchFor": "Search for: \"{{query}}\"",
+            "aiSearchResults": "AI search results",
+            "sections": {
+                "contacts": "CONTACTS",
+                "deals": "DEALS"
+            },
+            "showMoreContacts": "Show more contacts...",
+            "showMoreDeals": "Show more deals...",
+            "footer": " 2025 CRM Dashboard - Powered by AI Orchestration Real-time Data Smart Predictions"
+        },
+        "contacts": {
+            "title": "Contact Management",
+            "subtitle": "Manage potential customer information and track conversion progress",
+            "columns": {
+                "name": "Name",
+                "email": "Email",
+                "phone": "Phone",
+                "company": "Company",
+                "position": "Position",
+                "owner": "Owner",
+                "leadStatus": "Lead status",
+                "lastContact": "Last contact",
+                "value": "Potential value",
+                "actions": "Actions"
+            },
+            "validation": {
+                "emailInvalid": "Invalid email",
+                "phoneInvalid": "Invalid phone number"
+            },
+            "filters": {
+                "owner": "Contact owner",
+                "lastContact": "Last contact",
+                "leadStatus": "Lead status"
+            },
+            "views": {
+                "all": "All",
+                "my": "My contacts",
+                "unassigned": "Unassigned"
+            },
+            "empty": "No contacts yet",
+            "notifications": {
+                "createSuccess": " Contact created successfully!"
+            },
+            "form": {
+                "createTitle": "Create New Contact",
+                "fields": {
+                    "firstName": "First Name",
+                    "lastName": "Last Name",
+                    "email": "Email",
+                    "phone": "Phone Number",
+                    "jobTitle": "Job Title",
+                    "leadStatus": "Lead Status"
+                },
+                "options": {
+                    "leadStatus": {
+                        "new": "New",
+                        "contacted": "Contacted",
+                        "qualified": "Qualified",
+                        "lost": "Lost"
+                    }
+                },
+                "actions": {
+                    "cancel": "Cancel",
+                    "save": "Save"
+                }
+            },
+            "note": {
+                "title": "Add Note",
+                "fields": {
+                    "note": "Note"
+                },
+                "actions": {
+                    "attachFile": "Attach File",
+                    "cancel": "Cancel",
+                    "save": "Save"
+                }
+            },
+            "emailWindow": {
+                "title": "New Email",
+                "tabs": {
+                    "templates": "Templates",
+                    "sequences": "Sequences",
+                    "documents": "Documents",
+                    "meetings": "Meetings",
+                    "quotes": "Quotes"
+                },
+                "fields": {
+                    "to": "To",
+                    "from": "From",
+                    "cc": "Cc",
+                    "bcc": "Bcc",
+                    "subject": "Subject"
+                },
+                "placeholders": {
+                    "to": "recipient@example.com",
+                    "subject": "Email subject",
+                    "body": "Type your message here..."
+                },
+                "toolbar": {
+                    "more": "More",
+                    "insert": "Insert"
+                },
+                "prompts": {
+                    "enterUrl": "Enter URL:"
+                },
+                "associated": "Associated with {{count}} record",
+                "actions": {
+                    "send": "Send",
+                    "sendLater": "Send Later",
+                    "sendNow": "Send Now"
+                },
+                "messages": {
+                    "missingRecipient": "Please enter a recipient email address",
+                    "openedClient": "Email opened in your default mail client!"
+                },
+                "sendLater": {
+                    "title": "Send later",
+                    "options": {
+                        "in1hour": "In 1 hour",
+                        "in2hours": "In 2 hours",
+                        "tomorrowMorning": "Tomorrow morning (8am)",
+                        "tomorrowAfternoon": "Tomorrow afternoon (1pm)",
+                        "custom": "Custom"
+                    },
+                    "actions": {
+                        "schedule": "Schedule",
+                        "cancel": "Cancel"
+                    }
+                }
+            }
         },
         "deals": {
-          "predictSuccessRate": "Predict success rates for deals",
-          "analyzePipeline": "Analyze current pipeline",
-          "suggestPendingActions": "Suggest actions for pending deals"
+            "title": "Deal Management",
+            "subtitle": "Track and manage sales opportunities from prospecting to closing",
+            "columns": {
+                "dealName": "Deal name",
+                "customer": "Customer",
+                "amount": "Amount",
+                "stage": "Stage",
+                "priority": "Priority",
+                "owner": "Owner",
+                "probability": "Probability (%)",
+                "expectedCloseDate": "Expected close date",
+                "lastActivity": "Last activity",
+                "createdAt": "Created at",
+                "deadline": "Deadline",
+                "actions": "Actions"
+            },
+            "validation": {
+                "probabilityRange": "Probability must be between 0-100%"
+            },
+            "filters": {
+                "owner": "Deal owner",
+                "expectedCloseDate": "Expected close date",
+                "lastActivity": "Last activity",
+                "amount": "Amount",
+                "stage": "Stage"
+            },
+            "views": {
+                "all": "All",
+                "my": "My deals",
+                "unassigned": "Unassigned"
+            },
+            "stats": {
+                "totalValue": "Total value",
+                "won": "Won",
+                "active": "Active",
+                "winRate": "Win rate",
+                "activeDeals": "{{count}} deals"
+            },
+            "empty": "No deals yet",
+            "ui": {
+                "addDeal": "Add deal",
+                "filters": "Filters",
+                "resetFilters": "Reset filters",
+                "smartFilter": "Smart filter",
+                "tabs": {
+                    "allDeals": "All deals ({{count}})",
+                    "reminders": "Reminders"
+                },
+                "filtering": "Filtering:",
+                "clearFilter": "Clear filter",
+                "foundMatching": "Found {{count}} matching deals",
+                "form": {
+                    "createTitle": "Create new deal",
+                    "editTitle": "Edit deal"
+                },
+                "dialogs": {
+                    "deleteConfirmTitle": "Delete confirmation",
+                    "deleteConfirmText": "Are you sure you want to delete this deal?"
+                },
+                "contextMenu": {
+                    "duplicate": "Duplicate",
+                    "delete": "Delete"
+                }
+            },
+            "pagination": {
+                "rowsPerPage": "Rows per page:",
+                "displayedRows": "{{from}}-{{to}} of {{count}}"
+            }
         },
-        "customers": {
-          "analyzeBehavior": "Analyze customer behavior",
-          "findCrossSell": "Find cross-sell/up-sell opportunities",
-          "predictChurn": "Predict customer churn"
-        }
-      },
-      "recentResults": {
-        "title": "Recent results",
-        "confidence": "Confidence"
-      },
-      "suggestions": {
-        "dealsNotClosedThisMonth": "Deals not closed this month",
-        "totalClosedValue": "Total value of closed deals",
-        "createReminderCompanyB": "Create a reminder for Company B",
-        "writeThankYouEmail": "Write a thank-you email"
-      },
-      "responses": {
-        "dealsNotClosedThisMonth": "Here is the list of your deals not closed in July:\n```\n| Deal Name | Customer | Value |\n|-----------|----------|-------|\n| Deal 1    | Company A| 100M  |\n| Deal 2    | Company B| 80M   |\n```",
-        "totalClosedValue": "Your total closed value this month is 377,043,143 ₫",
-        "createReminderCompanyB": "Created a reminder for Company B's deal for tomorrow. Would you like to add a note?",
-        "writeThankYouEmail": "Dear Customer,\n\nThank you for choosing our services. We truly appreciate your partnership..."
-      },
-      "noUnderstand": "Sorry, I didn't quite understand. Could you try again?"
-    }
-    ,
-    "appendices": {
-      "title": "Contract Appendices Management",
-      "tabs": {
-        "templates": "Appendix Templates",
-        "appendices": "Contract Appendices"
-      },
-      "actions": {
-        "createTemplate": "Create new template",
-        "createAppendix": "Create new appendix"
-      },
-      "loading": {
-        "templates": "Loading appendix templates...",
-        "appendices": "Loading contract appendices..."
-      },
-      "templates": {
-        "title": "Appendix templates list",
-        "columns": {
-          "code": "Code",
-          "name": "Template name",
-          "description": "Description",
-          "type": "Type",
-          "createdAt": "Created at",
-          "status": "Status",
-          "actions": "Actions"
-        }
-      },
-      "appendices": {
-        "title": "Contract appendices list",
-        "columns": {
-          "code": "Appendix ID",
-          "name": "Appendix name",
-          "contractId": "Contract ID",
-          "contractName": "Contract name",
-          "createdAt": "Created at",
-          "status": "Status",
-          "actions": "Actions"
-        }
-      },
-      "status": {
-        "active": "Active",
-        "inactive": "Inactive",
-        "draft": "Draft",
-        "pending": "Pending",
-        "signed": "Signed",
-        "cancelled": "Cancelled"
-      },
-      "types": {
-        "extension": "Extension",
-        "value": "Value change",
-        "other": "Other"
-      },
-      "defaults": {
-        "extensionAppendixName": "Extension appendix",
-        "valueAppendixName": "Value change appendix"
-      },
-      "dialogs": {
-        "createTemplateTitle": "Create new appendix template",
-        "createAppendixTitle": "Create new contract appendix",
-        "fields": {
-          "templateName": "Template name",
-          "description": "Description",
-          "type": "Type",
-          "selectTemplate": "Select template",
-          "appendixName": "Appendix name",
-          "linkedContract": "Linked contract",
-          "createdAt": "Created date",
-          "appendixContent": "Appendix content",
-          "internalNotes": "Internal notes (optional)"
+        "assistant": {
+            "title": "CRM Smart Assistant",
+            "greeting": "Hello! I'm the CRM virtual assistant. How can I help you?",
+            "you": "You",
+            "assistant": "AI Assistant",
+            "youCanAsk": "You can ask:",
+            "inputPlaceholder": "Type a message...",
+            "floatingInputPlaceholder": "Ask AI anything...",
+            "headerSubtitle": "Smart reports Always ready to help",
+            "buttons": {
+                "open": "Open",
+                "task": "Task"
+            },
+            "resultsFor": "Results for \"{{query}}\"",
+            "topContacts": "Top contacts",
+            "openDeals": "Open deals",
+            "nextSuggestions": "Next suggestions",
+            "actions": {
+                "createContact": "Create contact",
+                "createDeal": "Create deal",
+                "sendDraftEmail": "Send draft email"
+            },
+            "mock": {
+                "disclaimer": "AI-generated demo content. Data is mock for preview only."
+            },
+            "quickActions": {
+                "title": "Quick actions",
+                "trendingLabel": "Trending",
+                "insightsLabel": "Insights",
+                "predictionsLabel": "Predictions",
+                "queries": {
+                    "trending": "Show current market trends",
+                    "insights": "Analyze business insights",
+                    "predictions": "Predict potential deals"
+                }
+            },
+            "pageSuggestions": {
+                "title": "Suggestions for this page",
+                "base": {
+                    "marketTrends": "Analyze current market trends",
+                    "predictTopDeal": "Predict which deal is most likely to win",
+                    "findProspects": "Find potential customers",
+                    "createOverviewReport": "Create a business overview report"
+                },
+                "dashboard": {
+                    "kpiThisMonth": "Show this month's KPIs",
+                    "revenueTrends": "Analyze revenue trends",
+                    "top5Deals": "Top 5 potential deals"
+                },
+                "deals": {
+                    "predictSuccessRate": "Predict success rates for deals",
+                    "analyzePipeline": "Analyze current pipeline",
+                    "suggestPendingActions": "Suggest actions for pending deals"
+                },
+                "customers": {
+                    "analyzeBehavior": "Analyze customer behavior",
+                    "findCrossSell": "Find cross-sell/up-sell opportunities",
+                    "predictChurn": "Predict customer churn"
+                }
+            },
+            "recentResults": {
+                "title": "Recent results",
+                "confidence": "Confidence"
+            },
+            "suggestions": {
+                "dealsNotClosedThisMonth": "Deals not closed this month",
+                "totalClosedValue": "Total value of closed deals",
+                "createReminderCompanyB": "Create a reminder for Company B",
+                "writeThankYouEmail": "Write a thank-you email"
+            },
+            "responses": {
+                "dealsNotClosedThisMonth": "Here is the list of your deals not closed in July:\n```\n| Deal Name | Customer | Value |\n|-----------|----------|-------|\n| Deal 1    | Company A| 100M  |\n| Deal 2    | Company B| 80M   |\n```",
+                "totalClosedValue": "Your total closed value this month is 377,043,143 ",
+                "createReminderCompanyB": "Created a reminder for Company B's deal for tomorrow. Would you like to add a note?",
+                "writeThankYouEmail": "Dear Customer,\n\nThank you for choosing our services. We truly appreciate your partnership..."
+            },
+            "noUnderstand": "Sorry, I didn't quite understand. Could you try again?"
         },
-        "actions": {
-          "uploadTemplateFile": "Upload template file (PDF, DOCX)",
-          "uploadAttachment": "Upload attachment",
-          "saveTemplate": "Save template",
-          "saveDraft": "Save draft",
-          "submit": "Submit for approval",
-          "signAppendix": "Sign appendix"
-        },
-        "steps": {
-          "chooseMethod": "Choose creation method",
-          "fillInformation": "Fill information"
-        },
-        "chooseMethodTitle": "Select how to create the appendix:",
-        "methods": {
-          "useTemplate": "Use a template",
-          "manual": "Create manually"
-        },
-        "noTemplatesWarning": "No appendix templates yet. Please create a template first.",
-        "selectedFile": "Selected file",
-        "placeholders": {
-          "appendixContent": "Enter appendix content..."
-        },
-        "defaults": {
-          "contentFromTemplate": "Content from appendix template..."
-        }
-      },
-      "notifications": {
-        "createTemplateSuccess": "✅ Appendix template created successfully!",
-        "saveDraftSuccess": "✅ Appendix saved as draft!",
-        "submitSuccess": "✅ Appendix submitted for approval!",
-        "signSuccess": "✅ Appendix signed successfully!",
-        "loadError": "An error occurred while loading data. Please try again."
-      },
-      "sample": {
-        "contract1": "CRM development contract",
-        "contract2": "Consulting contract",
-        "contract3": "Maintenance contract"
-      }
-    }
-    ,
-    "contracts": {
-      "title": "Contract Management",
-      "tabs": {
-        "templates": "Contract Templates",
-        "contracts": "Contracts"
-      },
-      "actions": {
-        "createContract": "Create new contract"
-      },
-      "loading": {
-        "contracts": "Loading contracts..."
-      },
-      "list": {
-        "title": "Contracts list",
-        "buttonCreate": "Create new contract",
-        "loading": "Loading contracts..."
-      },
-      "columns": {
-        "code": "Contract ID",
-        "name": "Contract name",
-        "type": "Template",
-        "partyA": "Party A",
-        "partyB": "Party B",
-        "createdAt": "Created at",
-        "status": "Status",
-        "actions": "Actions"
-      },
-      "status": {
-        "draft": "Draft",
-        "pending": "Pending",
-        "signed": "Signed",
-        "expired": "Expired",
-        "cancelled": "Cancelled"
-      },
-      "tooltips": {
-        "view": "View details",
-        "download": "Download",
-        "delete": "Delete"
-      },
-      "dialogs": {
-        "detailTitle": "Contract details",
-        "deleteConfirmTitle": "Delete confirmation",
-        "deleteConfirmText": "Are you sure you want to delete this contract? This action cannot be undone.",
-        "createTitle": "Create new contract"
-      },
-      "notifications": {
-        "uploadTemplateSuccess": "✅ Template uploaded successfully!",
-        "uploadTemplateError": "An error occurred while uploading the template. Please try again.",
-        "loadError": "An error occurred while loading data. Please try again.",
-        "createContractSuccess": "✅ Created a new contract successfully!",
-        "deleteContractSuccess": "✅ Contract deleted successfully!",
-        "editInfo": "Contract editing feature is under development"
-      },
-      "templateList": {
-        "title": "Contract Template List",
-        "subtitle": "Manage and create contract templates",
-        "loading": "Loading data...",
-        "confirmDelete": "Are you sure you want to delete this template?",
-        "alerts": {
-          "saveAiSuccess": "✅ Template saved successfully!",
-          "saveAiError": "An error occurred while saving the template!"
-        },
-        "table": {
-          "columns": {
-            "name": "Template name",
-            "type": "Type",
-            "status": "Status",
-            "fields": "Fields",
-            "createdAt": "Created at",
-            "createdBy": "Created by",
-            "actions": "Actions"
-          },
-          "chips": {
-            "type": {
-              "internal": "Internal",
-              "customer": "Customer"
+        "appendices": {
+            "title": "Contract Appendices Management",
+            "tabs": {
+                "templates": "Appendix Templates",
+                "appendices": "Contract Appendices"
+            },
+            "actions": {
+                "createTemplate": "Create new template",
+                "createAppendix": "Create new appendix"
+            },
+            "loading": {
+                "templates": "Loading appendix templates...",
+                "appendices": "Loading contract appendices..."
+            },
+            "templates": {
+                "title": "Appendix templates list",
+                "columns": {
+                    "code": "Code",
+                    "name": "Template name",
+                    "description": "Description",
+                    "type": "Type",
+                    "createdAt": "Created at",
+                    "status": "Status",
+                    "actions": "Actions"
+                }
+            },
+            "appendices": {
+                "title": "Contract appendices list",
+                "columns": {
+                    "code": "Appendix ID",
+                    "name": "Appendix name",
+                    "contractId": "Contract ID",
+                    "contractName": "Contract name",
+                    "createdAt": "Created at",
+                    "status": "Status",
+                    "actions": "Actions"
+                }
             },
             "status": {
-              "active": "Active",
-              "inactive": "Inactive"
+                "active": "Active",
+                "inactive": "Inactive",
+                "draft": "Draft",
+                "pending": "Pending",
+                "signed": "Signed",
+                "cancelled": "Cancelled"
+            },
+            "types": {
+                "extension": "Extension",
+                "value": "Value change",
+                "other": "Other"
+            },
+            "defaults": {
+                "extensionAppendixName": "Extension appendix",
+                "valueAppendixName": "Value change appendix"
+            },
+            "dialogs": {
+                "createTemplateTitle": "Create new appendix template",
+                "createAppendixTitle": "Create new contract appendix",
+                "fields": {
+                    "templateName": "Template name",
+                    "description": "Description",
+                    "type": "Type",
+                    "selectTemplate": "Select template",
+                    "appendixName": "Appendix name",
+                    "linkedContract": "Linked contract",
+                    "createdAt": "Created date",
+                    "appendixContent": "Appendix content",
+                    "internalNotes": "Internal notes (optional)"
+                },
+                "actions": {
+                    "uploadTemplateFile": "Upload template file (PDF, DOCX)",
+                    "uploadAttachment": "Upload attachment",
+                    "saveTemplate": "Save template",
+                    "saveDraft": "Save draft",
+                    "submit": "Submit for approval",
+                    "signAppendix": "Sign appendix"
+                },
+                "steps": {
+                    "chooseMethod": "Choose creation method",
+                    "fillInformation": "Fill information"
+                },
+                "chooseMethodTitle": "Select how to create the appendix:",
+                "methods": {
+                    "useTemplate": "Use a template",
+                    "manual": "Create manually"
+                },
+                "noTemplatesWarning": "No appendix templates yet. Please create a template first.",
+                "selectedFile": "Selected file",
+                "placeholders": {
+                    "appendixContent": "Enter appendix content..."
+                },
+                "defaults": {
+                    "contentFromTemplate": "Content from appendix template..."
+                }
+            },
+            "notifications": {
+                "createTemplateSuccess": " Appendix template created successfully!",
+                "saveDraftSuccess": " Appendix saved as draft!",
+                "submitSuccess": " Appendix submitted for approval!",
+                "signSuccess": " Appendix signed successfully!",
+                "loadError": "An error occurred while loading data. Please try again."
+            },
+            "sample": {
+                "contract1": "CRM development contract",
+                "contract2": "Consulting contract",
+                "contract3": "Maintenance contract"
+            }
+        },
+        "contracts": {
+            "title": "Contract Management",
+            "tabs": {
+                "templates": "Contract Templates",
+                "contracts": "Contracts"
+            },
+            "actions": {
+                "createContract": "Create new contract"
+            },
+            "loading": {
+                "contracts": "Loading contracts..."
+            },
+            "list": {
+                "title": "Contracts list",
+                "buttonCreate": "Create new contract",
+                "loading": "Loading contracts..."
+            },
+            "columns": {
+                "code": "Contract ID",
+                "name": "Contract name",
+                "type": "Template",
+                "partyA": "Party A",
+                "partyB": "Party B",
+                "createdAt": "Created at",
+                "status": "Status",
+                "actions": "Actions"
+            },
+            "status": {
+                "draft": "Draft",
+                "pending": "Pending",
+                "signed": "Signed",
+                "expired": "Expired",
+                "cancelled": "Cancelled"
+            },
+            "tooltips": {
+                "view": "View details",
+                "download": "Download",
+                "delete": "Delete"
+            },
+            "dialogs": {
+                "detailTitle": "Contract details",
+                "deleteConfirmTitle": "Delete confirmation",
+                "deleteConfirmText": "Are you sure you want to delete this contract? This action cannot be undone.",
+                "createTitle": "Create new contract"
+            },
+            "notifications": {
+                "uploadTemplateSuccess": " Template uploaded successfully!",
+                "uploadTemplateError": "An error occurred while uploading the template. Please try again.",
+                "loadError": "An error occurred while loading data. Please try again.",
+                "createContractSuccess": " Created a new contract successfully!",
+                "deleteContractSuccess": " Contract deleted successfully!",
+                "editInfo": "Contract editing feature is under development"
+            },
+            "templateList": {
+                "title": "Contract Template List",
+                "subtitle": "Manage and create contract templates",
+                "loading": "Loading data...",
+                "confirmDelete": "Are you sure you want to delete this template?",
+                "alerts": {
+                    "saveAiSuccess": " Template saved successfully!",
+                    "saveAiError": "An error occurred while saving the template!"
+                },
+                "table": {
+                    "columns": {
+                        "name": "Template name",
+                        "type": "Type",
+                        "status": "Status",
+                        "fields": "Fields",
+                        "createdAt": "Created at",
+                        "createdBy": "Created by",
+                        "actions": "Actions"
+                    },
+                    "chips": {
+                        "type": {
+                            "internal": "Internal",
+                            "customer": "Customer"
+                        },
+                        "status": {
+                            "active": "Active",
+                            "inactive": "Inactive"
+                        }
+                    },
+                    "tooltips": {
+                        "view": "View details",
+                        "edit": "Edit",
+                        "default": "Default",
+                        "setDefault": "Set as default",
+                        "delete": "Delete"
+                    },
+                    "empty": "No data",
+                    "pagination": {
+                        "rowsPerPage": "Rows per page:",
+                        "displayedRows": "{{from}}-{{to}} of {{count}}"
+                    }
+                }
+            }
+        },
+        "customers": {
+            "title": "Customer Management",
+            "addCustomer": "Add customer",
+            "searchPlaceholder": "Search by name, phone, email...",
+            "filters": {
+                "status": {
+                    "all": "All",
+                    "potential": "Potential",
+                    "nurturing": "Nurturing",
+                    "signed": "Signed"
+                }
+            },
+            "columns": {
+                "name": "Name",
+                "phone": "Phone",
+                "email": "Email",
+                "company": "Company",
+                "status": "Status",
+                "owner": "Owner",
+                "createdAt": "Created at",
+                "actions": "Actions"
+            },
+            "status": {
+                "potential": "Potential",
+                "nurturing": "Nurturing",
+                "signed": "Signed"
+            },
+            "dialogs": {
+                "createTitle": "Add new customer",
+                "editTitle": "Edit customer",
+                "deleteTitle": "Delete confirmation",
+                "deleteText": "Are you sure you want to delete customer {{name}}? This action cannot be undone."
+            },
+            "form": {
+                "name": "Customer name",
+                "phone": "Phone number",
+                "email": "Email",
+                "company": "Company",
+                "status": "Status",
+                "owner": "Owner",
+                "notes": "Notes",
+                "save": "Save",
+                "update": "Update"
+            },
+            "pagination": {
+                "rowsPerPage": "Rows per page:",
+                "displayedRows": "{{from}}-{{to}} of {{count}}"
+            }
+        },
+        "requirements": {
+            "title": "Requirement Management",
+            "actions": {
+                "exportExcel": "Export Excel",
+                "createRequirement": "Create requirement"
+            },
+            "filters": {
+                "customer": "Customer",
+                "assignee": "Assignee",
+                "status": "Status",
+                "all": "All"
+            },
+            "searchPlaceholder": "Search requirements by name...",
+            "list": {
+                "columns": {
+                    "id": "ID",
+                    "name": "Requirement name",
+                    "type": "Type",
+                    "customer": "Customer",
+                    "assignee": "Assignee",
+                    "source": "Source",
+                    "createdDate": "Created at",
+                    "deadline": "Deadline",
+                    "status": "Status",
+                    "actions": "Actions"
+                },
+                "empty": "No requirements found"
+            },
+            "status": {
+                "pending": "Pending",
+                "in_discussion": "In discussion",
+                "confirmed": "Confirmed"
+            },
+            "pagination": {
+                "rowsPerPage": "Rows per page:",
+                "displayedRows": "{{from}}-{{to}} of {{count}}"
+            },
+            "dialogs": {
+                "deleteConfirmTitle": "Delete confirmation",
+                "deleteConfirmText": "Are you sure you want to delete this requirement?"
+            },
+            "form": {
+                "title": "Create new requirement (AI)",
+                "steps": {
+                    "step1": "Enter basic information",
+                    "step2": "Choose requirement creation method",
+                    "indicator": "Step {{current}}/2"
+                },
+                "fields": {
+                    "name": "Requirement name",
+                    "type": "Requirement type",
+                    "customer": "Customer",
+                    "assignee": "Assignee",
+                    "deadline": "Deadline",
+                    "description": "Description"
+                },
+                "placeholders": {
+                    "name": "Enter requirement name",
+                    "manualDescription": "Example: I need a warehouse management system with inbound/outbound, minimum stock alerts..."
+                },
+                "method": {
+                    "group": "Creation method",
+                    "manual": "Enter description manually",
+                    "upload": "Upload specification file (.pdf, .docx)",
+                    "uploadButton": "Choose file (.pdf, .docx)",
+                    "uploadHelp": "Supports .pdf, .docx"
+                },
+                "actions": {
+                    "next": "Next",
+                    "back": "Back",
+                    "generate": "Generate automatically (AI)",
+                    "generating": "Processing...",
+                    "regenerate": "Regenerate",
+                    "addRow": "Add new row"
+                },
+                "ai": {
+                    "resultTitle": "AI analysis result:"
+                },
+                "tabs": {
+                    "functional": "Functional requirements",
+                    "nonFunctional": "Non-functional requirements",
+                    "tests": "Test requirements",
+                    "uiMockups": "UI Mockups / Descriptions",
+                    "dataModel": "Data model",
+                    "integration": "Integration requirements"
+                },
+                "tableHeaders": {
+                    "feature": "Feature",
+                    "detail": "Detail",
+                    "description": "Description",
+                    "notes": "Notes",
+                    "requirementType": "Requirement type",
+                    "value": "Detail",
+                    "testCase": "Test case",
+                    "condition": "Condition",
+                    "expectedResult": "Expected result",
+                    "entity": "Entity",
+                    "fields": "Fields",
+                    "modelDescription": "Description",
+                    "system": "System",
+                    "method": "Method",
+                    "purpose": "Purpose"
+                },
+                "links": {
+                    "viewOnFigma": "View design on Figma"
+                }
+            }
+        },
+        "acceptance": {
+            "title": " Acceptance Management",
+            "overview": {
+                "totalTemplates": "Total templates",
+                "signedReports": "Signed reports",
+                "pending": "Pending",
+                "totalValue": "Total value"
+            },
+            "tabs": {
+                "templates": "Acceptance Templates",
+                "reports": "Acceptance Reports"
+            },
+            "searchPlaceholder": "Search...",
+            "filters": {
+                "status": "Status",
+                "all": "All"
+            },
+            "status": {
+                "active": "Active",
+                "inactive": "Inactive",
+                "draft": "Draft",
+                "pending": "Pending",
+                "signed": "Signed",
+                "rejected": "Rejected"
+            },
+            "actions": {
+                "createTemplate": "Create new template",
+                "createReport": "Create new acceptance",
+                "sign": "Sign"
+            },
+            "templates": {
+                "columns": {
+                    "code": "Code",
+                    "name": "Template name",
+                    "description": "Description",
+                    "type": "Type",
+                    "usage": "Usage",
+                    "status": "Status",
+                    "actions": "Actions"
+                }
+            },
+            "types": {
+                "full": "Full",
+                "simple": "Simple",
+                "phase": "Phase"
+            },
+            "reports": {
+                "columns": {
+                    "code": "Acceptance ID",
+                    "name": "Acceptance name",
+                    "contract": "Contract",
+                    "appendix": "Appendix",
+                    "acceptanceDate": "Acceptance date",
+                    "value": "Value",
+                    "status": "Status",
+                    "actions": "Actions"
+                }
+            },
+            "none": "None",
+            "dialogs": {
+                "createTemplateTitle": "Create new acceptance template",
+                "createReportTitle": "Create new acceptance report",
+                "fields": {
+                    "templateName": "Template name",
+                    "reportName": "Acceptance name",
+                    "code": "Code",
+                    "description": "Description",
+                    "type": "Type",
+                    "linkedContract": "Linked contract",
+                    "linkedAppendix": "Linked appendix"
+                }
+            },
+            "notifications": {
+                "createTemplateSuccess": " Template created successfully!",
+                "createReportSuccess": " Acceptance report created successfully!"
+            },
+            "sample": {}
+        },
+        "types": {
+            "full": "Full",
+            "simple": "Simple",
+            "phase": "Phase"
+        },
+        "reports": {
+            "columns": {
+                "code": "Acceptance ID",
+                "name": "Acceptance name",
+                "contract": "Contract",
+                "appendix": "Appendix",
+                "acceptanceDate": "Acceptance date",
+                "value": "Value",
+                "status": "Status",
+                "actions": "Actions"
+            }
+        },
+        "none": "None",
+        "dialogs": {
+            "createTemplateTitle": "Create new acceptance template",
+            "createReportTitle": "Create new acceptance report",
+            "fields": {
+                "templateName": "Template name",
+                "reportName": "Acceptance name",
+                "code": "Code",
+                "description": "Description",
+                "type": "Type",
+                "linkedContract": "Linked contract",
+                "linkedAppendix": "Linked appendix"
+            }
+        },
+        "notifications": {
+            "createTemplateSuccess": " Template created successfully!",
+            "createReportSuccess": " Acceptance report created successfully!"
+        },
+        "sample": {
+            "contract1": "CRM development contract",
+            "contract2": "Consulting contract",
+            "appendix1": "Customer management module",
+            "appendix2": "Reporting module"
+        },
+        "invoices": {
+            "title": "Invoice Management",
+            "stats": {
+                "totalInvoices": "Total invoices",
+                "totalValue": "Total value",
+                "paid": "Paid",
+                "overdue": "Overdue"
+            },
+            "tabs": {
+                "templates": "Invoice Templates",
+                "invoices": "Invoices"
+            },
+            "filters": {
+                "status": "Status",
+                "all": "All",
+                "templates": { "active": "Active", "inactive": "Inactive" },
+                "invoices": { "draft": "Draft", "sent": "Sent", "partial": "Partially paid", "paid": "Paid", "overdue": "Overdue" }
+            },
+            "columns": {
+                "templates": {
+                    "code": "Code",
+                    "name": "Template name",
+                    "description": "Description",
+                    "type": "Type",
+                    "taxRate": "Tax rate",
+                    "usage": "Usage",
+                    "status": "Status",
+                    "actions": "Actions"
+                },
+                "invoices": {
+                    "invoiceCode": "Invoice ID",
+                    "invoiceName": "Invoice name",
+                    "customer": "Customer",
+                    "appendix": "Appendix",
+                    "issueDate": "Issue date",
+                    "value": "Value",
+                    "paymentProgress": "Payment progress",
+                    "status": "Status",
+                    "actions": "Actions",
+                    "none": "None"
+                }
+            },
+            "ui": {
+                "currencyUnit": "VND"
+            },
+            "dialogs": {
+                "create": {
+                    "title": "Create new invoice",
+                    "selectTemplateLabel": "Invoice template",
+                    "selectTemplatePlaceholder": "Select invoice template",
+                    "acceptanceLabel": "Acceptance report"
+                },
+                "payment": {
+                    "title": "Record payment",
+                    "method": "Payment method",
+                    "methods": {
+                        "bank": "Bank transfer",
+                        "cash": "Cash",
+                        "card": "Credit card"
+                    }
+                },
+                "actions": {
+                    "cancel": "Cancel",
+                    "save": "Save",
+                    "saveDraft": "Save draft",
+                    "record": "Record"
+                }
+            }
+        },
+        "quotations": {
+          "title": "Quotation Management",
+          "tabs": { "templates": "Quotation Templates", "quotes": "Quotations" },
+          "searchPlaceholder": "Search...",
+          "filters": { "status": "Status", "all": "All", "customer": "Customer" },
+          "status": { "draft": "Draft", "sent": "Sent", "approved": "Approved", "rejected": "Rejected" },
+          "actions": { "createQuotation": "Create new quotation", "exportExcel": "Export Excel" },
+          "columns": { "name": "Quotation name", "customer": "Customer", "deal": "Deal", "requirement": "Requirement", "createdAt": "Created at", "status": "Status", "actions": "Actions", "amount": "Amount", "effort": "Effort" },
+          "dialogs": { "createTitle": "Create new quotation" },
+          "tables": { "actions": "Actions" },
+          "pagination": { "rowsPerPage": "Rows per page:", "displayedRows": "{{from}}-{{to}} of {{count}}" },
+          "templateUpload": {
+            "title": "Upload quotation template",
+            "fields": {
+              "name": "Template name",
+              "description": "Description",
+              "type": "Template type"
+            },
+            "options": {
+              "type": { "customer": "For customer", "internal": "Internal" }
+            },
+            "file": {
+              "choose": "Choose template file (.docx, .doc, .pdf)",
+              "selected": "Selected:",
+              "accept": ".docx,.doc,.pdf"
+            },
+            "validations": {
+              "invalidFormat": "Only .doc, .docx or .pdf files are accepted",
+              "oversize": "File size must not exceed 5MB",
+              "missingName": "Please enter template name",
+              "missingFile": "Please choose a template file"
+            },
+            "extracted": {
+              "title": "Fields extracted from the template:",
+              "empty": "No extractable fields were found. Please check the file content.",
+              "needFile": "Please upload a template file for AI to analyze and suggest fields.",
+              "columns": {
+                "original": "Original text in file",
+                "placeholder": "Suggested placeholder",
+                "type": "Data type",
+                "description": "Description",
+                "actions": "Actions"
+              }
+            },
+            "fieldTypes": {
+              "text": "Text",
+              "number": "Number",
+              "date": "Date",
+              "phone": "Phone",
+              "email": "Email",
+              "taxcode": "Tax code"
+            },
+            "analyzing": "Analyzing template content...",
+            "guide": {
+              "title": "Instructions:",
+              "line1": "AI will analyze the template and suggest fields to fill in.",
+              "line2": "You can edit placeholder names and descriptions as needed.",
+              "line3": "When creating a quotation, the system will auto-fill information into corresponding positions."
+            },
+            "actions": {
+              "chooseFile": "Choose file",
+              "saveTemplate": "Save template",
+              "uploading": "Uploading..."
             }
           },
-          "tooltips": {
-            "view": "View details",
-            "edit": "Edit",
-            "default": "Default",
-            "setDefault": "Set as default",
-            "delete": "Delete"
+          "steps": {
+            "basicInfo": "Basic information",
+            "estimationMethod": "Choose estimation method",
+            "preview": "Quotation preview"
           },
-          "empty": "No data",
-          "pagination": {
-            "rowsPerPage": "Rows per page:",
-            "displayedRows": "{{from}}-{{to}} of {{count}}"
+          "fields": { "template": "Quotation template", "name": "Quotation name", "customer": "Customer", "deal": "Deal", "requirement": "Requirement", "status": "Status", "note": "Notes" },
+          "placeholders": {
+            "selectTemplate": "Select a quotation template",
+            "name": "Enter quotation name",
+            "note": "Enter notes (optional)..."
+          },
+          "validation": { "selectTemplate": "Please select a quotation template" },
+          "estimation": {
+            "chooseMethod": "Choose estimation method",
+            "fixed": {
+              "addRow": "Add row",
+              "addColumn": "Add column",
+              "newColumnPlaceholder": "New column name",
+              "deleteRow": "Delete row",
+              "total": "Total:",
+              "totalByPhase": "Total - By phase (man-days):"
+            }
+          },
+          "tnm": {
+            "selectRole": "Select role",
+            "addCustomRole": "Add custom role",
+            "roleName": "Role name",
+            "columns": {
+              "role": "Role",
+              "hoursOrMd": "Hours / man-days",
+              "unit": "Unit",
+              "unitPrice": "Unit price",
+              "amount": "Amount"
+            },
+            "units": {
+              "hour": "Hour",
+              "day": "Man-day"
+            },
+            "perHour": "hour",
+            "perMd": "man-day",
+            "hourHint": "Calculated per hour",
+            "mdHint": "1 man-day = 8 hours",
+            "total": "Total",
+            "totalHours": "Total hours: {{hours}}h",
+            "messages": {
+              "roleExists": "This role already exists"
+            }
+          },
+          "preview": {
+            "customerInfo": "Customer information",
+            "quotationDetails": "Quotation details",
+            "table": {
+              "no": "No.",
+              "item": "Item",
+              "description": "Description",
+              "days": "Days",
+              "unitPrice": "Unit price",
+              "amount": "Amount",
+              "total": "Total:"
+            },
+            "notes": "Notes",
+            "noNotes": "No notes"
+          },
+          "formActions": { "cancel": "Cancel", "back": "Back", "next": "Next", "save": "Save" },
+          "notifications": {
+            "emailSent": " Email has been sent successfully!",
+            "saveDraftSuccess": " Quotation saved as draft!",
+            "exportPdfSuccess": " Quotation PDF exported!"
           }
         }
-      }
     }
-    ,
-    "customers": {
-      "title": "Customer Management",
-      "addCustomer": "Add customer",
-      "searchPlaceholder": "Search by name, phone, email...",
-      "filters": {
-        "status": {
-          "all": "All",
-          "potential": "Potential",
-          "nurturing": "Nurturing",
-          "signed": "Signed"
-        }
-      },
-      "columns": {
-        "name": "Name",
-        "phone": "Phone",
-        "email": "Email",
-        "company": "Company",
-        "status": "Status",
-        "owner": "Owner",
-        "createdAt": "Created at",
-        "actions": "Actions"
-      },
-      "status": {
-        "potential": "Potential",
-        "nurturing": "Nurturing",
-        "signed": "Signed"
-      },
-      "dialogs": {
-        "createTitle": "Add new customer",
-        "editTitle": "Edit customer",
-        "deleteTitle": "Delete confirmation",
-        "deleteText": "Are you sure you want to delete customer {{name}}? This action cannot be undone."
-      },
-      "form": {
-        "name": "Customer name",
-        "phone": "Phone number",
-        "email": "Email",
-        "company": "Company",
-        "status": "Status",
-        "owner": "Owner",
-        "notes": "Notes",
-        "save": "Save",
-        "update": "Update"
-      },
-      "pagination": {
-        "rowsPerPage": "Rows per page:",
-        "displayedRows": "{{from}}-{{to}} of {{count}}"
-      }
-    }
-    ,
-    "acceptance": {
-      "title": "✅ Acceptance Management",
-      "overview": {
-        "totalTemplates": "Total templates",
-        "signedReports": "Signed reports",
-        "pending": "Pending",
-        "totalValue": "Total value"
-      },
-      "tabs": {
-        "templates": "Acceptance Templates",
-        "reports": "Acceptance Reports"
-      },
-      "searchPlaceholder": "Search...",
-      "filters": {
-        "status": "Status",
-        "all": "All"
-      },
-      "status": {
-        "active": "Active",
-        "inactive": "Inactive",
-        "draft": "Draft",
-        "pending": "Pending",
-        "signed": "Signed",
-        "rejected": "Rejected"
-      },
-      "actions": {
-        "createTemplate": "Create new template",
-        "createReport": "Create new acceptance",
-        "sign": "Sign"
-      },
-      "templates": {
-        "columns": {
-          "code": "Code",
-          "name": "Template name",
-          "description": "Description",
-          "type": "Type",
-          "usage": "Usage",
-          "status": "Status",
-          "actions": "Actions"
-        }
-      },
-      "types": {
-        "full": "Full",
-        "simple": "Simple",
-        "phase": "Phase"
-      },
-      "reports": {
-        "columns": {
-          "code": "Acceptance ID",
-          "name": "Acceptance name",
-          "contract": "Contract",
-          "appendix": "Appendix",
-          "acceptanceDate": "Acceptance date",
-          "value": "Value",
-          "status": "Status",
-          "actions": "Actions"
-        }
-      },
-      "none": "None",
-      "dialogs": {
-        "createTemplateTitle": "Create new acceptance template",
-        "createReportTitle": "Create new acceptance report",
-        "fields": {
-          "templateName": "Template name",
-          "reportName": "Acceptance name",
-          "code": "Code",
-          "description": "Description",
-          "type": "Type",
-          "linkedContract": "Linked contract",
-          "linkedAppendix": "Linked appendix"
-        }
-      },
-      "notifications": {
-        "createTemplateSuccess": "✅ Template created successfully!",
-        "createReportSuccess": "✅ Acceptance report created successfully!"
-      },
-      "sample": {
-      }
-    },
-    "types": {
-      "full": "Full",
-      "simple": "Simple",
-      "phase": "Phase"
-    },
-    "reports": {
-      "columns": {
-        "code": "Acceptance ID",
-        "name": "Acceptance name",
-        "contract": "Contract",
-        "appendix": "Appendix",
-        "acceptanceDate": "Acceptance date",
-        "value": "Value",
-        "status": "Status",
-        "actions": "Actions"
-      }
-    },
-    "none": "None",
-    "dialogs": {
-      "createTemplateTitle": "Create new acceptance template",
-      "createReportTitle": "Create new acceptance report",
-      "fields": {
-        "templateName": "Template name",
-        "reportName": "Acceptance name",
-        "code": "Code",
-        "description": "Description",
-        "type": "Type",
-        "linkedContract": "Linked contract",
-        "linkedAppendix": "Linked appendix"
-      }
-    },
-    "notifications": {
-      "createTemplateSuccess": "✅ Template created successfully!",
-      "createReportSuccess": "✅ Acceptance report created successfully!"
-    },
-    "sample": {
-      "contract1": "CRM development contract",
-      "contract2": "Consulting contract",
-      "appendix1": "Customer management module",
-      "appendix2": "Reporting module"
-    }
-  }
 }
