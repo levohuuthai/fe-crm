@@ -6,6 +6,7 @@ import UploadTemplate from './components/UploadTemplate';
 import CreateContract from './components/CreateContract';
 import ContractDetail from './components/ContractDetail';
 import { UploadTemplateFormValues } from './components/UploadTemplate/types';
+import { useTranslation } from 'react-i18next';
 
 // Import interface Template từ TemplateList/types.ts
 import { Template as TemplateType } from './components/TemplateList/types';
@@ -36,6 +37,7 @@ interface Contract {
 type ContractTab = 'templates' | 'contracts';
 
 const ContractManagement: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [currentTab, setCurrentTab] = useState<ContractTab>('templates');
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
   const [createContractOpen, setCreateContractOpen] = useState(false);
@@ -103,7 +105,7 @@ const ContractManagement: React.FC = () => {
         console.error('Error fetching templates:', error);
         setSnackbar({
           open: true,
-          message: 'Có lỗi xảy ra khi tải dữ liệu. Vui lòng thử lại.',
+          message: t('pages.contracts.notifications.loadError'),
           severity: 'error',
         });
       }
@@ -192,14 +194,14 @@ const ContractManagement: React.FC = () => {
       
       setSnackbar({
         open: true,
-        message: 'Tải lên template thành công!',
+        message: t('pages.contracts.notifications.uploadTemplateSuccess'),
         severity: 'success',
       });
     } catch (error) {
       console.error('Error uploading template:', error);
       setSnackbar({
         open: true,
-        message: 'Có lỗi xảy ra khi tải lên template. Vui lòng thử lại.',
+        message: t('pages.contracts.notifications.uploadTemplateError'),
         severity: 'error',
       });
       throw error; // Ném lỗi để component UploadTemplate xử lý
@@ -222,7 +224,7 @@ const ContractManagement: React.FC = () => {
     setSelectedContract(newContract);
     setSnackbar({
       open: true,
-      message: 'Tạo hợp đồng mới thành công!',
+      message: t('pages.contracts.notifications.createContractSuccess'),
       severity: 'success',
     });
   };
@@ -244,10 +246,10 @@ const ContractManagement: React.FC = () => {
     if (contractToDelete) {
       setContracts(prev => prev.filter(c => c.id !== contractToDelete));
       setDeleteConfirmOpen(false);
-      setSelectedContract(null);
+      setContractToDelete(null);
       setSnackbar({
         open: true,
-        message: 'Đã xóa hợp đồng thành công!',
+        message: t('pages.contracts.notifications.deleteContractSuccess'),
         severity: 'success',
       });
     }
@@ -257,7 +259,7 @@ const ContractManagement: React.FC = () => {
     // In a real app, this would navigate to an edit page or open an edit dialog
     setSnackbar({
       open: true,
-      message: 'Chức năng chỉnh sửa hợp đồng đang được phát triển',
+      message: t('pages.contracts.notifications.editInfo'),
       severity: 'info' as const,
     });
   };
@@ -266,7 +268,7 @@ const ContractManagement: React.FC = () => {
     <Box sx={{ p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" gutterBottom>
-          Quản lý Hợp đồng
+          {t('pages.contracts.title')}
         </Typography>
       </Box>
       
@@ -276,8 +278,8 @@ const ContractManagement: React.FC = () => {
           onChange={handleTabChange}
           aria-label="contract management tabs"
         >
-          <Tab label="Mẫu hợp đồng" value="templates" />
-          <Tab label="Hợp đồng" value="contracts" />
+          <Tab label={t('pages.contracts.tabs.templates')} value="templates" />
+          <Tab label={t('pages.contracts.tabs.contracts')} value="contracts" />
         </Tabs>
       </Box>
       
@@ -299,7 +301,7 @@ const ContractManagement: React.FC = () => {
         <Paper sx={{ p: 3 }}>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
             <Typography variant="h6" gutterBottom>
-              Danh sách Hợp đồng
+              {t('pages.contracts.list.title')}
             </Typography>
             <Button 
               variant="contained" 
@@ -307,27 +309,27 @@ const ContractManagement: React.FC = () => {
               startIcon={<Add />}
               onClick={() => setCreateContractOpen(true)}
             >
-              Tạo hợp đồng mới
+              {t('pages.contracts.list.buttonCreate')}
             </Button>
           </Box>
           
           {loading ? (
             <Typography color="textSecondary" paragraph>
-              Đang tải danh sách hợp đồng...
+              {t('pages.contracts.loading.contracts')}
             </Typography>
           ) : (
             <TableContainer>
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Mã HĐ</TableCell>
-                    <TableCell>Tên hợp đồng</TableCell>
-                    <TableCell>Loại HĐ</TableCell>
-                    <TableCell>Bên A</TableCell>
-                    <TableCell>Bên B</TableCell>
-                    <TableCell>Ngày tạo</TableCell>
-                    <TableCell>Trạng thái</TableCell>
-                    <TableCell>Hành động</TableCell>
+                    <TableCell>{t('pages.contracts.columns.code')}</TableCell>
+                    <TableCell>{t('pages.contracts.columns.name')}</TableCell>
+                    <TableCell>{t('pages.contracts.columns.type')}</TableCell>
+                    <TableCell>{t('pages.contracts.columns.partyA')}</TableCell>
+                    <TableCell>{t('pages.contracts.columns.partyB')}</TableCell>
+                    <TableCell>{t('pages.contracts.columns.createdAt')}</TableCell>
+                    <TableCell>{t('pages.contracts.columns.status')}</TableCell>
+                    <TableCell>{t('pages.contracts.columns.actions')}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -343,14 +345,14 @@ const ContractManagement: React.FC = () => {
                       <TableCell>{contract.templateName}</TableCell>
                       <TableCell>{contract.partyA}</TableCell>
                       <TableCell>{contract.partyB}</TableCell>
-                      <TableCell>{new Date(contract.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell>{new Date(contract.createdAt).toLocaleDateString(i18n.language)}</TableCell>
                       <TableCell>
                         <Chip 
                           label={
-                            contract.status === 'signed' ? 'Đã ký' :
-                            contract.status === 'pending' ? 'Chờ ký' :
-                            contract.status === 'draft' ? 'Nháp' :
-                            contract.status === 'expired' ? 'Hết hạn' : 'Đã hủy'
+                            contract.status === 'signed' ? t('pages.contracts.status.signed') :
+                            contract.status === 'pending' ? t('pages.contracts.status.pending') :
+                            contract.status === 'draft' ? t('pages.contracts.status.draft') :
+                            contract.status === 'expired' ? t('pages.contracts.status.expired') : t('pages.contracts.status.cancelled')
                           }
                           color={
                             contract.status === 'signed' ? 'success' :
@@ -363,17 +365,17 @@ const ContractManagement: React.FC = () => {
                       <TableCell>
                         <IconButton 
                           size="small" 
-                          title="Xem chi tiết"
+                          title={t('pages.contracts.tooltips.view')}
                           onClick={() => handleViewContract(contract)}
                         >
                           <Visibility fontSize="small" />
                         </IconButton>
-                        <IconButton size="small" title="Tải về">
+                        <IconButton size="small" title={t('pages.contracts.tooltips.download')}>
                           <FileDownload fontSize="small" />
                         </IconButton>
                         <IconButton 
                           size="small" 
-                          title="Xóa"
+                          title={t('pages.contracts.tooltips.delete')}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDeleteClick(contract.id);
@@ -418,7 +420,7 @@ const ContractManagement: React.FC = () => {
             <IconButton onClick={handleCloseDetail} sx={{ mr: 1 }}>
               <ArrowBack />
             </IconButton>
-            <span>Chi tiết hợp đồng</span>
+            <span>{t('pages.contracts.dialogs.detailTitle')}</span>
           </Box>
         </DialogTitle>
         <DialogContent dividers>
@@ -429,7 +431,7 @@ const ContractManagement: React.FC = () => {
                 contractData: {
                   tenBenA: selectedContract.partyA,
                   tenBenB: selectedContract.partyB,
-                  ngayKy: new Date(selectedContract.createdAt).toLocaleDateString('vi-VN'),
+                  ngayKy: new Date(selectedContract.createdAt).toLocaleDateString(i18n.language),
                   diaChiA: '123 Lê Lợi, Q.1, TP.HCM',
                   dienThoaiA: '0901234567',
                   maSoThueA: '0123456789',
@@ -451,18 +453,18 @@ const ContractManagement: React.FC = () => {
         open={deleteConfirmOpen}
         onClose={() => setDeleteConfirmOpen(false)}
       >
-        <DialogTitle>Xác nhận xóa</DialogTitle>
+        <DialogTitle>{t('pages.contracts.dialogs.deleteConfirmTitle')}</DialogTitle>
         <DialogContent>
-          <Typography>Bạn có chắc chắn muốn xóa hợp đồng này? Hành động này không thể hoàn tác.</Typography>
+          <Typography>{t('pages.contracts.dialogs.deleteConfirmText')}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteConfirmOpen(false)}>Hủy</Button>
+          <Button onClick={() => setDeleteConfirmOpen(false)}>{t('common.cancel')}</Button>
           <Button 
             onClick={handleConfirmDelete} 
             color="error"
             variant="contained"
           >
-            Xác nhận xóa
+            {t('common.delete')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -484,7 +486,7 @@ const ContractManagement: React.FC = () => {
       >
         <DialogTitle>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6">Tạo hợp đồng mới</Typography>
+            <Typography variant="h6">{t('pages.contracts.dialogs.createTitle')}</Typography>
             <IconButton onClick={() => setCreateContractOpen(false)}>
               <Close />
             </IconButton>

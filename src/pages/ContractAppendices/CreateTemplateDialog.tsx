@@ -16,6 +16,7 @@ import {
   Box
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { useTranslation } from 'react-i18next';
 
 interface AppendixTemplate {
   id: string;
@@ -36,6 +37,7 @@ interface CreateTemplateDialogProps {
 }
 
 const CreateTemplateDialog: React.FC<CreateTemplateDialogProps> = ({ open, onClose, onSave }) => {
+  const { t } = useTranslation();
   const [template, setTemplate] = useState<Partial<AppendixTemplate>>({
     name: '',
     description: '',
@@ -91,12 +93,12 @@ const CreateTemplateDialog: React.FC<CreateTemplateDialogProps> = ({ open, onClo
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle>Tạo mẫu phụ lục mới</DialogTitle>
+      <DialogTitle>{t('pages.appendices.dialogs.createTemplateTitle')}</DialogTitle>
       <DialogContent>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
           <TextField
             name="name"
-            label="Tên mẫu phụ lục"
+            label={t('pages.appendices.dialogs.fields.templateName')}
             value={template.name}
             onChange={handleChange}
             fullWidth
@@ -105,7 +107,7 @@ const CreateTemplateDialog: React.FC<CreateTemplateDialogProps> = ({ open, onClo
           
           <TextField
             name="description"
-            label="Mô tả"
+            label={t('pages.appendices.dialogs.fields.description')}
             value={template.description}
             onChange={handleChange}
             fullWidth
@@ -114,16 +116,16 @@ const CreateTemplateDialog: React.FC<CreateTemplateDialogProps> = ({ open, onClo
           />
           
           <FormControl fullWidth>
-            <InputLabel>Loại</InputLabel>
+            <InputLabel>{t('pages.appendices.dialogs.fields.type')}</InputLabel>
             <Select
               name="type"
               value={template.type}
               onChange={handleSelectChange}
-              label="Loại"
+              label={t('pages.appendices.dialogs.fields.type')}
             >
-              <MenuItem value="extension">Gia hạn (extension)</MenuItem>
-              <MenuItem value="value">Thay đổi giá trị (value)</MenuItem>
-              <MenuItem value="other">Khác</MenuItem>
+              <MenuItem value="extension">{t('pages.appendices.types.extension')}</MenuItem>
+              <MenuItem value="value">{t('pages.appendices.types.value')}</MenuItem>
+              <MenuItem value="other">{t('pages.appendices.types.other')}</MenuItem>
             </Select>
           </FormControl>
           
@@ -135,7 +137,7 @@ const CreateTemplateDialog: React.FC<CreateTemplateDialogProps> = ({ open, onClo
                 color="primary"
               />
             }
-            label="Hoạt động"
+            label={t('pages.appendices.status.active')}
           />
           
           <Box>
@@ -145,7 +147,7 @@ const CreateTemplateDialog: React.FC<CreateTemplateDialogProps> = ({ open, onClo
               startIcon={<CloudUploadIcon />}
               sx={{ mb: 1 }}
             >
-              Upload file mẫu (PDF, DOCX)
+              {t('pages.appendices.dialogs.actions.uploadTemplateFile')}
               <input
                 type="file"
                 hidden
@@ -155,21 +157,21 @@ const CreateTemplateDialog: React.FC<CreateTemplateDialogProps> = ({ open, onClo
             </Button>
             {selectedFile && (
               <Typography variant="body2" color="textSecondary">
-                File đã chọn: {selectedFile.name}
+                {t('pages.appendices.dialogs.selectedFile')}: {selectedFile.name}
               </Typography>
             )}
           </Box>
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Huỷ</Button>
+        <Button onClick={onClose}>{t('common.cancel')}</Button>
         <Button 
           onClick={handleSubmit} 
           variant="contained" 
           color="primary"
           disabled={!template.name}
         >
-          Lưu mẫu
+          {t('pages.appendices.dialogs.actions.saveTemplate')}
         </Button>
       </DialogActions>
     </Dialog>

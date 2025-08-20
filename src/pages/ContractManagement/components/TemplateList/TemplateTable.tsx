@@ -22,6 +22,7 @@ import {
   Delete as DeleteIcon,
 } from '@mui/icons-material';
 import { Template } from './types';
+import { useTranslation } from 'react-i18next';
 
 interface TemplateTableProps {
   templates: Template[];
@@ -48,6 +49,7 @@ const TemplateTable: React.FC<TemplateTableProps> = ({
   onSetDefault,
   onDelete,
 }) => {
+  const { t, i18n } = useTranslation();
   const handleChangePage = (event: unknown, newPage: number) => {
     onPageChange(newPage);
   };
@@ -62,13 +64,13 @@ const TemplateTable: React.FC<TemplateTableProps> = ({
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Tên template</TableCell>
-              <TableCell align="center">Loại</TableCell>
-              <TableCell align="center">Trạng thái</TableCell>
-              <TableCell align="center">Số trường</TableCell>
-              <TableCell align="center">Ngày tạo</TableCell>
-              <TableCell align="center">Người tạo</TableCell>
-              <TableCell align="center">Thao tác</TableCell>
+              <TableCell>{t('pages.contracts.templateList.table.columns.name')}</TableCell>
+              <TableCell align="center">{t('pages.contracts.templateList.table.columns.type')}</TableCell>
+              <TableCell align="center">{t('pages.contracts.templateList.table.columns.status')}</TableCell>
+              <TableCell align="center">{t('pages.contracts.templateList.table.columns.fields')}</TableCell>
+              <TableCell align="center">{t('pages.contracts.templateList.table.columns.createdAt')}</TableCell>
+              <TableCell align="center">{t('pages.contracts.templateList.table.columns.createdBy')}</TableCell>
+              <TableCell align="center">{t('pages.contracts.templateList.table.columns.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -88,7 +90,7 @@ const TemplateTable: React.FC<TemplateTableProps> = ({
                   </TableCell>
                   <TableCell align="center">
                     <Chip
-                      label={template.type === 'internal' ? 'Nội bộ' : 'Khách hàng'}
+                      label={template.type === 'internal' ? t('pages.contracts.templateList.table.chips.type.internal') : t('pages.contracts.templateList.table.chips.type.customer')}
                       color={template.type === 'internal' ? 'primary' : 'default'}
                       size="small"
                       variant="outlined"
@@ -96,29 +98,29 @@ const TemplateTable: React.FC<TemplateTableProps> = ({
                   </TableCell>
                   <TableCell align="center">
                     <Chip
-                      label={template.status === 'active' ? 'Hoạt động' : 'Ngừng'}
+                      label={template.status === 'active' ? t('pages.contracts.templateList.table.chips.status.active') : t('pages.contracts.templateList.table.chips.status.inactive')}
                       color={template.status === 'active' ? 'success' : 'default'}
                       size="small"
                     />
                   </TableCell>
                   <TableCell align="center">{template.placeholderCount}</TableCell>
                   <TableCell align="center">
-                    {new Date(template.createdAt).toLocaleDateString()}
+                    {new Date(template.createdAt).toLocaleDateString(i18n.language)}
                   </TableCell>
                   <TableCell align="center">{template.createdBy}</TableCell>
                   <TableCell align="center">
                     <Box display="flex" justifyContent="center">
-                      <Tooltip title="Xem chi tiết">
+                      <Tooltip title={t('pages.contracts.templateList.table.tooltips.view')}>
                         <IconButton size="small" onClick={() => onView(template.id)}>
                           <ViewIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Chỉnh sửa">
+                      <Tooltip title={t('pages.contracts.templateList.table.tooltips.edit')}>
                         <IconButton size="small" onClick={() => onEdit(template.id)}>
                           <EditIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title={template.isDefault ? 'Mặc định' : 'Đặt làm mặc định'}>
+                      <Tooltip title={template.isDefault ? t('pages.contracts.templateList.table.tooltips.default') : t('pages.contracts.templateList.table.tooltips.setDefault')}>
                         <span>
                           <IconButton
                             size="small"
@@ -134,7 +136,7 @@ const TemplateTable: React.FC<TemplateTableProps> = ({
                           </IconButton>
                         </span>
                       </Tooltip>
-                      <Tooltip title="Xóa">
+                      <Tooltip title={t('pages.contracts.templateList.table.tooltips.delete')}>
                         <IconButton
                           size="small"
                           onClick={() => onDelete(template.id)}
@@ -151,7 +153,7 @@ const TemplateTable: React.FC<TemplateTableProps> = ({
               <TableRow>
                 <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
                   <Typography variant="body2" color="textSecondary">
-                    Không có dữ liệu
+                    {t('pages.contracts.templateList.table.empty')}
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -167,9 +169,9 @@ const TemplateTable: React.FC<TemplateTableProps> = ({
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        labelRowsPerPage="Số dòng mỗi trang:"
+        labelRowsPerPage={t('pages.contracts.templateList.table.pagination.rowsPerPage')}
         labelDisplayedRows={({ from, to, count }) =>
-          `${from}-${to} trong ${count}`
+          t('pages.contracts.templateList.table.pagination.displayedRows', { from, to, count })
         }
       />
     </Paper>

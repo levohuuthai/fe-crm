@@ -1,21 +1,9 @@
-import React, { useState } from 'react';
-import {
-  Box,
-  Typography,
-  Container,
-  useTheme,
-  alpha,
-  Fade
-} from '@mui/material';
+import React, { useState, useMemo } from 'react';
+import { Box, Typography, useTheme, alpha, Fade } from '@mui/material';
 import SmartTable, { SmartTableColumn, SmartTableRow } from '../../components/SmartTable';
 import FilterBar, { FilterConfig, FilterOwner, FilterStatus, SavedView, FilterQuery } from '../../components/FilterBar';
-import {
-  Person as PersonIcon,
-  CalendarToday as CalendarIcon,
-  Timeline as ActivityIcon,
-  AttachMoney as MoneyIcon,
-  Label as StatusIcon
-} from '@mui/icons-material';
+import { Person as PersonIcon, CalendarToday as CalendarIcon, Timeline as ActivityIcon, AttachMoney as MoneyIcon, Label as StatusIcon } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 // Mock users data (same as contacts)
 const mockUsers = [
@@ -44,105 +32,7 @@ const dealPriorityOptions = [
   { value: 'urgent', label: 'Urgent', color: '#e91e63' }
 ];
 
-// Table columns configuration for deals
-const dealsColumns: SmartTableColumn[] = [
-  {
-    id: 'dealName',
-    label: 'Tên Deal',
-    type: 'text',
-    width: 250,
-    sortable: true,
-    editable: true,
-    required: true
-  },
-  {
-    id: 'customer',
-    label: 'Khách hàng',
-    type: 'text',
-    width: 200,
-    sortable: true,
-    editable: true,
-    required: true
-  },
-  {
-    id: 'amount',
-    label: 'Giá trị',
-    type: 'currency',
-    width: 150,
-    sortable: true,
-    editable: true,
-    required: true,
-    format: (value: number) => {
-      if (value >= 1000000000) return `${(value / 1000000000).toFixed(1)}B₫`;
-      if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M₫`;
-      if (value >= 1000) return `${(value / 1000).toFixed(1)}K₫`;
-      return `${value}₫`;
-    }
-  },
-  {
-    id: 'stage',
-    label: 'Giai đoạn',
-    type: 'select',
-    width: 150,
-    sortable: true,
-    editable: true,
-    options: dealStageOptions
-  },
-  {
-    id: 'priority',
-    label: 'Độ ưu tiên',
-    type: 'select',
-    width: 120,
-    sortable: true,
-    editable: true,
-    options: dealPriorityOptions
-  },
-  {
-    id: 'owner',
-    label: 'Người phụ trách',
-    type: 'userSelect',
-    width: 180,
-    sortable: true,
-    editable: true
-  },
-  {
-    id: 'probability',
-    label: 'Xác suất (%)',
-    type: 'number',
-    width: 120,
-    sortable: true,
-    editable: true,
-    validate: (value: number) => {
-      const num = Number(value);
-      return num >= 0 && num <= 100 ? null : 'Xác suất phải từ 0-100%';
-    },
-    format: (value: number) => `${value}%`
-  },
-  {
-    id: 'expectedCloseDate',
-    label: 'Ngày dự kiến đóng',
-    type: 'date',
-    width: 150,
-    sortable: true,
-    editable: true
-  },
-  {
-    id: 'lastActivity',
-    label: 'Hoạt động cuối',
-    type: 'date',
-    width: 140,
-    sortable: true,
-    editable: true
-  },
-  {
-    id: 'actions',
-    label: 'Thao tác',
-    type: 'actions',
-    width: 100,
-    sortable: false,
-    editable: false
-  }
-];
+// Columns will be defined via translatedColumns inside the component
 
 // Mock deals data
 const mockDealsData: SmartTableRow[] = [
@@ -270,6 +160,105 @@ const mockDealsData: SmartTableRow[] = [
 
 const DealsPage: React.FC = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
+  const translatedColumns: SmartTableColumn[] = useMemo(() => ([
+    {
+      id: 'dealName',
+      label: t('pages.deals.columns.dealName'),
+      type: 'text',
+      width: 250,
+      sortable: true,
+      editable: true,
+      required: true
+    },
+    {
+      id: 'customer',
+      label: t('pages.deals.columns.customer'),
+      type: 'text',
+      width: 200,
+      sortable: true,
+      editable: true,
+      required: true
+    },
+    {
+      id: 'amount',
+      label: t('pages.deals.columns.amount'),
+      type: 'currency',
+      width: 150,
+      sortable: true,
+      editable: true,
+      required: true,
+      format: (value: number) => {
+        if (value >= 1000000000) return `${(value / 1000000000).toFixed(1)}B₫`;
+        if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M₫`;
+        if (value >= 1000) return `${(value / 1000).toFixed(1)}K₫`;
+        return `${value}₫`;
+      }
+    },
+    {
+      id: 'stage',
+      label: t('pages.deals.columns.stage'),
+      type: 'select',
+      width: 150,
+      sortable: true,
+      editable: true,
+      options: dealStageOptions
+    },
+    {
+      id: 'priority',
+      label: t('pages.deals.columns.priority'),
+      type: 'select',
+      width: 120,
+      sortable: true,
+      editable: true,
+      options: dealPriorityOptions
+    },
+    {
+      id: 'owner',
+      label: t('pages.deals.columns.owner'),
+      type: 'userSelect',
+      width: 180,
+      sortable: true,
+      editable: true
+    },
+    {
+      id: 'probability',
+      label: t('pages.deals.columns.probability'),
+      type: 'number',
+      width: 120,
+      sortable: true,
+      editable: true,
+      validate: (value: number) => {
+        const num = Number(value);
+        return num >= 0 && num <= 100 ? null : t('pages.deals.validation.probabilityRange');
+      },
+      format: (value: number) => `${value}%`
+    },
+    {
+      id: 'expectedCloseDate',
+      label: t('pages.deals.columns.expectedCloseDate'),
+      type: 'date',
+      width: 150,
+      sortable: true,
+      editable: true
+    },
+    {
+      id: 'lastActivity',
+      label: t('pages.deals.columns.lastActivity'),
+      type: 'date',
+      width: 140,
+      sortable: true,
+      editable: true
+    },
+    {
+      id: 'actions',
+      label: t('pages.deals.columns.actions'),
+      type: 'actions',
+      width: 100,
+      sortable: false,
+      editable: false
+    }
+  ]), [t]);
   const [dealsData, setDealsData] = useState<SmartTableRow[]>(mockDealsData);
   const [filteredData, setFilteredData] = useState<SmartTableRow[]>(mockDealsData);
   const [loading, setLoading] = useState(false);
@@ -280,7 +269,7 @@ const DealsPage: React.FC = () => {
   const filterConfigs: FilterConfig[] = [
     {
       id: 'owner',
-      label: 'Contact owner',
+      label: t('pages.deals.filters.owner'),
       type: 'owner',
       icon: <PersonIcon fontSize="small" />,
       enabled: true,
@@ -288,7 +277,7 @@ const DealsPage: React.FC = () => {
     },
     {
       id: 'expectedCloseDate',
-      label: 'Ngày dự kiến đóng',
+      label: t('pages.deals.filters.expectedCloseDate'),
       type: 'date',
       icon: <CalendarIcon fontSize="small" />,
       enabled: true,
@@ -296,7 +285,7 @@ const DealsPage: React.FC = () => {
     },
     {
       id: 'lastActivity',
-      label: 'Hoạt động cuối',
+      label: t('pages.deals.filters.lastActivity'),
       type: 'date',
       icon: <ActivityIcon fontSize="small" />,
       enabled: true,
@@ -304,7 +293,7 @@ const DealsPage: React.FC = () => {
     },
     {
       id: 'amount',
-      label: 'Amount',
+      label: t('pages.deals.filters.amount'),
       type: 'amount',
       icon: <MoneyIcon fontSize="small" />,
       enabled: true,
@@ -312,7 +301,7 @@ const DealsPage: React.FC = () => {
     },
     {
       id: 'stage',
-      label: 'Stage',
+      label: t('pages.deals.filters.stage'),
       type: 'status',
       icon: <StatusIcon fontSize="small" />,
       enabled: true,
@@ -322,9 +311,9 @@ const DealsPage: React.FC = () => {
 
   // Saved views for Deals
   const savedViews: SavedView[] = [
-    { id: 'all', label: 'All', count: mockDealsData.length },
-    { id: 'my', label: 'My deals', count: 6 },
-    { id: 'unassigned', label: 'Unassigned', count: 2 }
+    { id: 'all', label: t('pages.deals.views.all'), count: mockDealsData.length },
+    { id: 'my', label: t('pages.deals.views.my'), count: 6 },
+    { id: 'unassigned', label: t('pages.deals.views.unassigned'), count: 2 }
   ];
 
   // Filter owners (using existing mockUsers)
@@ -489,14 +478,14 @@ const DealsPage: React.FC = () => {
               mb: 1
             }}
           >
-            Quản lý Cơ hội
+            {t('pages.deals.title')}
           </Typography>
           <Typography 
             variant="body1" 
             color="text.secondary"
             sx={{ mb: 3 }}
           >
-            Theo dõi và quản lý các cơ hội bán hàng từ prospecting đến closing
+            {t('pages.deals.subtitle')}
           </Typography>
 
           {/* Summary Cards */}
@@ -511,7 +500,7 @@ const DealsPage: React.FC = () => {
               backgroundColor: alpha(theme.palette.primary.main, 0.1),
               border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`
             }}>
-              <Typography variant="body2" color="text.secondary">Tổng giá trị</Typography>
+              <Typography variant="body2" color="text.secondary">{t('pages.deals.stats.totalValue')}</Typography>
               <Typography variant="h6" fontWeight="bold" color="primary">
                 {formatCurrency(totalValue)}
               </Typography>
@@ -523,7 +512,7 @@ const DealsPage: React.FC = () => {
               backgroundColor: alpha(theme.palette.success.main, 0.1),
               border: `1px solid ${alpha(theme.palette.success.main, 0.2)}`
             }}>
-              <Typography variant="body2" color="text.secondary">Đã thắng</Typography>
+              <Typography variant="body2" color="text.secondary">{t('pages.deals.stats.won')}</Typography>
               <Typography variant="h6" fontWeight="bold" color="success.main">
                 {formatCurrency(wonValue)}
               </Typography>
@@ -535,9 +524,9 @@ const DealsPage: React.FC = () => {
               backgroundColor: alpha(theme.palette.warning.main, 0.1),
               border: `1px solid ${alpha(theme.palette.warning.main, 0.2)}`
             }}>
-              <Typography variant="body2" color="text.secondary">Đang hoạt động</Typography>
+              <Typography variant="body2" color="text.secondary">{t('pages.deals.stats.active')}</Typography>
               <Typography variant="h6" fontWeight="bold" color="warning.main">
-                {activeDeals.length} deals
+                {t('pages.deals.stats.activeDeals', { count: activeDeals.length })}
               </Typography>
             </Box>
             
@@ -547,7 +536,7 @@ const DealsPage: React.FC = () => {
               backgroundColor: alpha(theme.palette.info.main, 0.1),
               border: `1px solid ${alpha(theme.palette.info.main, 0.2)}`
             }}>
-              <Typography variant="body2" color="text.secondary">Tỷ lệ thắng</Typography>
+              <Typography variant="body2" color="text.secondary">{t('pages.deals.stats.winRate')}</Typography>
               <Typography variant="h6" fontWeight="bold" color="info.main">
                 {dealsData.length > 0 ? Math.round((wonDeals.length / dealsData.length) * 100) : 0}%
               </Typography>
@@ -576,7 +565,7 @@ const DealsPage: React.FC = () => {
           flexDirection: 'column'
         }}>
           <SmartTable
-            columns={dealsColumns}
+            columns={translatedColumns}
             data={filteredData}
             loading={loading}
             searchable={true}
@@ -589,7 +578,7 @@ const DealsPage: React.FC = () => {
             onRowDoubleClick={handleRowDoubleClick}
             onBulkAction={handleBulkAction}
             users={mockUsers}
-            emptyMessage="Chưa có cơ hội nào"
+            emptyMessage={t('pages.deals.empty')}
             zebra={true}
           />
         </Box>

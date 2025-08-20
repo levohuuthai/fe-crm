@@ -1,0 +1,635 @@
+{
+  "app": {
+    "title": "CRMアプリ",
+    "welcome": "ようこそ"
+  },
+  "menu": {
+    "dashboard": "ダッシュボード",
+    "dashboardFull": "ダッシュボード",
+    "contacts": "連絡先",
+    "contactsFull": "連絡先管理",
+    "deals": "商談",
+    "dealsFull": "営業機会",
+    "requirements": "要件",
+    "requirementsFull": "要件",
+    "quotations": "見積",
+    "quotationsFull": "見積 / 試算",
+    "contracts": "契約",
+    "contractsFull": "契約",
+    "appendices": "付属書",
+    "appendicesFull": "契約付属書",
+    "acceptance": "検収",
+    "acceptanceFull": "検収書",
+    "invoices": "請求書",
+    "invoicesFull": "請求書"
+  },
+  "tooltips": {
+    "notifications": "通知",
+    "aiAssistant": "AIアシスタント",
+    "account": "アカウント",
+    "language": "言語"
+  },
+  "common": {
+    "contacts": "連絡先",
+    "deals": "商談",
+    "viewAllContacts": "すべての連絡先を表示...",
+    "viewAllDeals": "すべての商談を表示...",
+    "aiAssistantMinimized": "AIアシスタント - なんでも質問してください！",
+    "viewDetails": "詳細を見る",
+    "edit": "編集",
+    "delete": "削除",
+    "download": "ダウンロード",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "back": "戻る",
+    "next": "次へ"
+  },
+  "pages": {
+    "dashboard": {
+      "welcomeBack": "お帰りなさい、管理者",
+      "smartDashboard": "スマートダッシュボード",
+      "searchPlaceholder": "AIにビジネスデータ、市場、顧客について質問...",
+      "askAssistant": "CRMアシスタントに質問: \"{{query}}\""
+    },
+    "contacts": {
+      "title": "連絡先管理",
+      "subtitle": "見込み客情報を管理し、コンバージョンの進捗を追跡",
+      "columns": {
+        "name": "氏名",
+        "email": "メール",
+        "phone": "電話",
+        "company": "会社",
+        "position": "役職",
+        "owner": "担当者",
+        "leadStatus": "リードの状態",
+        "lastContact": "最終連絡",
+        "value": "見込み価値",
+        "actions": "操作"
+      },
+      "validation": {
+        "emailInvalid": "メールアドレスが正しくありません",
+        "phoneInvalid": "電話番号が正しくありません"
+      },
+      "filters": {
+        "owner": "担当者",
+        "lastContact": "最終連絡",
+        "leadStatus": "リードの状態"
+      },
+      "views": {
+        "all": "すべて",
+        "my": "自分の連絡先",
+        "unassigned": "未割り当て"
+      },
+      "empty": "連絡先がまだありません",
+      "notifications": {
+        "createSuccess": "✅ 連絡先を作成しました！"
+      },
+      "form": {
+        "createTitle": "新規連絡先の作成",
+        "fields": {
+          "firstName": "名",
+          "lastName": "姓",
+          "email": "メール",
+          "phone": "電話番号",
+          "jobTitle": "役職",
+          "leadStatus": "リードの状態"
+        },
+        "options": {
+          "leadStatus": {
+            "new": "新規",
+            "contacted": "連絡済み",
+            "qualified": "有望",
+            "lost": "失注"
+          }
+        },
+        "actions": {
+          "cancel": "キャンセル",
+          "save": "保存"
+        }
+      },
+      "note": {
+        "title": "メモを追加",
+        "fields": {
+          "note": "メモ"
+        },
+        "actions": {
+          "attachFile": "ファイルを添付",
+          "cancel": "キャンセル",
+          "save": "保存"
+        }
+      },
+      "emailWindow": {
+        "title": "新規メール",
+        "tabs": {
+          "templates": "テンプレート",
+          "sequences": "シーケンス",
+          "documents": "ドキュメント",
+          "meetings": "ミーティング",
+          "quotes": "見積"
+        },
+        "fields": {
+          "to": "宛先",
+          "from": "差出人",
+          "cc": "Cc",
+          "bcc": "Bcc",
+          "subject": "件名"
+        },
+        "placeholders": {
+          "to": "recipient@example.com",
+          "subject": "メールの件名",
+          "body": "メッセージを入力してください..."
+        },
+        "toolbar": {
+          "more": "その他",
+          "insert": "挿入"
+        },
+        "prompts": {
+          "enterUrl": "URLを入力:"
+        },
+        "associated": "{{count}} 件のレコードに関連付け",
+        "actions": {
+          "send": "送信",
+          "sendLater": "後で送信",
+          "sendNow": "今すぐ送信"
+        },
+        "messages": {
+          "missingRecipient": "宛先メールアドレスを入力してください",
+          "openedClient": "既定のメールクライアントで開きました！"
+        },
+        "sendLater": {
+          "title": "後で送信",
+          "options": {
+            "in1hour": "1時間後",
+            "in2hours": "2時間後",
+            "tomorrowMorning": "明日の朝 (8時)",
+            "tomorrowAfternoon": "明日の午後 (13時)",
+            "custom": "カスタム"
+          },
+          "actions": {
+            "schedule": "スケジュール",
+            "cancel": "キャンセル"
+          }
+        }
+      }
+    },
+    "deals": {
+      "title": "商談管理",
+      "subtitle": "見込みからクロージングまで営業機会を追跡・管理",
+      "columns": {
+        "dealName": "商談名",
+        "customer": "顧客",
+        "amount": "金額",
+        "stage": "ステージ",
+        "priority": "優先度",
+        "owner": "担当者",
+        "probability": "確度 (%)",
+        "expectedCloseDate": "予定締結日",
+        "lastActivity": "最終アクティビティ",
+        "actions": "操作"
+      },
+      "validation": {
+        "probabilityRange": "確度は0〜100%の範囲で指定してください"
+      },
+      "filters": {
+        "owner": "商談担当者",
+        "expectedCloseDate": "予定締結日",
+        "lastActivity": "最終アクティビティ",
+        "amount": "金額",
+        "stage": "ステージ"
+      },
+      "views": {
+        "all": "すべて",
+        "my": "自分の商談",
+        "unassigned": "未割り当て"
+      },
+      "stats": {
+        "totalValue": "合計金額",
+        "won": "受注",
+        "active": "進行中",
+        "winRate": "受注率",
+        "activeDeals": "{{count}} 件"
+      },
+      "empty": "商談がまだありません"
+    }
+    ,
+    "assistant": {
+      "title": "CRMスマートアシスタント",
+      "greeting": "こんにちは！CRMのバーチャルアシスタントです。どのようにお手伝いできますか？",
+      "you": "あなた",
+      "assistant": "AIアシスタント",
+      "youCanAsk": "次のように質問できます:",
+      "inputPlaceholder": "メッセージを入力...",
+      "floatingInputPlaceholder": "AIに何でも質問...",
+      "headerSubtitle": "スマートレポート • いつでもサポート",
+      "buttons": {
+        "open": "開く",
+        "task": "タスク"
+      },
+      "resultsFor": "\"{{query}}\" の結果",
+      "topContacts": "注目の連絡先",
+      "openDeals": "進行中の商談",
+      "nextSuggestions": "次のおすすめ",
+      "actions": {
+        "createContact": "連絡先を作成",
+        "createDeal": "商談を作成",
+        "sendDraftEmail": "下書きメールを送信"
+      },
+      "mock": {
+        "disclaimer": "AI生成のデモコンテンツです。データはプレビュー用のモックです。"
+      },
+      "quickActions": {
+        "title": "クイックアクション",
+        "trendingLabel": "トレンド",
+        "insightsLabel": "インサイト",
+        "predictionsLabel": "予測",
+        "queries": {
+          "trending": "現在の市場トレンドを表示",
+          "insights": "ビジネスインサイトを分析",
+          "predictions": "有望な商談を予測"
+        }
+      },
+      "pageSuggestions": {
+        "title": "このページのおすすめ",
+        "base": {
+          "marketTrends": "現在の市場トレンドを分析",
+          "predictTopDeal": "最も受注見込みの高い商談を予測",
+          "findProspects": "見込み客を探す",
+          "createOverviewReport": "ビジネス概要レポートを作成"
+        },
+        "dashboard": {
+          "kpiThisMonth": "今月のKPIを表示",
+          "revenueTrends": "売上トレンドを分析",
+          "top5Deals": "有望な商談トップ5"
+        },
+        "deals": {
+          "predictSuccessRate": "商談の成功確度を予測",
+          "analyzePipeline": "現在のパイプラインを分析",
+          "suggestPendingActions": "保留中の商談のアクションを提案"
+        },
+        "customers": {
+          "analyzeBehavior": "顧客行動を分析",
+          "findCrossSell": "クロスセル/アップセルの機会を探す",
+          "predictChurn": "解約予測を行う"
+        }
+      },
+      "recentResults": {
+        "title": "最近の結果",
+        "confidence": "信頼度"
+      },
+      "suggestions": {
+        "dealsNotClosedThisMonth": "今月未クローズの商談",
+        "totalClosedValue": "今月の受注合計金額",
+        "createReminderCompanyB": "会社Bのリマインダーを作成",
+        "writeThankYouEmail": "お礼メールを作成"
+      },
+      "responses": {
+        "dealsNotClosedThisMonth": "7月に未クローズの商談一覧です:\n```\n| 商談名   | 顧客       | 金額  |\n|----------|------------|-------|\n| Deal 1   | 会社A      | 100M  |\n| Deal 2   | 会社B      | 80M   |\n```",
+        "totalClosedValue": "今月の受注合計金額は 377,043,143 ₫ です",
+        "createReminderCompanyB": "会社Bの商談向けに明日のリマインダーを作成しました。メモを追加しますか？",
+        "writeThankYouEmail": "お客様各位\n\nこの度は弊社サービスをご利用いただき、誠にありがとうございます。今後ともよろしくお願いいたします..."
+      },
+      "noUnderstand": "すみません、うまく理解できませんでした。もう一度お試しください。"
+    }
+    ,
+    "appendices": {
+      "title": "契約付属書の管理",
+      "tabs": {
+        "templates": "付属書テンプレート",
+        "appendices": "契約付属書"
+      },
+      "actions": {
+        "createTemplate": "テンプレートを新規作成",
+        "createAppendix": "付属書を新規作成"
+      },
+      "loading": {
+        "templates": "付属書テンプレートを読み込み中...",
+        "appendices": "契約付属書を読み込み中..."
+      },
+      "templates": {
+        "title": "付属書テンプレート一覧",
+        "columns": {
+          "code": "コード",
+          "name": "テンプレート名",
+          "description": "説明",
+          "type": "タイプ",
+          "createdAt": "作成日",
+          "status": "ステータス",
+          "actions": "操作"
+        }
+      },
+      "appendices": {
+        "title": "契約付属書一覧",
+        "columns": {
+          "code": "付属書ID",
+          "name": "付属書名",
+          "contractId": "契約ID",
+          "contractName": "契約名",
+          "createdAt": "作成日",
+          "status": "ステータス",
+          "actions": "操作"
+        }
+      },
+      "status": {
+        "active": "有効",
+        "inactive": "無効",
+        "draft": "下書き",
+        "pending": "保留中",
+        "signed": "署名済み",
+        "cancelled": "キャンセル"
+      },
+      "types": {
+        "extension": "期間延長",
+        "value": "金額変更",
+        "other": "その他"
+      },
+      "defaults": {
+        "extensionAppendixName": "期間延長の付属書",
+        "valueAppendixName": "金額変更の付属書"
+      },
+      "dialogs": {
+        "createTemplateTitle": "付属書テンプレートの新規作成",
+        "createAppendixTitle": "契約付属書の新規作成",
+        "fields": {
+          "templateName": "テンプレート名",
+          "description": "説明",
+          "type": "タイプ",
+          "selectTemplate": "テンプレートを選択",
+          "appendixName": "付属書名",
+          "linkedContract": "関連する契約",
+          "createdAt": "作成日",
+          "appendixContent": "付属書の内容",
+          "internalNotes": "内部メモ（任意）"
+        },
+        "actions": {
+          "uploadTemplateFile": "テンプレートファイルをアップロード (PDF, DOCX)",
+          "uploadAttachment": "添付ファイルをアップロード",
+          "saveTemplate": "テンプレートを保存",
+          "saveDraft": "下書き保存",
+          "submit": "承認申請",
+          "signAppendix": "付属書に署名"
+        },
+        "steps": {
+          "chooseMethod": "作成方法の選択",
+          "fillInformation": "情報の入力"
+        },
+        "chooseMethodTitle": "付属書の作成方法を選択してください:",
+        "methods": {
+          "useTemplate": "テンプレートを使用",
+          "manual": "手動で作成"
+        },
+        "noTemplatesWarning": "付属書テンプレートがまだありません。先にテンプレートを作成してください。",
+        "selectedFile": "選択したファイル",
+        "placeholders": {
+          "appendixContent": "付属書の内容を入力..."
+        },
+        "defaults": {
+          "contentFromTemplate": "付属書テンプレートからの内容..."
+        }
+      },
+      "notifications": {
+        "createTemplateSuccess": "✅ 付属書テンプレートを作成しました！",
+        "saveDraftSuccess": "✅ 付属書を下書き保存しました！",
+        "submitSuccess": "✅ 付属書を承認申請しました！",
+        "signSuccess": "✅ 付属書に署名しました！",
+        "loadError": "データの読み込み中にエラーが発生しました。もう一度お試しください。"
+      },
+      "sample": {
+        "contract1": "CRM開発契約",
+        "contract2": "コンサルティング契約",
+        "contract3": "保守契約"
+      }
+    }
+    ,
+    "contracts": {
+      "title": "契約管理",
+      "tabs": {
+        "templates": "契約テンプレート",
+        "contracts": "契約"
+      },
+      "actions": {
+        "createContract": "新規契約の作成"
+      },
+      "loading": {
+        "contracts": "契約を読み込み中..."
+      },
+      "list": {
+        "title": "契約一覧",
+        "buttonCreate": "新規契約の作成",
+        "loading": "契約を読み込み中..."
+      },
+      "columns": {
+        "code": "契約ID",
+        "name": "契約名",
+        "type": "テンプレート",
+        "partyA": "甲",
+        "partyB": "乙",
+        "createdAt": "作成日",
+        "status": "ステータス",
+        "actions": "操作"
+      },
+      "status": {
+        "draft": "下書き",
+        "pending": "保留中",
+        "signed": "署名済み",
+        "expired": "期限切れ",
+        "cancelled": "キャンセル"
+      },
+      "tooltips": {
+        "view": "詳細を見る",
+        "download": "ダウンロード",
+        "delete": "削除"
+      },
+      "dialogs": {
+        "detailTitle": "契約の詳細",
+        "deleteConfirmTitle": "削除の確認",
+        "deleteConfirmText": "この契約を削除してもよろしいですか？この操作は元に戻せません。",
+        "createTitle": "新規契約の作成"
+      },
+      "notifications": {
+        "uploadTemplateSuccess": "✅ テンプレートをアップロードしました！",
+        "uploadTemplateError": "テンプレートのアップロード中にエラーが発生しました。もう一度お試しください。",
+        "loadError": "データの読み込み中にエラーが発生しました。もう一度お試しください。",
+        "createContractSuccess": "✅ 新しい契約を作成しました！",
+        "deleteContractSuccess": "✅ 契約を削除しました！",
+        "editInfo": "契約の編集機能は開発中です"
+      },
+      "templateList": {
+        "title": "契約テンプレート一覧",
+        "subtitle": "契約テンプレートの管理・作成",
+        "loading": "データを読み込み中...",
+        "confirmDelete": "このテンプレートを削除してもよろしいですか？",
+        "alerts": {
+          "saveAiSuccess": "✅ テンプレートを保存しました！",
+          "saveAiError": "テンプレートの保存中にエラーが発生しました！"
+        },
+        "table": {
+          "columns": {
+            "name": "テンプレート名",
+            "type": "タイプ",
+            "status": "ステータス",
+            "fields": "項目数",
+            "createdAt": "作成日",
+            "createdBy": "作成者",
+            "actions": "操作"
+          },
+          "chips": {
+            "type": {
+              "internal": "社内",
+              "customer": "顧客"
+            },
+            "status": {
+              "active": "有効",
+              "inactive": "無効"
+            }
+          },
+          "tooltips": {
+            "view": "詳細を見る",
+            "edit": "編集",
+            "default": "デフォルト",
+            "setDefault": "デフォルトに設定",
+            "delete": "削除"
+          },
+          "empty": "データがありません",
+          "pagination": {
+            "rowsPerPage": "1ページあたりの行数:",
+            "displayedRows": "{{from}}-{{to}} / {{count}}"
+          }
+        }
+      }
+    }
+    ,
+    "customers": {
+      "title": "顧客管理",
+      "addCustomer": "顧客を追加",
+      "searchPlaceholder": "名前、電話、メールで検索...",
+      "filters": {
+        "status": {
+          "all": "すべて",
+          "potential": "見込み",
+          "nurturing": "育成中",
+          "signed": "契約済み"
+        }
+      },
+      "columns": {
+        "name": "名前",
+        "phone": "電話",
+        "email": "メール",
+        "company": "会社",
+        "status": "ステータス",
+        "owner": "担当者",
+        "createdAt": "作成日",
+        "actions": "操作"
+      },
+      "status": {
+        "potential": "見込み",
+        "nurturing": "育成中",
+        "signed": "契約済み"
+      },
+      "dialogs": {
+        "createTitle": "新規顧客の追加",
+        "editTitle": "顧客の編集",
+        "deleteTitle": "削除の確認",
+        "deleteText": "顧客 {{name}} を削除してもよろしいですか？この操作は元に戻せません。"
+      },
+      "form": {
+        "name": "顧客名",
+        "phone": "電話番号",
+        "email": "メール",
+        "company": "会社",
+        "status": "ステータス",
+        "owner": "担当者",
+        "notes": "メモ",
+        "save": "保存",
+        "update": "更新"
+      },
+      "pagination": {
+        "rowsPerPage": "1ページあたりの行数:",
+        "displayedRows": "{{from}}-{{to}} / {{count}}"
+      }
+    }
+    ,
+    "acceptance": {
+      "title": "✅ 検収管理",
+      "overview": {
+        "totalTemplates": "テンプレート総数",
+        "signedReports": "署名済み",
+        "pending": "保留中",
+        "totalValue": "合計金額"
+      },
+      "tabs": {
+        "templates": "検収テンプレート",
+        "reports": "検収書"
+      },
+      "searchPlaceholder": "検索...",
+      "filters": {
+        "status": "ステータス",
+        "all": "すべて"
+      },
+      "status": {
+        "active": "有効",
+        "inactive": "無効",
+        "draft": "下書き",
+        "pending": "保留中",
+        "signed": "署名済み",
+        "rejected": "却下"
+      },
+      "actions": {
+        "createTemplate": "新規テンプレート作成",
+        "createReport": "新規検収の作成",
+        "sign": "署名"
+      },
+      "templates": {
+        "columns": {
+          "code": "コード",
+          "name": "テンプレート名",
+          "description": "説明",
+          "type": "タイプ",
+          "usage": "使用状況",
+          "status": "ステータス",
+          "actions": "操作"
+        }
+      },
+      "types": {
+        "full": "フル",
+        "simple": "シンプル",
+        "phase": "フェーズ"
+      },
+      "reports": {
+        "columns": {
+          "code": "検収ID",
+          "name": "検収名",
+          "contract": "契約",
+          "appendix": "付属書",
+          "acceptanceDate": "検収日",
+          "value": "金額",
+          "status": "ステータス",
+          "actions": "操作"
+        }
+      },
+      "none": "なし",
+      "dialogs": {
+        "createTemplateTitle": "検収テンプレートの作成",
+        "createReportTitle": "検収書の作成",
+        "fields": {
+          "templateName": "テンプレート名",
+          "reportName": "検収名",
+          "code": "コード",
+          "description": "説明",
+          "type": "タイプ",
+          "linkedContract": "関連する契約",
+          "linkedAppendix": "関連する付属書"
+        }
+      },
+      "notifications": {
+        "createTemplateSuccess": "✅ テンプレートを作成しました！",
+        "createReportSuccess": "✅ 検収書を作成しました！"
+      },
+      "sample": {
+        "contract1": "CRM開発契約",
+        "contract2": "コンサルティング契約",
+        "appendix1": "顧客管理モジュール",
+        "appendix2": "レポートモジュール"
+      }
+    }
+  }
+}

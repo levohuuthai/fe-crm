@@ -29,6 +29,7 @@ import {
   Notifications as NotificationsIcon
 } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface SidebarProps {
   drawerWidth: number;
@@ -39,56 +40,56 @@ interface SidebarProps {
 
 const menuItems = [
   {
-    text: 'Dashboard',
-    fullText: 'Dashboard',
+    key: 'menu.dashboard',
+    fullKey: 'menu.dashboardFull',
     icon: <DashboardIcon />,
     path: '/dashboard'
   },
   {
-    text: 'Liên hệ',
-    fullText: 'Quản lý liên hệ',
+    key: 'menu.contacts',
+    fullKey: 'menu.contactsFull',
     icon: <PeopleIcon />,
     path: '/contacts'
   },
   {
-    text: 'Cơ hội',
-    fullText: 'Cơ hội bán hàng',
+    key: 'menu.deals',
+    fullKey: 'menu.dealsFull',
     icon: <DealIcon />,
     path: '/deals'
   },
   {
-    text: 'Requirement',
-    fullText: 'Requirement',
+    key: 'menu.requirements',
+    fullKey: 'menu.requirementsFull',
     icon: <RequirementIcon />,
     path: '/requirements'
   },
   {
-    text: 'Báo giá',
-    fullText: 'Báo giá / Ước tính',
+    key: 'menu.quotations',
+    fullKey: 'menu.quotationsFull',
     icon: <QuotationIcon />,
     path: '/quotations'
   },
   {
-    text: 'Hợp đồng',
-    fullText: 'Hợp đồng',
+    key: 'menu.contracts',
+    fullKey: 'menu.contractsFull',
     icon: <ContractIcon />,
     path: '/contracts'
   },
   {
-    text: 'Phụ lục',
-    fullText: 'Phụ lục hợp đồng',
+    key: 'menu.appendices',
+    fullKey: 'menu.appendicesFull',
     icon: <AppendixIcon />,
     path: '/contract-appendices'
   },
   {
-    text: 'Nghiệm thu',
-    fullText: 'Biên bản nghiệm thu',
+    key: 'menu.acceptance',
+    fullKey: 'menu.acceptanceFull',
     icon: <AcceptanceIcon />,
     path: '/acceptance'
   },
   {
-    text: 'Hóa đơn',
-    fullText: 'Hóa đơn',
+    key: 'menu.invoices',
+    fullKey: 'menu.invoicesFull',
     icon: <InvoiceIcon />,
     path: '/invoices'
   }
@@ -99,6 +100,7 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth, mobileOpen, onClose, onA
   const location = useLocation();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { t, i18n } = useTranslation();
 
 
   const drawer = (
@@ -133,7 +135,7 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth, mobileOpen, onClose, onA
             transform: 'translateX(-50%)',
           }
         }}>
-          <Tooltip title="Thông báo" placement="right" arrow>
+          <Tooltip title={t('tooltips.notifications')} placement="right" arrow>
             <IconButton 
               size="large"
               sx={{ 
@@ -198,7 +200,7 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth, mobileOpen, onClose, onA
           <List sx={{ display: 'flex', flexDirection: 'column', p: 0.5, gap: 0.5 }}>
             {menuItems.map((item) => (
               <ListItem 
-                key={item.text} 
+                key={item.path} 
                 disablePadding 
                 sx={{ 
                   width: '100%',
@@ -224,7 +226,7 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth, mobileOpen, onClose, onA
                 }}
               >
                 <Tooltip 
-                  title={item.fullText} 
+                  title={t(item.fullKey)} 
                   placement="right" 
                   arrow
                   componentsProps={{
@@ -297,7 +299,7 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth, mobileOpen, onClose, onA
                       {item.icon}
                     </ListItemIcon>
                     <ListItemText 
-                      primary={item.text} 
+                      primary={t(item.key)} 
                       sx={{ 
                         margin: 0,
                         '& .MuiTypography-root': {
@@ -343,7 +345,7 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth, mobileOpen, onClose, onA
             zIndex: 1,
           }}>
             <Tooltip 
-              title="Trợ lý AI" 
+              title={t('tooltips.aiAssistant')} 
               placement="right"
               arrow
               componentsProps={{
@@ -377,7 +379,7 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth, mobileOpen, onClose, onA
             </Tooltip>
             
             <Tooltip 
-              title="Tài khoản" 
+              title={t('tooltips.account')} 
               placement="right"
               arrow
               componentsProps={{
@@ -411,6 +413,46 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth, mobileOpen, onClose, onA
               >
                 U
               </Avatar>
+            </Tooltip>
+
+            {/* Language toggle flag button */}
+            <Tooltip 
+              title={t('tooltips.language')} 
+              placement="right"
+              arrow
+              componentsProps={{
+                tooltip: {
+                  sx: {
+                    bgcolor: theme.palette.grey[800],
+                    fontSize: '0.8rem',
+                    '& .MuiTooltip-arrow': {
+                      color: theme.palette.grey[800],
+                    },
+                  },
+                },
+              }}
+            >
+              <IconButton
+                size="small"
+                onClick={() => i18n.changeLanguage(i18n.language.startsWith('ja') ? 'en' : 'ja')}
+                sx={{
+                  p: 0.8,
+                  backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                  '&:hover': {
+                    backgroundColor: alpha(theme.palette.primary.main, 0.18),
+                    transform: 'scale(1.08)'
+                  },
+                  transition: 'all 0.2s ease-in-out',
+                }}
+                aria-label="toggle-language"
+              >
+                <Box
+                  component="img"
+                  src={`${process.env.PUBLIC_URL || ''}/flags/${i18n.language.startsWith('ja') ? 'jp' : 'us'}.svg`}
+                  alt={i18n.language.startsWith('ja') ? 'Japanese' : 'English'}
+                  sx={{ width: 24, height: 16, display: 'block', borderRadius: 0.5 }}
+                />
+              </IconButton>
             </Tooltip>
           </Box>
         </Box>
