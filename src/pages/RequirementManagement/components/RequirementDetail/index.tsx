@@ -17,6 +17,8 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import { Requirement, AIFeature } from '../../types';
 
 interface RequirementDetailProps {
@@ -38,20 +40,12 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getStatusLabel = (status: string) => {
-  switch (status) {
-    case 'pending':
-      return 'Pending';
-    case 'in_discussion':
-      return 'In Discussion';
-    case 'confirmed':
-      return 'Confirmed';
-    default:
-      return status;
-  }
+const getStatusLabel = (status: string, t: (key: string, options?: any) => string) => {
+  return t(`pages.requirements.detail.status.${status}`, { defaultValue: status });
 };
 
 const RequirementDetail: React.FC<RequirementDetailProps> = ({ open, onClose, requirement }) => {
+  const { t } = useTranslation();
   if (!requirement) return null;
 
   return (
@@ -63,18 +57,18 @@ const RequirementDetail: React.FC<RequirementDetailProps> = ({ open, onClose, re
       PaperProps={{ sx: { maxHeight: '90vh' } }}
     >
       <DialogTitle sx={{ fontWeight: 'bold' }}>
-        Chi tiết yêu cầu
+        {t('pages.requirements.detail.title', 'Requirement details')}
       </DialogTitle>
       <DialogContent dividers>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-            📌 Thông tin cơ bản
+            📌 {t('pages.requirements.detail.sections.basicInfo', 'Basic information')}
           </Typography>
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
               <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Tên yêu cầu
+                  {t('pages.requirements.detail.fields.name', 'Requirement name')}
                 </Typography>
                 <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
                   {requirement.name}
@@ -82,7 +76,7 @@ const RequirementDetail: React.FC<RequirementDetailProps> = ({ open, onClose, re
               </Box>
               <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Khách hàng
+                  {t('pages.requirements.detail.fields.customer', 'Customer')}
                 </Typography>
                 <Typography variant="body1">
                   {requirement.customer}
@@ -90,7 +84,7 @@ const RequirementDetail: React.FC<RequirementDetailProps> = ({ open, onClose, re
               </Box>
               <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Người phụ trách
+                  {t('pages.requirements.detail.fields.assignee', 'Assignee')}
                 </Typography>
                 <Typography variant="body1">
                   {requirement.assignee}
@@ -98,17 +92,17 @@ const RequirementDetail: React.FC<RequirementDetailProps> = ({ open, onClose, re
               </Box>
               <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Trạng thái
+                  {t('pages.requirements.detail.fields.status', 'Status')}
                 </Typography>
                 <Chip 
-                  label={getStatusLabel(requirement.status)} 
+                  label={getStatusLabel(requirement.status, t)} 
                   color={getStatusColor(requirement.status) as "warning" | "info" | "success" | "default"}
                   size="small"
                 />
               </Box>
               <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Hạn dự kiến
+                  {t('pages.requirements.detail.fields.deadline', 'Expected deadline')}
                 </Typography>
                 <Typography variant="body1">
                   {requirement.expectedDeadline}
@@ -116,7 +110,7 @@ const RequirementDetail: React.FC<RequirementDetailProps> = ({ open, onClose, re
               </Box>
               <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Ngày tạo
+                  {t('pages.requirements.detail.fields.createdAt', 'Created at')}
                 </Typography>
                 <Typography variant="body1">
                   {requirement.createdDate}
@@ -130,11 +124,11 @@ const RequirementDetail: React.FC<RequirementDetailProps> = ({ open, onClose, re
 
         <Box sx={{ mb: 4 }}>
           <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: 'primary.main', mt: 4 }}>
-            📝 Mô tả yêu cầu
+            📝 {t('pages.requirements.detail.sections.description', 'Requirement description')}
           </Typography>
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
-              {requirement.description || 'Chưa có mô tả.'}
+              {requirement.description || ''}
             </Typography>
           </Paper>
         </Box>
@@ -143,18 +137,18 @@ const RequirementDetail: React.FC<RequirementDetailProps> = ({ open, onClose, re
 
         <Box>
           <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: 'primary.main', mt: 4 }}>
-            🤖 Phân tích yêu cầu (tạo bởi AI)
+            🤖 {t('pages.requirements.detail.sections.aiAnalysis', 'AI-generated requirement analysis')}
           </Typography>
           {requirement.features && requirement.features.length > 0 ? (
             <TableContainer component={Paper} variant="outlined">
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>STT</TableCell>
-                    <TableCell>Tính năng</TableCell>
-                    <TableCell>Chi tiết</TableCell>
-                    <TableCell>Mô tả</TableCell>
-                    <TableCell>Ghi chú</TableCell>
+                    <TableCell>{t('pages.requirements.detail.table.headers.no', 'No.')}</TableCell>
+                    <TableCell>{t('pages.requirements.detail.table.headers.feature', 'Feature')}</TableCell>
+                    <TableCell>{t('pages.requirements.detail.table.headers.detail', 'Detail')}</TableCell>
+                    <TableCell>{t('pages.requirements.detail.table.headers.description', 'Description')}</TableCell>
+                    <TableCell>{t('pages.requirements.detail.table.headers.notes', 'Notes')}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -173,14 +167,14 @@ const RequirementDetail: React.FC<RequirementDetailProps> = ({ open, onClose, re
           ) : (
             <Paper variant="outlined" sx={{ p: 2 }}>
               <Typography variant="body1" color="text.secondary">
-                No AI-generated features available.
+                {t('pages.requirements.detail.empty.aiFeatures', 'No AI-generated features available.')}
               </Typography>
             </Paper>
           )}
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Đóng</Button>
+        <Button onClick={onClose}>{t('pages.requirements.detail.buttons.close', 'Close')}</Button>
       </DialogActions>
     </Dialog>
   );

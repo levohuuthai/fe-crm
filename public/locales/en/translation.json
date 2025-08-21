@@ -18,12 +18,16 @@
         "next": "Next",
         "noData": "No data",
         "save": "Save",
+        "saving": "Saving...",
         "sendEmail": "Send email",
         "unknown": "Unknown",
         "view": "View",
         "viewAllContacts": "View all contacts...",
         "viewAllDeals": "View all deals...",
-        "viewDetails": "View details"
+        "viewDetails": "View details",
+        "validation": {
+            "requiredField": "{{field}} is required"
+        }
     },
     "header": {
         "logout": "Logout",
@@ -49,6 +53,117 @@
         "quotationsFull": "Quotations / Estimates",
         "requirements": "Requirements",
         "requirementsFull": "Requirements"
+    },
+    "components": {
+        "editCellModal": {
+            "errors": {
+                "saveError": "An error occurred while saving.",
+                "saveFailed": "Could not save changes. Please try again."
+            },
+            "examples": {
+                "email": "Example: example@company.com",
+                "phone": "Example: 0901234567 (10-11 digits)"
+            },
+            "noUsersFound": "No users found",
+            "searchUser": "Search user",
+            "title": "Edit for {{name}}"
+        },
+        "filterBar": {
+            "chips": {
+                "me": "Me",
+                "unassigned": "Unassigned"
+            },
+            "placeholders": {
+                "searchOwners": "Search owners..."
+            },
+            "range": {
+                "min": "Min",
+                "max": "Max"
+            },
+            "labels": {
+                "view": "View:",
+                "applied": "Applied:",
+                "quickSelect": "Quick select:",
+                "dateFilter": "Date Filter",
+                "statusFilter": "Status Filter",
+                "amountRange": "Amount Range"
+            },
+            "buttons": {
+                "clearAll": "Clear all",
+                "cancel": "Cancel",
+                "apply": "Apply"
+            },
+            "messages": {
+                "noResults": "No results found"
+            },
+            "datePresets": {
+                "today": "Today",
+                "yesterday": "Yesterday",
+                "last7days": "Last 7 days",
+                "last30days": "Last 30 days",
+                "thismonth": "This month",
+                "lastmonth": "Last month",
+                "custom": "Custom range"
+            }
+        },
+        "smartTable": {
+            "placeholders": {
+                "search": "Search...",
+                "searchUsers": "Search users..."
+            },
+            "tooltips": {
+                "previewContact": "Preview Contact"
+            },
+            "buttons": {
+                "filters": "Filters"
+            },
+            "actions": {
+                "filters": "Filters",
+                "assignOwner": "Assign Owner",
+                "delete": "Delete"
+            },
+            "labels": {
+                "rows": "{{count}} rows",
+                "selected": "{{count}} selected"
+            },
+            "columnMenu": {
+                "sortAsc": "Sort Ascending",
+                "sortDesc": "Sort Descending",
+                "hide": "Hide Column",
+                "hideColumn": "Hide Column"
+            },
+            "empty": "No data"
+        },
+        "globalAISearch": {
+            "placeholder": "Smart search with AI...",
+            "sections": {
+                "recent": "Recent searches",
+                "suggestions": "Suggestions for this page",
+                "results": "Search results ({{count}})"
+            },
+            "empty": {
+                "title": "No results for \"{{query}}\"",
+                "hint": "Try a different keyword or use semantic search",
+                "noResults": "No results for \"{{query}}\"",
+                "tryAnother": "Try a different keyword or use semantic search"
+            }
+        },
+        "sidebar": {
+            "aria": {
+                "mainNav": "main navigation",
+                "mainNavigation": "main navigation",
+                "toggleLanguage": "toggle language"
+            },
+            "alt": {
+                "english": "English",
+                "japanese": "Japanese"
+            }
+        },
+        "header": {
+            "aria": {
+                "openDrawer": "open drawer"
+            }
+        }
     },
     "pages": {
         "acceptance": {
@@ -134,6 +249,130 @@
                 "simple": "Simple"
             }
         },
+        "contacts": {
+            "columns": {
+                "actions": "Actions",
+                "company": "Company",
+                "email": "Email",
+                "lastContact": "Last contact",
+                "leadStatus": "Lead status",
+                "name": "Name",
+                "owner": "Owner",
+                "phone": "Phone",
+                "position": "Position",
+                "value": "Value"
+            },
+            "emailWindow": {
+                "actions": {
+                    "send": "Send",
+                    "sendLater": "Send later",
+                    "sendNow": "Send now"
+                },
+                "associated": "{{count}} records associated",
+                "fields": {
+                    "bcc": "Bcc",
+                    "cc": "Cc",
+                    "from": "From",
+                    "subject": "Subject",
+                    "to": "To"
+                },
+                "messages": {
+                    "missingRecipient": "Enter recipient email address",
+                    "openedClient": "Opened in default email client!"
+                },
+                "placeholders": {
+                    "body": "Enter message...",
+                    "subject": "Subject",
+                    "to": "recipient@example.com"
+                },
+                "prompts": {
+                    "enterUrl": "Enter URL:"
+                },
+                "sendLater": {
+                    "actions": {
+                        "cancel": "Cancel",
+                        "schedule": "Schedule"
+                    },
+                    "options": {
+                        "custom": "Custom",
+                        "in1hour": "1 hour later",
+                        "in2hours": "2 hours later",
+                        "tomorrowAfternoon": "Tomorrow afternoon (13:00)",
+                        "tomorrowMorning": "Tomorrow morning (8:00)"
+                    },
+                    "title": "Send later"
+                },
+                "tabs": {
+                    "documents": "Documents",
+                    "meetings": "Meetings",
+                    "quotes": "Quotes",
+                    "sequences": "Sequences",
+                    "templates": "Templates"
+                },
+                "title": "New email",
+                "toolbar": {
+                    "insert": "Insert",
+                    "more": "More"
+                }
+            },
+            "empty": "No contacts yet",
+            "filters": {
+                "lastContact": "Last contact",
+                "leadStatus": "Lead status",
+                "owner": "Owner"
+            },
+            "form": {
+                "actions": {
+                    "cancel": "Cancel",
+                    "save": "Save"
+                },
+                "createTitle": "New contact",
+                "fields": {
+                    "email": "Email",
+                    "firstName": "First name",
+                    "jobTitle": "Job title",
+                    "lastName": "Last name",
+                    "leadStatus": "Lead status",
+                    "phone": "Phone number"
+                },
+                "options": {
+                    "leadStatus": {
+                        "contacted": "Contacted",
+                        "cold": "Cold",
+                        "converted": "Converted",
+                        "hot": "Hot",
+                        "lost": "Lost",
+                        "new": "New",
+                        "qualified": "Qualified"
+                    }
+                }
+            },
+            "note": {
+                "actions": {
+                    "attachFile": "Attach file",
+                    "cancel": "Cancel",
+                    "save": "Save"
+                },
+                "fields": {
+                    "note": "Note"
+                },
+                "title": "Add note"
+            },
+            "notifications": {
+                "createSuccess": "✅ Contact created!"
+            },
+            "subtitle": "Manage lead information and track conversion progress",
+            "title": "Contact Management",
+            "validation": {
+                "emailInvalid": "Invalid email address",
+                "phoneInvalid": "Invalid phone number"
+            },
+            "views": {
+                "all": "All",
+                "my": "My contacts",
+                "unassigned": "Unassigned"
+            }
+        },
         "aiGeneration": {
             "input": {
                 "generate": "Generate",
@@ -165,11 +404,11 @@
                 "suggestions": {
                     "compose": "{{suggestion}}",
                     "items": [
-                        "CRM開発の業務委託契約を作成して",
-                        "A社とB社の秘密保持契約（NDA）を書いて",
-                        "12か月間の保守契約の下書きを作成して",
-                        "契約解除合意書を作成して",
-                        "ソフトウェア使用許諾契約を作成して"
+                        "Draw up a contract for outsourcing CRM development,",
+                        "Draw up a non-disclosure agreement (NDA) between Company A and Company B,",
+                        "Draw up a draft of a 12-month maintenance contract,",
+                        "Draw up a termination agreement,",
+                        "Draw up a software license agreement."
                     ],
                     "title": "Try one of these:"
                 }
@@ -294,6 +533,7 @@
             }
         },
         "assistant": {
+            "typing": "AI typing...",
             "actions": {
                 "createContact": "Create contact",
                 "createDeal": "Create deal",
@@ -309,8 +549,15 @@
             "headerSubtitle": "Smart reports Always ready to help",
             "inputPlaceholder": "Type a message...",
             "mock": {
-                "disclaimer": "AI-generated demo content. Data is mock for preview only."
+                "disclaimer": "AI-generated demo content. Data is mock for preview only.",
+                "summary": {
+                    "foundContacts": "Found {{count}} matching contacts",
+                    "openDealsTotal": "{{count}} open deals with total value ~{{total}}",
+                    "manyDealsAtStage": "Many deals are at stage \"{{stage}}\" and need attention",
+                    "currentLeadConversion": "Current lead conversion rate: {{percent}}%"
+                }
             },
+            "topContacts": "Top contact",
             "nextSuggestions": "Next suggestions",
             "noUnderstand": "Sorry, I didn't quite understand. Could you try again?",
             "openDeals": "Open deals",
@@ -362,20 +609,6 @@
             "resultsFor": "Results for \"{{query}}\"",
             "suggestions": {
                 "createReminderCompanyB": "Create a reminder for Company B",
-                "dealsNotClosedThisMonth": "Deals not closed this month",
-                "totalClosedValue": "Total value of closed deals",
-                "writeThankYouEmail": "Write a thank-you email"
-            },
-            "title": "CRM Smart Assistant",
-            "topContacts": "Top contacts",
-            "you": "You",
-            "youCanAsk": "You can ask:"
-        },
-        "contacts": {
-            "columns": {
-                "actions": "Actions",
-                "company": "Company",
-                "email": "Email",
                 "lastContact": "Last contact",
                 "leadStatus": "Lead status",
                 "name": "Name",
@@ -1024,7 +1257,251 @@
             "showMoreContacts": "Show more contacts...",
             "showMoreDeals": "Show more deals...",
             "smartDashboard": "Smart dashboard",
-            "welcomeBack": "Welcome back, Admin"
+            "welcomeBack": "Welcome back, Admin",
+            "aiChatbot": {
+                "history": {
+                    "q1": "What is the revenue this month?",
+                    "q2": "Top 5 employees by sales",
+                    "q3": "Lead to customer conversion rate",
+                    "time": {
+                        "1030am": "10:30 AM",
+                        "monday": "Monday",
+                        "yesterday": "Yesterday"
+                    }
+                },
+                "placeholder": "Enter a question or report request...",
+                "recentReports": "Recent reports",
+                "saveReport": "Save report",
+                "suggestions": {
+                    "compareRevenueThisVsLastMonth": "Compare this month's revenue to last month",
+                    "conversionRateThisQuarter": "Lead-to-customer conversion rate this quarter",
+                    "revenueByEmployeeThisMonth": "Revenue by employee this month",
+                    "todayNewCustomers": "Show how many new customers today",
+                    "topCloserThisQuarter": "Who closed the most deals this quarter?"
+                },
+                "title": "🤖 AI Assistant - Smart Reports"
+            },
+            "kpiStats": {
+                "title": "📊 KPI Overview",
+                "newCustomers": "New customers",
+                "comparedToYesterday": "compared to yesterday",
+                "totalDeals": "Total deals",
+                "comparedToLastWeek": "compared to last week",
+                "dealByStage": "Deals by stage",
+                "stages": {
+                    "lead": "Lead",
+                    "quote": "Quote",
+                    "negotiation": "Negotiation",
+                    "win": "Win",
+                    "lose": "Lose"
+                },
+                "totalDealsCount": "Total: {{count}} deals",
+                "revenueActual": "Actual revenue",
+                "comparedToLastMonth": "compared to last month",
+                "topEmployee": "Top deal employee",
+                "deals": "deals"
+            },
+            "dynamicKPI": {
+                "header": "Real-time Activity & KPIs",
+                "updatesCount": "{{count}} updates",
+                "lastUpdated": "Last updated {{time}}",
+                "timeAgo": {
+                    "justNow": "just now",
+                    "minutes": "{{count}} minutes ago",
+                    "hours": "{{count}} hours ago",
+                    "date": "{{date}}"
+                },
+                "tooltip": {
+                    "showCarousel": "Show carousel",
+                    "showAll": "Show all KPIs",
+                    "refresh": "Refresh data"
+                },
+                "activity": {
+                    "title": "Activity",
+                    "subtitle": "Latest system and sales activities",
+                    "new": "NEW"
+                },
+                "updates": {
+                    "dealCreated": {
+                        "title": "New deal created",
+                        "description": "ERP system for ABC Company - Value: {{value}}"
+                    },
+                    "newCustomer": {
+                        "title": "New customer registered",
+                        "description": "{{customer}} has signed up"
+                    },
+                    "marketTrend": {
+                        "title": "Market trend",
+                        "description": "AI/ML solutions grew {{percent}}% this quarter"
+                    },
+                    "dealUpdated": {
+                        "title": "Deal updated",
+                        "description": "Deal '{{deal}}' moved to Negotiation stage"
+                    },
+                    "revenueMilestone": {
+                        "title": "Revenue milestone",
+                        "description": "Reached {{value}} revenue this month"
+                    }
+                }
+            },
+            "trendingInsights": {
+                "header": "AI-Powered Analytics",
+                "subtitle": "Trending • Insights • Predictions powered by AI",
+                "tooltip": {
+                    "refresh": "Refresh data"
+                },
+                "tabs": {
+                    "trending": "Trending",
+                    "insights": "Insights",
+                    "predictions": "Predictions"
+                },
+                "labels": {
+                    "confidence": "Confidence",
+                    "actionable": "Actionable",
+                    "source": "Source",
+                    "probability": "{{percent}}% probability",
+                    "risk": "Risk"
+                }
+            },
+            "dynamicCharts": {
+                "title": "📈 Business data analytics",
+                "resultsFor": "📈 Results for: \"{{query}}\"",
+                "time": "Time",
+                "timeRanges": {
+                    "today": "Today",
+                    "week": "This week",
+                    "month": "This month",
+                    "quarter": "This quarter",
+                    "year": "This year"
+                },
+                "series": {
+                    "revenueByMonth": "Revenue by month",
+                    "revenueByEmployee": "Revenue by employee"
+                },
+                "table": {
+                    "name": "Name",
+                    "value": "Value"
+                },
+                "valueWithUnit": "{{value}} M",
+                "newCustomers": {
+                    "today": "Today",
+                    "yesterday": "Yesterday",
+                    "daysAgo2": "2 days ago",
+                    "daysAgo3": "3 days ago",
+                    "daysAgo4": "4 days ago"
+                },
+                "months": {
+                    "m1": "Jan",
+                    "m2": "Feb",
+                    "m3": "Mar",
+                    "m4": "Apr",
+                    "m5": "May",
+                    "m6": "Jun",
+                    "m7": "Jul"
+                },
+                "dealStatus": {
+                    "lead": "Lead",
+                    "quote": "Quote",
+                    "negotiation": "Negotiation",
+                    "win": "Win",
+                    "lose": "Lose"
+                },
+                "conversion": {
+                    "converted": "Converted",
+                    "notConverted": "Not converted"
+                }
+            },
+            "savedReports": {
+                "items": {
+                    "1": {
+                        "title": "Employee revenue report Q2/2025",
+                        "tags": [
+                            "revenue",
+                            "employee",
+                            "Q2"
+                        ]
+                    },
+                    "2": {
+                        "title": "Conversion rate analysis from leads to customers",
+                        "tags": [
+                            "lead",
+                            "conversion",
+                            "sales funnel"
+                        ]
+                    },
+                    "3": {
+                        "title": "Monthly revenue report for 2025",
+                        "tags": [
+                            "revenue",
+                            "month",
+                            "2025"
+                        ]
+                    },
+                    "4": {
+                        "title": "Top 10 potential customers in June",
+                        "tags": [
+                            "prospects",
+                            "top 10"
+                        ]
+                    },
+                    "5": {
+                        "title": "Marketing campaign effectiveness analysis Q2",
+                        "tags": [
+                            "marketing",
+                            "campaign",
+                            "Q2"
+                        ]
+                    }
+                }
+            },
+            "trendingDefaults": {
+                "trends": {
+                    "cloud": "SMEs are moving to cloud at record speed",
+                    "ai": "Demand for AI solutions surges across enterprises",
+                    "cyber": "Cybersecurity becomes top priority after attacks",
+                    "dx": "Digital transformation accelerates across industries"
+                },
+                "insights": {
+                    "marketGrowth": {
+                        "title": "Tech market booms in Q4",
+                        "desc": "Revenue from tech projects up 28% vs Q3, led by AI and Cloud"
+                    },
+                    "customerBehavior": {
+                        "title": "Customer behavior shifts",
+                        "desc": "SMEs prefer integrated solutions over standalone products"
+                    },
+                    "competitive": {
+                        "title": "Competitive landscape shifts",
+                        "desc": "Rivals focus on pricing; adjust pricing strategy"
+                    },
+                    "techAdoption": {
+                        "title": "Faster tech adoption",
+                        "desc": "Time from demo to purchase down 40%—faster decisions"
+                    }
+                },
+                "predictions": {
+                    "abcDeal": {
+                        "title": "Deal ABC Corp - ERP System",
+                        "desc": "ERP implementation for ABC Corp likely to succeed",
+                        "timeframe": "2 weeks"
+                    },
+                    "aiMarket": {
+                        "title": "AI market will surge",
+                        "desc": "AI/ML market to grow 40% in next 6 months",
+                        "timeframe": "6 months"
+                    },
+                    "xyzCustomer": {
+                        "title": "Customer XYZ expansion",
+                        "desc": "XYZ Ltd likely to buy CRM module in Q1 next year",
+                        "timeframe": "3 months"
+                    },
+                    "revenueMilestone": {
+                        "title": "Reach 3M revenue milestone",
+                        "desc": "Forecast to reach 3M revenue in Q1 next year",
+                        "timeframe": "4 months"
+                    }
+                }
+            }
         },
         "deals": {
             "columns": {
@@ -1036,7 +1513,7 @@
                 "dealName": "Deal name",
                 "expectedCloseDate": "Expected close date",
                 "lastActivity": "Last activity",
-                "owner": "Owner",
+                "owner": "Deal owner",
                 "priority": "Priority",
                 "probability": "Probability (%)",
                 "stage": "Stage"
@@ -1221,6 +1698,16 @@
             },
             "estimation": {
                 "chooseMethod": "Choose estimation method",
+                "modes": {
+                    "fixed": "Fixed Price",
+                    "timeAndMaterial": "Time & Material"
+                },
+                "modeDescriptions": {
+                    "fixed": "Fixed Price mode: Create a detailed estimation table with customizable effort columns.",
+                    "timeAndMaterial": "Time & Material mode: Create an estimation based on hours and rates."
+                },
+                "modeSwitchedFixed": "Switched to Fixed Price mode",
+                "modeSwitchedTimeAndMaterial": "Switched to Time & Material mode",
                 "fixed": {
                     "addColumn": "Add column",
                     "addRow": "Add row",
@@ -1517,6 +2004,13 @@
                     "name": "Requirement name",
                     "type": "Requirement type"
                 },
+                "types": {
+                    "rfi": "RFI",
+                    "bank": "Bank",
+                    "industry": "Industry",
+                    "client": "Client",
+                    "internal": "Internal"
+                },
                 "links": {
                     "viewOnFigma": "View design on Figma"
                 },
@@ -1578,8 +2072,44 @@
                 },
                 "empty": "No requirements found"
             },
+            "detail": {
+                "title": "Requirement details",
+                "sections": {
+                    "basicInfo": "Basic information",
+                    "description": "Requirement description",
+                    "aiAnalysis": "AI-generated requirement analysis"
+                },
+                "fields": {
+                    "name": "Requirement name",
+                    "customer": "Customer",
+                    "assignee": "Assignee",
+                    "status": "Status",
+                    "deadline": "Expected deadline",
+                    "createdAt": "Created at"
+                },
+                "table": {
+                    "headers": {
+                        "no": "No.",
+                        "feature": "Feature",
+                        "detail": "Detail",
+                        "description": "Description",
+                        "notes": "Notes"
+                    }
+                },
+                "empty": {
+                    "aiFeatures": "No AI-generated features available."
+                },
+                "buttons": {
+                    "close": "Close"
+                },
+                "status": {
+                    "pending": "Pending",
+                    "in_discussion": "In discussion",
+                    "confirmed": "Confirmed"
+                }
+            },
             "pagination": {
-                "displayedRows": "{{from}}-{{to}} of {{count}}",
+                "displayedRows": "{{from}}-{{to}} / {{count}}",
                 "rowsPerPage": "Rows per page:"
             },
             "searchPlaceholder": "Search requirements by name...",

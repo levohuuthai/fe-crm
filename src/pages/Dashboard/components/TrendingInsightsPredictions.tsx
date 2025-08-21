@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Typography,
@@ -92,6 +93,7 @@ function TabPanel(props: TabPanelProps) {
 
 const TrendingInsightsPredictions: React.FC = () => {
   const theme = useTheme();
+  const { t, i18n } = useTranslation();
   const [tabValue, setTabValue] = useState(0);
   const [trendingData, setTrendingData] = useState<TrendingItem[]>([]);
   const [insightsData, setInsightsData] = useState<InsightItem[]>([]);
@@ -157,7 +159,7 @@ const TrendingInsightsPredictions: React.FC = () => {
       {
         id: 'cloud-computing',
         title: 'Cloud Computing',
-        description: 'Doanh nghiệp SME đang chuyển đổi sang cloud với tốc độ kỷ lục',
+        description: t('pages.dashboard.trendingDefaults.trends.cloud', 'SMEs are moving to cloud at record speed'),
         growth: '+25%',
         confidence: 0.92,
         category: 'technology',
@@ -167,7 +169,7 @@ const TrendingInsightsPredictions: React.FC = () => {
       {
         id: 'ai-solutions',
         title: 'AI/ML Solutions',
-        description: 'Nhu cầu về giải pháp AI tăng vượt bậc trong các doanh nghiệp',
+        description: t('pages.dashboard.trendingDefaults.trends.ai', 'Demand for AI solutions surges across enterprises'),
         growth: '+35%',
         confidence: 0.88,
         category: 'technology',
@@ -177,7 +179,7 @@ const TrendingInsightsPredictions: React.FC = () => {
       {
         id: 'cybersecurity',
         title: 'Cybersecurity',
-        description: 'An ninh mạng trở thành ưu tiên hàng đầu sau các vụ tấn công',
+        description: t('pages.dashboard.trendingDefaults.trends.cyber', 'Cybersecurity becomes top priority after attacks'),
         growth: '+18%',
         confidence: 0.85,
         category: 'technology',
@@ -187,7 +189,7 @@ const TrendingInsightsPredictions: React.FC = () => {
       {
         id: 'digital-transformation',
         title: 'Digital Transformation',
-        description: 'Chuyển đổi số được đẩy mạnh trong mọi ngành nghề',
+        description: t('pages.dashboard.trendingDefaults.trends.dx', 'Digital transformation accelerates across industries'),
         growth: '+22%',
         confidence: 0.90,
         category: 'industry',
@@ -211,8 +213,8 @@ const TrendingInsightsPredictions: React.FC = () => {
     const defaultInsights: InsightItem[] = [
       {
         id: 'market-growth',
-        title: 'Thị trường công nghệ Q4 tăng trưởng mạnh',
-        description: 'Doanh thu từ các dự án công nghệ tăng 28% so với Q3, chủ yếu từ segment AI và Cloud',
+        title: t('pages.dashboard.trendingDefaults.insights.marketGrowth.title', 'Tech market booms in Q4'),
+        description: t('pages.dashboard.trendingDefaults.insights.marketGrowth.desc', 'Revenue from tech projects up 28% vs Q3, led by AI and Cloud'),
         impact: 'high',
         actionable: true,
         source: 'Market Analysis AI',
@@ -220,8 +222,8 @@ const TrendingInsightsPredictions: React.FC = () => {
       },
       {
         id: 'customer-behavior',
-        title: 'Hành vi khách hàng thay đổi',
-        description: 'Khách hàng SME có xu hướng đầu tư vào giải pháp tích hợp thay vì từng sản phẩm riêng lẻ',
+        title: t('pages.dashboard.trendingDefaults.insights.customerBehavior.title', 'Customer behavior shifts'),
+        description: t('pages.dashboard.trendingDefaults.insights.customerBehavior.desc', 'SMEs prefer integrated solutions over standalone products'),
         impact: 'medium',
         actionable: true,
         source: 'Customer Analytics',
@@ -229,8 +231,8 @@ const TrendingInsightsPredictions: React.FC = () => {
       },
       {
         id: 'competitive-landscape',
-        title: 'Cảnh quan cạnh tranh thay đổi',
-        description: 'Các đối thủ đang tập trung vào pricing strategy, cần điều chỉnh chiến lược giá',
+        title: t('pages.dashboard.trendingDefaults.insights.competitive.title', 'Competitive landscape shifts'),
+        description: t('pages.dashboard.trendingDefaults.insights.competitive.desc', 'Rivals focus on pricing; adjust pricing strategy'),
         impact: 'high',
         actionable: true,
         source: 'Competitive Intelligence',
@@ -238,8 +240,8 @@ const TrendingInsightsPredictions: React.FC = () => {
       },
       {
         id: 'technology-adoption',
-        title: 'Tốc độ áp dụng công nghệ tăng',
-        description: 'Thời gian từ demo đến quyết định mua giảm 40%, khách hàng quyết định nhanh hơn',
+        title: t('pages.dashboard.trendingDefaults.insights.techAdoption.title', 'Faster tech adoption'),
+        description: t('pages.dashboard.trendingDefaults.insights.techAdoption.desc', 'Time from demo to purchase down 40%—faster decisions'),
         impact: 'medium',
         actionable: false,
         source: 'Sales Analytics',
@@ -259,39 +261,39 @@ const TrendingInsightsPredictions: React.FC = () => {
     const defaultPredictions: PredictionItem[] = [
       {
         id: 'deal-abc-corp',
-        title: 'Deal ABC Corp - ERP System',
-        description: 'Dự án triển khai hệ thống ERP cho ABC Corp có xác suất thành công cao',
+        title: t('pages.dashboard.trendingDefaults.predictions.abcDeal.title', 'Deal ABC Corp - ERP System'),
+        description: t('pages.dashboard.trendingDefaults.predictions.abcDeal.desc', 'ERP implementation for ABC Corp likely to succeed'),
         probability: 0.85,
-        timeframe: '2 tuần',
+        timeframe: t('pages.dashboard.trendingDefaults.predictions.abcDeal.timeframe', '2 weeks'),
         value: '250K',
         type: 'deal',
         riskLevel: 'low'
       },
       {
         id: 'market-ai-growth',
-        title: 'Thị trường AI sẽ bùng nổ',
-        description: 'Dự đoán thị trường AI/ML sẽ tăng trưởng 40% trong 6 tháng tới',
+        title: t('pages.dashboard.trendingDefaults.predictions.aiMarket.title', 'AI market will surge'),
+        description: t('pages.dashboard.trendingDefaults.predictions.aiMarket.desc', 'AI/ML market to grow 40% in next 6 months'),
         probability: 0.78,
-        timeframe: '6 tháng',
+        timeframe: t('pages.dashboard.trendingDefaults.predictions.aiMarket.timeframe', '6 months'),
         type: 'market',
         riskLevel: 'medium'
       },
       {
         id: 'customer-xyz-expansion',
-        title: 'Khách hàng XYZ mở rộng',
-        description: 'XYZ Ltd có khả năng cao sẽ mua thêm module CRM trong Q1 năm sau',
+        title: t('pages.dashboard.trendingDefaults.predictions.xyzCustomer.title', 'Customer XYZ expansion'),
+        description: t('pages.dashboard.trendingDefaults.predictions.xyzCustomer.desc', 'XYZ Ltd likely to buy CRM module in Q1 next year'),
         probability: 0.72,
-        timeframe: '3 tháng',
+        timeframe: t('pages.dashboard.trendingDefaults.predictions.xyzCustomer.timeframe', '3 months'),
         value: '180K',
         type: 'customer',
         riskLevel: 'low'
       },
       {
         id: 'revenue-milestone',
-        title: 'Đạt mốc doanh thu 3M',
-        description: 'Dự đoán sẽ đạt mốc doanh thu 3M trong Q1 năm sau dựa trên pipeline hiện tại',
+        title: t('pages.dashboard.trendingDefaults.predictions.revenueMilestone.title', 'Reach 3M revenue milestone'),
+        description: t('pages.dashboard.trendingDefaults.predictions.revenueMilestone.desc', 'Forecast to reach 3M revenue in Q1 next year'),
         probability: 0.68,
-        timeframe: '4 tháng',
+        timeframe: t('pages.dashboard.trendingDefaults.predictions.revenueMilestone.timeframe', '4 months'),
         value: '3M',
         type: 'revenue',
         riskLevel: 'medium'
@@ -345,13 +347,13 @@ const TrendingInsightsPredictions: React.FC = () => {
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box>
             <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
-              📊 Phân tích thông minh
+              {t('pages.dashboard.trendingInsights.header')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Trending • Insights • Predictions được hỗ trợ bởi AI
+              {t('pages.dashboard.trendingInsights.subtitle')}
             </Typography>
           </Box>
-          <Tooltip title="Làm mới dữ liệu">
+          <Tooltip title={t('pages.dashboard.trendingInsights.tooltip.refresh')}>
             <IconButton onClick={loadAllData} color="primary">
               <RefreshIcon />
             </IconButton>
@@ -368,19 +370,19 @@ const TrendingInsightsPredictions: React.FC = () => {
         >
           <Tab 
             icon={<TrendingUpIcon />} 
-            label="Trending" 
+            label={t('pages.dashboard.trendingInsights.tabs.trending')} 
             iconPosition="start"
             sx={{ minHeight: 'auto', py: 2 }}
           />
           <Tab 
             icon={<LightbulbIcon />} 
-            label="Insights" 
+            label={t('pages.dashboard.trendingInsights.tabs.insights')} 
             iconPosition="start"
             sx={{ minHeight: 'auto', py: 2 }}
           />
           <Tab 
             icon={<TimelineIcon />} 
-            label="Predictions" 
+            label={t('pages.dashboard.trendingInsights.tabs.predictions')} 
             iconPosition="start"
             sx={{ minHeight: 'auto', py: 2 }}
           />
@@ -442,7 +444,7 @@ const TrendingInsightsPredictions: React.FC = () => {
                           }}
                         />
                         <Typography variant="caption" color="text.secondary">
-                          Độ tin cậy: {Math.round(trend.confidence * 100)}%
+                          {t('pages.dashboard.trendingInsights.labels.confidence')}: {Math.round(trend.confidence * 100)}%
                         </Typography>
                       </Box>
                     </Box>
@@ -504,7 +506,7 @@ const TrendingInsightsPredictions: React.FC = () => {
                         />
                         {insight.actionable && (
                           <Chip
-                            label="ACTIONABLE"
+                            label={t('pages.dashboard.trendingInsights.labels.actionable')}
                             size="small"
                             sx={{
                               backgroundColor: alpha(theme.palette.info.main, 0.1),
@@ -521,7 +523,7 @@ const TrendingInsightsPredictions: React.FC = () => {
                           {insight.description}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                          Nguồn: {insight.source} • {insight.timestamp.toLocaleTimeString('vi-VN')}
+                          {t('pages.dashboard.trendingInsights.labels.source')}: {insight.source} • {insight.timestamp.toLocaleTimeString(i18n.language)}
                         </Typography>
                       </Box>
                     }
@@ -576,7 +578,7 @@ const TrendingInsightsPredictions: React.FC = () => {
                       </Typography>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
                         <Chip
-                          label={`${Math.round(prediction.probability * 100)}% xác suất`}
+                          label={t('pages.dashboard.trendingInsights.labels.probability', { percent: Math.round(prediction.probability * 100) })}
                           size="small"
                           sx={{
                             backgroundColor: alpha(theme.palette.primary.main, 0.1),
@@ -602,7 +604,7 @@ const TrendingInsightsPredictions: React.FC = () => {
                   </Typography>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Chip
-                      label={`Risk: ${prediction.riskLevel}`}
+                      label={`${t('pages.dashboard.trendingInsights.labels.risk')}: ${prediction.riskLevel}`}
                       size="small"
                       sx={{
                         backgroundColor: alpha(getRiskColor(prediction.riskLevel), 0.1),

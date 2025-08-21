@@ -34,6 +34,7 @@ import {
 } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { globalAISearch, SearchResult } from '../../services/globalAISearch';
+import { useTranslation } from 'react-i18next';
 
 interface GlobalAISearchProps {
   placeholder?: string;
@@ -43,7 +44,7 @@ interface GlobalAISearchProps {
 }
 
 const GlobalAISearch: React.FC<GlobalAISearchProps> = ({
-  placeholder = "Tìm kiếm thông minh với AI...",
+  placeholder,
   size = 'medium',
   fullWidth = false,
   autoFocus = false
@@ -51,6 +52,7 @@ const GlobalAISearch: React.FC<GlobalAISearchProps> = ({
   const theme = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -201,7 +203,7 @@ const GlobalAISearch: React.FC<GlobalAISearchProps> = ({
           ref={inputRef}
           fullWidth={fullWidth}
           size={size}
-          placeholder={placeholder}
+          placeholder={placeholder || t('components.globalAISearch.placeholder')}
           value={query}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
@@ -264,7 +266,7 @@ const GlobalAISearch: React.FC<GlobalAISearchProps> = ({
                       <Box sx={{ p: 2, pb: 1 }}>
                         <Typography variant="subtitle2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                           <HistoryIcon fontSize="small" />
-                          Tìm kiếm gần đây
+                          {t('components.globalAISearch.sections.recent')}
                         </Typography>
                       </Box>
                       <List dense>
@@ -285,7 +287,7 @@ const GlobalAISearch: React.FC<GlobalAISearchProps> = ({
                   <Box sx={{ p: 2, pb: 1 }}>
                     <Typography variant="subtitle2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <TrendingIcon fontSize="small" />
-                      Gợi ý cho trang này
+                      {t('components.globalAISearch.sections.suggestions')}
                     </Typography>
                   </Box>
                   <List dense>
@@ -305,7 +307,7 @@ const GlobalAISearch: React.FC<GlobalAISearchProps> = ({
                 <>
                   <Box sx={{ p: 2, pb: 1 }}>
                     <Typography variant="subtitle2" color="text.secondary">
-                      Kết quả tìm kiếm ({results.length})
+                      {t('components.globalAISearch.sections.results', { count: results.length })}
                     </Typography>
                   </Box>
                   <List dense>
@@ -367,10 +369,10 @@ const GlobalAISearch: React.FC<GlobalAISearchProps> = ({
               {!isLoading && query.length > 0 && results.length === 0 && (
                 <Box sx={{ p: 3, textAlign: 'center' }}>
                   <Typography variant="body2" color="text.secondary">
-                    Không tìm thấy kết quả cho "{query}"
+                    {t('components.globalAISearch.empty.noResults', { query })}
                   </Typography>
                   <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-                    Thử tìm kiếm với từ khóa khác hoặc sử dụng tìm kiếm semantic
+                    {t('components.globalAISearch.empty.tryAnother')}
                   </Typography>
                 </Box>
               )}

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { 
   Box, 
   Paper, 
@@ -33,7 +35,7 @@ import {
   Line
 } from 'recharts';
 
-// Dữ liệu mẫu cho biểu đồ doanh thu theo nhân viên
+// Dữ liệu mẫu cho biểu đồ doanh thu theo nhân viên (tên nhân sự là dữ liệu mẫu, giữ nguyên)
 const REVENUE_DATA = [
   { name: 'Nguyễn Văn A', value: 1200 },
   { name: 'Trần Thị B', value: 950 },
@@ -42,50 +44,15 @@ const REVENUE_DATA = [
   { name: 'Hoàng Văn E', value: 500 },
 ];
 
-// Dữ liệu mẫu cho biểu đồ trạng thái deal
-const DEAL_STATUS_DATA = [
-  { name: 'Lead', value: 45, color: '#f87171' },
-  { name: 'Báo giá', value: 32, color: '#fbbf24' },
-  { name: 'Đàm phán', value: 18, color: '#60a5fa' },
-  { name: 'Win', value: 38, color: '#34d399' },
-  { name: 'Lose', value: 23, color: '#9ca3af' },
-];
+// Các tập dữ liệu dùng nhãn cần được bản địa hóa sẽ được tạo bên trong component bằng t()
 
-// Dữ liệu mẫu cho khách hàng mới
-const NEW_CUSTOMERS_DATA = [
-  { name: 'Hôm nay', value: 12 },
-  { name: 'Hôm qua', value: 10 },
-  { name: '2 ngày trước', value: 8 },
-  { name: '3 ngày trước', value: 15 },
-  { name: '4 ngày trước', value: 7 },
-];
+// Dữ liệu mẫu cho khách hàng mới sẽ được tạo trong component
 
-// Dữ liệu mẫu cho doanh thu theo tháng
-const REVENUE_BY_MONTH_DATA = [
-  { name: 'T1', value: 800 },
-  { name: 'T2', value: 950 },
-  { name: 'T3', value: 1100 },
-  { name: 'T4', value: 1250 },
-  { name: 'T5', value: 1400 },
-  { name: 'T6', value: 1600 },
-];
+// Dữ liệu mẫu cho doanh thu theo tháng sẽ được tạo trong component
 
-// Dữ liệu mẫu cho tỉ lệ chuyển đổi
-const CONVERSION_RATE_DATA = [
-  { name: 'Chuyển đổi', value: 65, color: '#34d399' },
-  { name: 'Không chuyển đổi', value: 35, color: '#f87171' },
-];
+// Dữ liệu mẫu cho tỉ lệ chuyển đổi sẽ được tạo trong component
 
-// Dữ liệu mẫu cho biểu đồ doanh thu theo tháng
-const MONTHLY_REVENUE_DATA = [
-  { name: 'T1', value: 1200 },
-  { name: 'T2', value: 1900 },
-  { name: 'T3', value: 1500 },
-  { name: 'T4', value: 2200 },
-  { name: 'T5', value: 1800 },
-  { name: 'T6', value: 2400 },
-  { name: 'T7', value: 2100 },
-];
+// Dữ liệu mẫu cho biểu đồ doanh thu theo tháng sẽ được tạo trong component
 
 // Màu sắc cho biểu đồ
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'];
@@ -101,6 +68,7 @@ interface DynamicChartsProps {
 }
 
 const DynamicCharts: React.FC<DynamicChartsProps> = ({ query }) => {
+  const { t } = useTranslation();
   const [chartType, setChartType] = useState<ChartType>('bar');
   const [timeRange, setTimeRange] = useState<TimeRange>('month');
 
@@ -163,17 +131,58 @@ const DynamicCharts: React.FC<DynamicChartsProps> = ({ query }) => {
     }
   }, [query]);
   
+  // Tạo dữ liệu bản địa hóa cho các tập dữ liệu dùng nhãn
+  const dealStatusData = [
+    { name: t('pages.dashboard.dynamicCharts.dealStatus.lead', { defaultValue: 'Lead' }), value: 45, color: '#f87171' },
+    { name: t('pages.dashboard.dynamicCharts.dealStatus.quote', { defaultValue: 'Quote' }), value: 32, color: '#fbbf24' },
+    { name: t('pages.dashboard.dynamicCharts.dealStatus.negotiation', { defaultValue: 'Negotiation' }), value: 18, color: '#60a5fa' },
+    { name: t('pages.dashboard.dynamicCharts.dealStatus.win', { defaultValue: 'Win' }), value: 38, color: '#34d399' },
+    { name: t('pages.dashboard.dynamicCharts.dealStatus.lose', { defaultValue: 'Lose' }), value: 23, color: '#9ca3af' },
+  ];
+
+  const newCustomersData = [
+    { name: t('pages.dashboard.dynamicCharts.newCustomers.today', { defaultValue: 'Today' }), value: 12 },
+    { name: t('pages.dashboard.dynamicCharts.newCustomers.yesterday', { defaultValue: 'Yesterday' }), value: 10 },
+    { name: t('pages.dashboard.dynamicCharts.newCustomers.daysAgo2', { defaultValue: '2 days ago' }), value: 8 },
+    { name: t('pages.dashboard.dynamicCharts.newCustomers.daysAgo3', { defaultValue: '3 days ago' }), value: 15 },
+    { name: t('pages.dashboard.dynamicCharts.newCustomers.daysAgo4', { defaultValue: '4 days ago' }), value: 7 },
+  ];
+
+  const revenueByMonthData = [
+    { name: t('pages.dashboard.dynamicCharts.months.m1', { defaultValue: 'Jan' }), value: 800 },
+    { name: t('pages.dashboard.dynamicCharts.months.m2', { defaultValue: 'Feb' }), value: 950 },
+    { name: t('pages.dashboard.dynamicCharts.months.m3', { defaultValue: 'Mar' }), value: 1100 },
+    { name: t('pages.dashboard.dynamicCharts.months.m4', { defaultValue: 'Apr' }), value: 1250 },
+    { name: t('pages.dashboard.dynamicCharts.months.m5', { defaultValue: 'May' }), value: 1400 },
+    { name: t('pages.dashboard.dynamicCharts.months.m6', { defaultValue: 'Jun' }), value: 1600 },
+  ];
+
+  const conversionRateData = [
+    { name: t('pages.dashboard.dynamicCharts.conversion.converted', { defaultValue: 'Converted' }), value: 65, color: '#34d399' },
+    { name: t('pages.dashboard.dynamicCharts.conversion.notConverted', { defaultValue: 'Not converted' }), value: 35, color: '#f87171' },
+  ];
+
+  const monthlyRevenueData = [
+    { name: t('pages.dashboard.dynamicCharts.months.m1', { defaultValue: 'Jan' }), value: 1200 },
+    { name: t('pages.dashboard.dynamicCharts.months.m2', { defaultValue: 'Feb' }), value: 1900 },
+    { name: t('pages.dashboard.dynamicCharts.months.m3', { defaultValue: 'Mar' }), value: 1500 },
+    { name: t('pages.dashboard.dynamicCharts.months.m4', { defaultValue: 'Apr' }), value: 2200 },
+    { name: t('pages.dashboard.dynamicCharts.months.m5', { defaultValue: 'May' }), value: 1800 },
+    { name: t('pages.dashboard.dynamicCharts.months.m6', { defaultValue: 'Jun' }), value: 2400 },
+    { name: t('pages.dashboard.dynamicCharts.months.m7', { defaultValue: 'Jul' }), value: 2100 },
+  ];
+
   // Lấy dữ liệu phù hợp với loại biểu đồ
   const getChartData = () => {
     switch (chartDataType) {
       case 'newCustomers':
-        return NEW_CUSTOMERS_DATA;
+        return newCustomersData;
       case 'dealStatus':
-        return DEAL_STATUS_DATA;
+        return dealStatusData;
       case 'revenueByMonth':
-        return REVENUE_BY_MONTH_DATA;
+        return revenueByMonthData;
       case 'conversionRate':
-        return CONVERSION_RATE_DATA;
+        return conversionRateData;
       case 'revenueByEmployee':
       default:
         return REVENUE_DATA;
@@ -184,14 +193,16 @@ const DynamicCharts: React.FC<DynamicChartsProps> = ({ query }) => {
 
   // Format giá trị tiền tệ
   const formatValue = (value: number) => {
-    return `${value} triệu`;
+    return t('pages.dashboard.dynamicCharts.valueWithUnit', { value, defaultValue: `${value} triệu` });
   };
 
   return (
     <Paper elevation={2} sx={{ p: 3, borderRadius: 2, mb: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-          📈 {query ? `Kết quả cho: "${query}"` : 'Phân tích dữ liệu kinh doanh'}
+          {query
+            ? t('pages.dashboard.dynamicCharts.resultsFor', { query, defaultValue: `📈 Results for: "${query}"` })
+            : t('pages.dashboard.dynamicCharts.title', { defaultValue: '📈 Business data analytics' })}
         </Typography>
         
         <Box sx={{ display: 'flex', gap: 2 }}>
@@ -217,19 +228,19 @@ const DynamicCharts: React.FC<DynamicChartsProps> = ({ query }) => {
           </ToggleButtonGroup>
           
           <FormControl size="small" sx={{ minWidth: 120 }}>
-            <InputLabel id="time-range-label">Thời gian</InputLabel>
+            <InputLabel id="time-range-label">{t('pages.dashboard.dynamicCharts.time', { defaultValue: 'Time' })}</InputLabel>
             <Select
               labelId="time-range-label"
               id="time-range"
               value={timeRange}
-              label="Thời gian"
+              label={t('pages.dashboard.dynamicCharts.time', { defaultValue: 'Time' })}
               onChange={handleTimeRangeChange}
             >
-              <MenuItem value="today">Hôm nay</MenuItem>
-              <MenuItem value="week">Tuần này</MenuItem>
-              <MenuItem value="month">Tháng này</MenuItem>
-              <MenuItem value="quarter">Quý này</MenuItem>
-              <MenuItem value="year">Năm nay</MenuItem>
+              <MenuItem value="today">{t('pages.dashboard.dynamicCharts.timeRanges.today', { defaultValue: 'Today' })}</MenuItem>
+              <MenuItem value="week">{t('pages.dashboard.dynamicCharts.timeRanges.week', { defaultValue: 'This week' })}</MenuItem>
+              <MenuItem value="month">{t('pages.dashboard.dynamicCharts.timeRanges.month', { defaultValue: 'This month' })}</MenuItem>
+              <MenuItem value="quarter">{t('pages.dashboard.dynamicCharts.timeRanges.quarter', { defaultValue: 'This quarter' })}</MenuItem>
+              <MenuItem value="year">{t('pages.dashboard.dynamicCharts.timeRanges.year', { defaultValue: 'This year' })}</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -239,7 +250,7 @@ const DynamicCharts: React.FC<DynamicChartsProps> = ({ query }) => {
         {chartType === 'bar' && (
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              data={chartDataType === 'revenueByMonth' ? MONTHLY_REVENUE_DATA : REVENUE_DATA}
+              data={chartDataType === 'revenueByMonth' ? monthlyRevenueData : REVENUE_DATA}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
@@ -249,7 +260,9 @@ const DynamicCharts: React.FC<DynamicChartsProps> = ({ query }) => {
               <Legend />
               <Bar 
                 dataKey="value" 
-                name={chartDataType === 'revenueByMonth' ? 'Doanh thu theo tháng' : 'Doanh thu theo nhân viên'} 
+                name={chartDataType === 'revenueByMonth' 
+                  ? t('pages.dashboard.dynamicCharts.series.revenueByMonth', { defaultValue: 'Revenue by month' }) 
+                  : t('pages.dashboard.dynamicCharts.series.revenueByEmployee', { defaultValue: 'Revenue by employee' })} 
                 fill="#3b82f6" 
               />
             </BarChart>
@@ -260,7 +273,7 @@ const DynamicCharts: React.FC<DynamicChartsProps> = ({ query }) => {
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
-                data={chartDataType === 'dealStatus' ? DEAL_STATUS_DATA : REVENUE_DATA}
+                data={chartDataType === 'dealStatus' ? dealStatusData : REVENUE_DATA}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
@@ -286,7 +299,7 @@ const DynamicCharts: React.FC<DynamicChartsProps> = ({ query }) => {
         {chartType === 'line' && (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
-              data={MONTHLY_REVENUE_DATA}
+              data={monthlyRevenueData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
@@ -297,7 +310,7 @@ const DynamicCharts: React.FC<DynamicChartsProps> = ({ query }) => {
               <Line 
                 type="monotone" 
                 dataKey="value" 
-                name="Doanh thu theo tháng" 
+                name={t('pages.dashboard.dynamicCharts.series.revenueByMonth', { defaultValue: 'Revenue by month' })} 
                 stroke="#3b82f6" 
                 activeDot={{ r: 8 }} 
               />
@@ -310,27 +323,27 @@ const DynamicCharts: React.FC<DynamicChartsProps> = ({ query }) => {
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
-                  <th style={{ padding: '12px 16px', textAlign: 'left' }}>Tên</th>
-                  <th style={{ padding: '12px 16px', textAlign: 'right' }}>Giá trị</th>
+                  <th style={{ padding: '12px 16px', textAlign: 'left' }}>{t('pages.dashboard.dynamicCharts.table.name', { defaultValue: 'Name' })}</th>
+                  <th style={{ padding: '12px 16px', textAlign: 'right' }}>{t('pages.dashboard.dynamicCharts.table.value', { defaultValue: 'Value' })}</th>
                 </tr>
               </thead>
               <tbody>
-                {(chartDataType === 'dealStatus' ? DEAL_STATUS_DATA : 
-                  chartDataType === 'revenueByMonth' ? MONTHLY_REVENUE_DATA : REVENUE_DATA)
+                {(chartDataType === 'dealStatus' ? dealStatusData : 
+                  chartDataType === 'revenueByMonth' ? monthlyRevenueData : REVENUE_DATA)
                   .map((item, index) => (
-                    <tr 
-                      key={index} 
-                      style={{ 
-                        borderBottom: '1px solid #e2e8f0',
-                        backgroundColor: index % 2 === 0 ? '#f8fafc' : 'white'
-                      }}
-                    >
-                      <td style={{ padding: '12px 16px' }}>{item.name}</td>
-                      <td style={{ padding: '12px 16px', textAlign: 'right' }}>
-                        {formatValue(item.value)}
-                      </td>
-                    </tr>
-                  ))}
+                  <tr 
+                    key={index} 
+                    style={{ 
+                      borderBottom: '1px solid #e2e8f0',
+                      backgroundColor: index % 2 === 0 ? '#f8fafc' : 'white'
+                    }}
+                  >
+                    <td style={{ padding: '12px 16px' }}>{item.name}</td>
+                    <td style={{ padding: '12px 16px', textAlign: 'right' }}>
+                      {formatValue(item.value)}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </Box>

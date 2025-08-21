@@ -35,6 +35,7 @@ import {
   AttachMoney as MoneyIcon,
   Clear as ClearIcon
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 // Types
 export interface FilterConfig {
@@ -109,6 +110,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
   sticky = true
 }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [activeView, setActiveView] = useState('all');
   const [appliedFilters, setAppliedFilters] = useState<FilterQuery>({
     ownerIds: [],
@@ -121,13 +123,13 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
   // Date presets
   const datePresets = [
-    { value: 'today', label: 'Today' },
-    { value: 'yesterday', label: 'Yesterday' },
-    { value: 'last7days', label: 'Last 7 days' },
-    { value: 'last30days', label: 'Last 30 days' },
-    { value: 'thismonth', label: 'This month' },
-    { value: 'lastmonth', label: 'Last month' },
-    { value: 'custom', label: 'Custom range' }
+    { value: 'today', label: t('components.filterBar.datePresets.today') },
+    { value: 'yesterday', label: t('components.filterBar.datePresets.yesterday') },
+    { value: 'last7days', label: t('components.filterBar.datePresets.last7days') },
+    { value: 'last30days', label: t('components.filterBar.datePresets.last30days') },
+    { value: 'thismonth', label: t('components.filterBar.datePresets.thismonth') },
+    { value: 'lastmonth', label: t('components.filterBar.datePresets.lastmonth') },
+    { value: 'custom', label: t('components.filterBar.datePresets.custom') }
   ];
 
   // Handle filter chip click
@@ -328,7 +330,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
       {/* Saved Views */}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
         <Typography variant="body2" color="text.secondary" sx={{ mr: 1 }}>
-          View:
+          {t('components.filterBar.labels.view')}
         </Typography>
         {savedViews.map(view => (
           <Chip
@@ -393,7 +395,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
             onClick={handleClearAll}
             sx={{ ml: 1 }}
           >
-            Clear all
+            {t('components.filterBar.buttons.clearAll')}
           </Button>
         )}
       </Box>
@@ -402,7 +404,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
       {hasActiveFilters && (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
           <Typography variant="body2" color="text.secondary" sx={{ mr: 1 }}>
-            Applied:
+            {t('components.filterBar.labels.applied')}
           </Typography>
           {appliedTokens.map((token, index) => (
             <Chip
@@ -454,7 +456,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
           <TextField
             fullWidth
             size="small"
-            placeholder="Search owners..."
+            placeholder={t('components.filterBar.placeholders.searchOwners')}
             value={searchQueries.owner || ''}
             onChange={(e) => setSearchQueries((prev: { [key: string]: string }) => ({ ...prev, owner: e.target.value }))}
             InputProps={{
@@ -470,18 +472,18 @@ const FilterBar: React.FC<FilterBarProps> = ({
           {/* Quick options */}
           <Box sx={{ mb: 2 }}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-              Quick select:
+              {t('components.filterBar.labels.quickSelect')}
             </Typography>
             <Stack direction="row" spacing={1}>
               <Chip
-                label="Me"
+                label={t('components.filterBar.chips.me')}
                 size="small"
                 variant="outlined"
                 onClick={() => handleOwnerSelect('current-user')}
                 sx={{ cursor: 'pointer' }}
               />
               <Chip
-                label="Unassigned"
+                label={t('components.filterBar.chips.unassigned')}
                 size="small"
                 variant="outlined"
                 onClick={() => handleOwnerSelect('unassigned')}
@@ -497,7 +499,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
             {filteredOwners.length === 0 ? (
               <ListItem>
                 <ListItemText
-                  primary="No results found"
+                  primary={t('components.filterBar.messages.noResults')}
                   primaryTypographyProps={{ color: 'text.secondary', variant: 'body2' }}
                 />
               </ListItem>
@@ -555,7 +557,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
       >
         <Box sx={{ p: 2 }}>
           <Typography variant="subtitle2" sx={{ mb: 2 }}>
-            {availableFilters.find(f => f.id === openPopover)?.label || 'Date Filter'}
+            {availableFilters.find(f => f.id === openPopover)?.label || t('components.filterBar.labels.dateFilter')}
           </Typography>
           
           <List>
@@ -596,7 +598,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
       >
         <Box sx={{ p: 2 }}>
           <Typography variant="subtitle2" sx={{ mb: 2 }}>
-            {availableFilters.find(f => f.id === openPopover)?.label || 'Status Filter'}
+            {availableFilters.find(f => f.id === openPopover)?.label || t('components.filterBar.labels.statusFilter')}
           </Typography>
           
           <List>
@@ -650,12 +652,12 @@ const FilterBar: React.FC<FilterBarProps> = ({
       >
         <Box sx={{ p: 2 }}>
           <Typography variant="subtitle2" sx={{ mb: 2 }}>
-            Amount Range
+            {t('components.filterBar.labels.amountRange')}
           </Typography>
           
           <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
             <TextField
-              label="Min"
+              label={t('components.filterBar.range.min')}
               type="number"
               size="small"
               value={tempFilters.min || ''}
@@ -665,7 +667,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
               }}
             />
             <TextField
-              label="Max"
+              label={t('components.filterBar.range.max')}
               type="number"
               size="small"
               value={tempFilters.max || ''}
@@ -678,7 +680,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
             <Button size="small" onClick={handlePopoverClose}>
-              Cancel
+              {t('components.filterBar.buttons.cancel')}
             </Button>
             <Button 
               size="small" 
@@ -686,7 +688,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
               onClick={handleAmountApply}
               disabled={!tempFilters.min && !tempFilters.max}
             >
-              Apply
+              {t('components.filterBar.buttons.apply')}
             </Button>
           </Box>
         </Box>

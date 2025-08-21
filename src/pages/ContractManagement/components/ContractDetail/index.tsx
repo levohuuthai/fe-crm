@@ -79,7 +79,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
           <ArrowBack />
         </IconButton>
         <Typography variant="h5">
-          {t('pages.contracts.detail.title', 'Contract details')}: {contract.name}
+          {t('pages.contracts.detail.title', { defaultValue: 'Contract details' })}: {contract.name}
         </Typography>
         <Chip 
           label={contract.status.toUpperCase()} 
@@ -93,22 +93,22 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3, flexWrap: 'wrap', gap: 2 }}>
           <Box>
             <Typography variant="h6" gutterBottom>
-              {t('pages.contracts.detail.generalInfo', 'General information')}
+              {t('pages.contracts.detail.generalInfo', { defaultValue: 'General information' })}
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
               <Box sx={{ flex: '1 1 300px' }}>
-                <Typography><strong>{t('pages.contracts.detail.fields.contractId', 'Contract ID')}:</strong> {contract.id}</Typography>
-                <Typography><strong>{t('pages.contracts.detail.fields.templateName', 'Template name')}:</strong> {contract.templateName}</Typography>
-                <Typography><strong>{t('pages.contracts.detail.fields.createdAt', 'Created at')}:</strong> {formatDate(contract.createdAt)}</Typography>
+                <Typography><strong>{t('pages.contracts.detail.fields.contractId', { defaultValue: 'Contract ID' })}:</strong> {contract.id}</Typography>
+                <Typography><strong>{t('pages.contracts.detail.fields.templateName', { defaultValue: 'Template name' })}:</strong> {contract.templateName}</Typography>
+                <Typography><strong>{t('pages.contracts.detail.fields.createdAt', { defaultValue: 'Created at' })}:</strong> {formatDate(contract.createdAt)}</Typography>
               </Box>
               <Box sx={{ flex: '1 1 300px' }}>
-                <Typography><strong>{t('pages.contracts.detail.fields.createdBy', 'Created by')}:</strong> {contract.createdBy}</Typography>
-                <Typography><strong>{t('pages.contracts.detail.fields.updatedAt', 'Updated at')}:</strong> {formatDate(contract.updatedAt)}</Typography>
+                <Typography><strong>{t('pages.contracts.detail.fields.createdBy', { defaultValue: 'Created by' })}:</strong> {contract.createdBy}</Typography>
+                <Typography><strong>{t('pages.contracts.detail.fields.updatedAt', { defaultValue: 'Updated at' })}:</strong> {formatDate(contract.updatedAt)}</Typography>
                 {contract.signedAt && (
-                  <Typography><strong>{t('pages.contracts.detail.fields.signedAt', 'Signed at')}:</strong> {formatDate(contract.signedAt)}</Typography>
+                  <Typography><strong>{t('pages.contracts.detail.fields.signedAt', { defaultValue: 'Signed at' })}:</strong> {formatDate(contract.signedAt)}</Typography>
                 )}
                 {contract.expiresAt && (
-                  <Typography><strong>{t('pages.contracts.detail.fields.expiresAt', 'Expires at')}:</strong> {formatDate(contract.expiresAt)}</Typography>
+                  <Typography><strong>{t('pages.contracts.detail.fields.expiresAt', { defaultValue: 'Expires at' })}:</strong> {formatDate(contract.expiresAt)}</Typography>
                 )}
               </Box>
             </Box>
@@ -116,13 +116,13 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
           
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
             <Button variant="outlined" startIcon={<Download />} size="small">
-              {t('common.download', 'Download')}
+              {t('common.download', { defaultValue: 'Download' })}
             </Button>
             <Button variant="outlined" startIcon={<Print />} size="small">
-              {t('pages.contracts.detail.actions.print', 'Print')}
+              {t('pages.contracts.detail.actions.print', { defaultValue: 'Print' })}
             </Button>
             <Button variant="outlined" startIcon={<Share />} size="small">
-              {t('pages.contracts.detail.actions.share', 'Share')}
+              {t('pages.contracts.detail.actions.share', { defaultValue: 'Share' })}
             </Button>
             <Button 
               variant="contained" 
@@ -131,7 +131,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
               onClick={() => onEdit(contract.id)}
               size="small"
             >
-              {t('common.edit', 'Edit')}
+              {t('common.edit', { defaultValue: 'Edit' })}
             </Button>
             <Button 
               variant="outlined" 
@@ -140,7 +140,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
               onClick={() => setDeleteConfirmOpen(true)}
               size="small"
             >
-              {t('common.delete', 'Delete')}
+              {t('common.delete', { defaultValue: 'Delete' })}
             </Button>
           </Box>
         </Box>
@@ -149,35 +149,35 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
 
         <Box sx={{ mb: 4 }}>
           <Typography variant="h6" gutterBottom>
-            {t('pages.contracts.detail.partiesInfo', 'Parties information')}
+            {t('pages.contracts.detail.partiesInfo', { defaultValue: 'Parties information' })}
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
             <Box sx={{ flex: '1 1 300px' }}>
               <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
                 <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                  {t('pages.contracts.detail.partyA.title', 'Party A (Contracting party)')}
+                  {t('pages.contracts.detail.partyA.title', { defaultValue: 'Party A (Contracting party)' })}
                 </Typography>
                 {contract.contractData ? (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                    <Typography><strong>{t('pages.contracts.detail.party.companyName', 'Company name')}:</strong> {contract.contractData.tenBenA}</Typography>
-                    <Typography><strong>{t('pages.contracts.detail.party.address', 'Address')}:</strong> {contract.contractData.diaChiA}</Typography>
-                    <Typography><strong>{t('pages.contracts.detail.party.phone', 'Phone')}:</strong> {contract.contractData.dienThoaiA}</Typography>
-                    <Typography><strong>{t('pages.contracts.detail.party.taxId', 'Tax ID')}:</strong> {contract.contractData.maSoThueA}</Typography>
-                    <Typography><strong>{t('pages.contracts.detail.party.representative', 'Representative')}:</strong> {contract.contractData.nguoiDaiDienA}</Typography>
-                    <Typography><strong>{t('pages.contracts.detail.party.position', 'Position')}:</strong> {contract.contractData.chucVuA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.companyName', { defaultValue: 'Company name' })}:</strong> {contract.contractData.tenBenA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.address', { defaultValue: 'Address' })}:</strong> {contract.contractData.diaChiA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.phone', { defaultValue: 'Phone' })}:</strong> {contract.contractData.dienThoaiA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.taxId', { defaultValue: 'Tax ID' })}:</strong> {contract.contractData.maSoThueA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.representative', { defaultValue: 'Representative' })}:</strong> {contract.contractData.nguoiDaiDienA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.position', { defaultValue: 'Position' })}:</strong> {contract.contractData.chucVuA}</Typography>
                   </Box>
                 ) : (
-                  <Typography>{t('common.noData', 'No data')}</Typography>
+                  <Typography>{t('common.noData', { defaultValue: 'No data' })}</Typography>
                 )}
               </Paper>
             </Box>
             <Box sx={{ flex: '1 1 300px' }}>
               <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
                 <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                  {t('pages.contracts.detail.partyB.title', 'Party B (Partner)')}
+                  {t('pages.contracts.detail.partyB.title', { defaultValue: 'Party B (Partner)' })}
                 </Typography>
                 {contract.contractData ? (
-                  <Typography><strong>{t('pages.contracts.detail.party.companyName', 'Company name')}:</strong> {contract.contractData.tenBenB}</Typography>
+                  <Typography><strong>{t('pages.contracts.detail.party.companyName', { defaultValue: 'Company name' })}:</strong> {contract.contractData.tenBenB}</Typography>
                 ) : (
                   <Typography>{t('common.noData', 'No data')}</Typography>
                 )}
@@ -188,14 +188,14 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
 
         <Box>
           <Typography variant="h6" gutterBottom>
-            {t('pages.contracts.detail.contractContent', 'Contract content')}
+            {t('pages.contracts.detail.contractContent', { defaultValue: 'Contract content' })}
           </Typography>
           <Paper variant="outlined" sx={{ p: 3 }}>
             <Typography variant="h5" align="center" gutterBottom>
-              {t('pages.contracts.detail.sample.heading', 'SERVICE CONTRACT')}
+              {t('pages.contracts.detail.sample.heading', { defaultValue: 'SERVICE CONTRACT' })}
             </Typography>
             <Typography paragraph align="center">
-              {t('pages.contracts.detail.sample.code', 'No.')}: {contract.id}
+              {t('pages.contracts.detail.sample.code', { defaultValue: 'No.' })}: {contract.id}
             </Typography>
             
             <Typography paragraph align="center">
@@ -208,11 +208,11 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
             </Typography>
             
             <Typography paragraph>
-              <strong>{t('pages.contracts.detail.sample.partyA', 'PARTY A')}:</strong> {contract.contractData?.tenBenA || contract.partyA}
+              <strong>{t('pages.contracts.detail.sample.partyA', { defaultValue: 'PARTY A' })}:</strong> {contract.contractData?.tenBenA || contract.partyA}
             </Typography>
             
             <Typography paragraph>
-              <strong>{t('pages.contracts.detail.sample.partyB', 'PARTY B')}:</strong> {contract.contractData?.tenBenB || contract.partyB}
+              <strong>{t('pages.contracts.detail.sample.partyB', { defaultValue: 'PARTY B' })}:</strong> {contract.contractData?.tenBenB || contract.partyB}
             </Typography>
             
             <Typography paragraph>
@@ -257,12 +257,12 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
 
       {/* Delete confirmation dialog */}
       <Dialog open={deleteConfirmOpen} onClose={() => setDeleteConfirmOpen(false)}>
-        <DialogTitle>{t('pages.contracts.detail.deleteDialog.title', 'Confirm contract deletion')}</DialogTitle>
+        <DialogTitle>{t('pages.contracts.detail.deleteDialog.title', { defaultValue: 'Confirm contract deletion' })}</DialogTitle>
         <DialogContent>
-          <Typography>{t('pages.contracts.detail.deleteDialog.text', 'Are you sure you want to delete this contract? This action cannot be undone.')}</Typography>
+          <Typography>{t('pages.contracts.detail.deleteDialog.text', { defaultValue: 'Are you sure you want to delete this contract? This action cannot be undone.' })}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteConfirmOpen(false)}>{t('common.cancel', 'Cancel')}</Button>
+          <Button onClick={() => setDeleteConfirmOpen(false)}>{t('common.cancel', { defaultValue: 'Cancel' })}</Button>
           <Button 
             onClick={() => {
               onDelete(contract.id);
@@ -271,7 +271,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
             color="error"
             variant="contained"
           >
-            {t('pages.contracts.detail.deleteDialog.confirm', 'Delete')}
+            {t('pages.contracts.detail.deleteDialog.confirm', { defaultValue: 'Delete' })}
           </Button>
         </DialogActions>
       </Dialog>
