@@ -166,12 +166,19 @@ const generateConversationTitle = (query: string): string => {
   return words.join(' ');
 };
 
-const generateMockSummary = (query: string): string[] => {
+const generateMockSummary = (query: string, t: (key: string, options?: any) => string): string[] => {
+  const totalAmount = mockDeals.reduce((sum, deal) => sum + deal.amount, 0);
+  const stageCounts = mockDeals.reduce<Record<string, number>>((acc, d) => {
+    acc[d.stage] = (acc[d.stage] || 0) + 1;
+    return acc;
+  }, {});
+  const mostCommonStage = Object.entries(stageCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '';
+
   return [
-    `Tìm thấy ${mockContacts.length} liên hệ phù hợp với truy vấn`,
-    `${mockDeals.length} cơ hội mở với tổng giá trị ~${formatAmount(mockDeals.reduce((sum, deal) => sum + deal.amount, 0))}`,
-    `Nhiều deal đang ở giai đoạn "Đã gửi báo giá" cần theo dõi`,
-    `Tỷ lệ chuyển đổi lead hiện tại: 65%`
+    t('pages.assistant.mock.summary.foundContacts', { count: mockContacts.length }),
+    t('pages.assistant.mock.summary.openDealsTotal', { count: mockDeals.length, total: formatAmount(totalAmount) }),
+    t('pages.assistant.mock.summary.manyDealsAtStage', { stage: mostCommonStage }),
+    t('pages.assistant.mock.summary.currentLeadConversion', { percent: 65 })
   ];
 };
 
@@ -521,7 +528,7 @@ const CrmAssistantPanel: React.FC<CrmAssistantPanelProps> = ({
         // Create card response for initial query
         const newCardData: AssistantCardData = {
           query: message,
-          summary: generateMockSummary(message),
+          summary: generateMockSummary(message, t),
           contacts: mockContacts,
           deals: mockDeals,
           showContacts: true,
@@ -638,7 +645,7 @@ const CrmAssistantPanel: React.FC<CrmAssistantPanelProps> = ({
             <AIIcon color="primary" />
             <Box>
               <Typography variant="h6" sx={{ fontWeight: 'bold', lineHeight: 1 }}>
-                CRM Assistant
+                {t('pages.assistant.assistant')}
               </Typography>
               <Typography variant="caption" color="text.secondary">
                 {conversationTitle || 'Start new chat'}

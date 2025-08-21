@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+  import React, { useState } from 'react';
 import {
   Box,
   Typography,
@@ -28,19 +28,7 @@ const mockUsers = [
   { id: '5', name: 'Hoàng Thị F', email: 'hoang.f@company.com', avatar: '/avatars/hoang.jpg' }
 ];
 
-// Lead status options
-const leadStatusOptions = [
-  { value: 'new', label: 'New Lead', color: '#2196f3' },
-  { value: 'qualified', label: 'Qualified', color: '#4caf50' },
-  { value: 'hot', label: 'Hot Lead', color: '#ff5722' },
-  { value: 'cold', label: 'Cold Lead', color: '#9e9e9e' },
-  { value: 'converted', label: 'Converted', color: '#8bc34a' }
-];
-
-// Table columns configuration (moved into component via translatedColumns)
-const contactsColumns: SmartTableColumn[] = [];
-
-// Mock contacts data
+// Mock contacts data (store canonical position keys)
 const mockContactsData: SmartTableRow[] = [
   {
     id: '1',
@@ -48,7 +36,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'an.nguyen@company.com',
     phone: '0901234567',
     company: 'ABC Corporation',
-    position: 'Giám đốc IT',
+    position: 'itDirector',
     owner: '1',
     leadStatus: 'hot',
     lastContact: '2024-01-15',
@@ -60,7 +48,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'cam.le@business.vn',
     phone: '0987654321',
     company: 'XYZ Trading',
-    position: 'Trưởng phòng Marketing',
+    position: 'marketingManager',
     owner: '2',
     leadStatus: 'qualified',
     lastContact: '2024-01-10',
@@ -72,7 +60,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'duc.hoang@tech.com',
     phone: '0912345678',
     company: 'Tech Solutions',
-    position: 'CTO',
+    position: 'cto',
     owner: '3',
     leadStatus: 'new',
     lastContact: '2024-01-08',
@@ -84,7 +72,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'mai.tran@startup.io',
     phone: '0923456789',
     company: 'Innovation Startup',
-    position: 'CEO',
+    position: 'ceo',
     owner: '1',
     leadStatus: 'qualified',
     lastContact: '2024-01-12',
@@ -96,7 +84,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'nam.pham@enterprise.com',
     phone: '0934567890',
     company: 'Big Enterprise',
-    position: 'Procurement Manager',
+    position: 'procurementManager',
     owner: '4',
     leadStatus: 'cold',
     lastContact: '2023-12-20',
@@ -108,7 +96,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'lan.vo@retail.vn',
     phone: '0945678901',
     company: 'Retail Chain',
-    position: 'Operations Director',
+    position: 'operationsDirector',
     owner: '2',
     leadStatus: 'hot',
     lastContact: '2024-01-14',
@@ -120,7 +108,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'tuan.do@finance.com',
     phone: '0956789012',
     company: 'Financial Services',
-    position: 'Head of Digital',
+    position: 'headOfDigital',
     owner: '5',
     leadStatus: 'qualified',
     lastContact: '2024-01-11',
@@ -132,7 +120,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'hoa.bui@healthcare.vn',
     phone: '0967890123',
     company: 'Healthcare Group',
-    position: 'IT Manager',
+    position: 'itManager',
     owner: '3',
     leadStatus: 'new',
     lastContact: '2024-01-09',
@@ -144,7 +132,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'kien.ngo@logistics.com',
     phone: '0978901234',
     company: 'Logistics Solutions',
-    position: 'Supply Chain Manager',
+    position: 'supplyChainManager',
     owner: '1',
     leadStatus: 'hot',
     lastContact: '2024-01-16',
@@ -156,7 +144,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'linh.dang@education.edu',
     phone: '0989012345',
     company: 'Education Institute',
-    position: 'Technology Director',
+    position: 'technologyDirector',
     owner: '2',
     leadStatus: 'qualified',
     lastContact: '2024-01-13',
@@ -168,7 +156,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'quang.ly@manufacturing.vn',
     phone: '0990123456',
     company: 'Manufacturing Corp',
-    position: 'Production Manager',
+    position: 'productionManager',
     owner: '3',
     leadStatus: 'new',
     lastContact: '2024-01-07',
@@ -180,7 +168,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'nga.phan@tourism.com',
     phone: '0901234568',
     company: 'Tourism Group',
-    position: 'Digital Marketing Head',
+    position: 'digitalMarketingHead',
     owner: '4',
     leadStatus: 'cold',
     lastContact: '2023-12-25',
@@ -192,7 +180,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'hung.vu@construction.vn',
     phone: '0912345679',
     company: 'Construction Ltd',
-    position: 'Project Manager',
+    position: 'projectManager',
     owner: '5',
     leadStatus: 'qualified',
     lastContact: '2024-01-11',
@@ -204,7 +192,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'oanh.trinh@banking.com',
     phone: '0923456780',
     company: 'Banking Solutions',
-    position: 'IT Director',
+    position: 'itDirector',
     owner: '1',
     leadStatus: 'hot',
     lastContact: '2024-01-15',
@@ -216,7 +204,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'phuc.ho@insurance.vn',
     phone: '0934567891',
     company: 'Insurance Group',
-    position: 'Digital Transformation Lead',
+    position: 'digitalTransformationLead',
     owner: '2',
     leadStatus: 'qualified',
     lastContact: '2024-01-12',
@@ -228,7 +216,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'quynh.mai@media.com',
     phone: '0945678902',
     company: 'Media Corporation',
-    position: 'Technology Manager',
+    position: 'technologyManager',
     owner: '3',
     leadStatus: 'new',
     lastContact: '2024-01-08',
@@ -240,7 +228,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'son.dinh@energy.vn',
     phone: '0956789013',
     company: 'Energy Solutions',
-    position: 'Operations Director',
+    position: 'operationsDirector',
     owner: '4',
     leadStatus: 'cold',
     lastContact: '2023-12-18',
@@ -252,7 +240,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'tam.luong@pharma.com',
     phone: '0967890124',
     company: 'Pharmaceutical Inc',
-    position: 'R&D Manager',
+    position: 'rdManager',
     owner: '5',
     leadStatus: 'qualified',
     lastContact: '2024-01-10',
@@ -264,7 +252,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'thang.cao@automotive.vn',
     phone: '0978901235',
     company: 'Automotive Group',
-    position: 'Engineering Manager',
+    position: 'engineeringManager',
     owner: '1',
     leadStatus: 'hot',
     lastContact: '2024-01-14',
@@ -276,7 +264,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'uyen.doan@agriculture.com',
     phone: '0989012346',
     company: 'Agriculture Tech',
-    position: 'Innovation Director',
+    position: 'innovationDirector',
     owner: '2',
     leadStatus: 'qualified',
     lastContact: '2024-01-11',
@@ -288,7 +276,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'vinh.to@textile.vn',
     phone: '0990123457',
     company: 'Textile Manufacturing',
-    position: 'Quality Manager',
+    position: 'qualityManager',
     owner: '3',
     leadStatus: 'new',
     lastContact: '2024-01-06',
@@ -300,7 +288,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'xuan.bach@chemicals.com',
     phone: '0901234569',
     company: 'Chemical Industries',
-    position: 'Process Manager',
+    position: 'processManager',
     owner: '4',
     leadStatus: 'cold',
     lastContact: '2023-12-22',
@@ -312,7 +300,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'yen.lam@electronics.vn',
     phone: '0912345680',
     company: 'Electronics Corp',
-    position: 'Product Manager',
+    position: 'productManager',
     owner: '5',
     leadStatus: 'qualified',
     lastContact: '2024-01-09',
@@ -324,7 +312,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'zara.ung@fashion.com',
     phone: '0923456781',
     company: 'Fashion Retail',
-    position: 'E-commerce Director',
+    position: 'ecommerceDirector',
     owner: '1',
     leadStatus: 'hot',
     lastContact: '2024-01-13',
@@ -336,7 +324,7 @@ const mockContactsData: SmartTableRow[] = [
     email: 'an.khuong@sports.vn',
     phone: '0934567892',
     company: 'Sports Equipment',
-    position: 'Sales Director',
+    position: 'salesDirector',
     owner: '2',
     leadStatus: 'qualified',
     lastContact: '2024-01-10',
@@ -347,6 +335,43 @@ const mockContactsData: SmartTableRow[] = [
 const ContactsPage: React.FC = () => {
   const theme = useTheme();
   const { t } = useTranslation();
+
+  // Canonical list of position keys (control which appear in UI)
+  const positionKeys = React.useMemo(
+    () => [
+      'itDirector',
+      'marketingManager',
+      'cto',
+      'ceo',
+      'procurementManager',
+      'operationsDirector',
+      'headOfDigital',
+      'itManager',
+      'supplyChainManager',
+      'technologyDirector',
+      'productionManager',
+      'digitalMarketingHead',
+      'projectManager',
+      'digitalTransformationLead',
+      'technologyManager',
+      'rdManager',
+      'engineeringManager',
+      'innovationDirector',
+      'qualityManager',
+      'processManager',
+      'productManager',
+      'ecommerceDirector',
+      'salesDirector'
+    ],
+    []
+  );
+
+  // Positions options from i18n 'positions' namespace
+  const positionsOptions = React.useMemo(
+    () => positionKeys.map((key) => ({ value: key, label: t(`positions:${key}`) })),
+    [positionKeys, t]
+  );
+
   const [contactsData, setContactsData] = useState<SmartTableRow[]>(mockContactsData);
   const [filteredData, setFilteredData] = useState<SmartTableRow[]>(mockContactsData);
   const [loading, setLoading] = useState(false);
@@ -354,6 +379,15 @@ const ContactsPage: React.FC = () => {
   const [currentView, setCurrentView] = useState('all');
   const [previewContact, setPreviewContact] = useState<SmartTableRow | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
+
+  // Lead status options (localized)
+  const leadStatusOptions = React.useMemo(() => ([
+    { value: 'new', label: t('pages.contacts.form.options.leadStatus.new'), color: '#2196f3' },
+    { value: 'qualified', label: t('pages.contacts.form.options.leadStatus.qualified'), color: '#4caf50' },
+    { value: 'hot', label: t('pages.contacts.form.options.leadStatus.hot'), color: '#ff5722' },
+    { value: 'cold', label: t('pages.contacts.form.options.leadStatus.cold'), color: '#9e9e9e' },
+    { value: 'converted', label: t('pages.contacts.form.options.leadStatus.converted'), color: '#8bc34a' }
+  ]), [t, positionsOptions]);
 
   // Filter configuration for Contacts
   const filterConfigs: FilterConfig[] = [
@@ -452,10 +486,11 @@ const ContactsPage: React.FC = () => {
     {
       id: 'position',
       label: t('pages.contacts.columns.position'),
-      type: 'text',
-      width: 150,
+      type: 'select',
+      width: 200,
       sortable: true,
-      editable: true
+      editable: true,
+      options: positionsOptions
     },
     {
       id: 'owner',

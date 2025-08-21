@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Typography,
@@ -53,6 +54,7 @@ interface DynamicUpdate {
 
 const DynamicKPIStats: React.FC = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [kpiData, setKpiData] = useState<KPIData[]>([]);
   const [dynamicUpdates, setDynamicUpdates] = useState<DynamicUpdate[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -95,57 +97,57 @@ const DynamicKPIStats: React.FC = () => {
     const kpis: KPIData[] = [
       {
         id: 'new_customers',
-        title: 'Khách hàng mới',
+        title: t('pages.dashboard.kpiStats.newCustomers'),
         value: Math.floor(Math.random() * 20) + 15, // 15-35
         change: Math.random() * 30 - 10, // -10% to +20%
-        changeLabel: 'so với tuần trước',
+        changeLabel: t('pages.dashboard.kpiStats.comparedToLastWeek'),
         icon: <PeopleIcon />,
         color: theme.palette.primary.main,
-        description: 'Khách hàng mới đăng ký trong tuần',
+        description: t('pages.dashboard.kpiStats.newCustomers'),
         lastUpdated: currentDate
       },
       {
         id: 'total_deals',
-        title: 'Tổng Deal',
+        title: t('pages.dashboard.kpiStats.totalDeals'),
         value: Math.floor(Math.random() * 50) + 120, // 120-170
         change: Math.random() * 25 - 5, // -5% to +20%
-        changeLabel: 'so với tháng trước',
+        changeLabel: t('pages.dashboard.kpiStats.comparedToLastMonth'),
         icon: <DealsIcon />,
         color: theme.palette.success.main,
-        description: 'Tổng số deal đang theo dõi',
+        description: t('pages.dashboard.kpiStats.totalDeals'),
         lastUpdated: currentDate
       },
       {
         id: 'revenue',
-        title: 'Doanh thu thực tế',
+        title: t('pages.dashboard.kpiStats.revenueActual'),
         value: `${(Math.random() * 500 + 1500).toFixed(0)}K`,
         change: Math.random() * 40 - 10, // -10% to +30%
-        changeLabel: 'so với tháng trước',
+        changeLabel: t('pages.dashboard.kpiStats.comparedToLastMonth'),
         icon: <MoneyIcon />,
         color: theme.palette.warning.main,
-        description: 'Doanh thu đã thực hiện trong tháng',
+        description: t('pages.dashboard.kpiStats.revenueActual'),
         lastUpdated: currentDate
       },
       {
         id: 'deal_pipeline',
-        title: 'Deal theo giai đoạn',
+        title: t('pages.dashboard.kpiStats.dealByStage'),
         value: `${Math.floor(Math.random() * 10) + 25}`,
         change: Math.random() * 20 - 5, // -5% to +15%
-        changeLabel: 'deal đang closing',
+        changeLabel: t('pages.dashboard.kpiStats.closedThisMonth'),
         icon: <TimelineIcon />,
         color: theme.palette.info.main,
-        description: 'Deal đang ở giai đoạn cuối',
+        description: t('pages.dashboard.kpiStats.dealByStage'),
         lastUpdated: currentDate
       },
       {
         id: 'top_performer',
-        title: 'Nhân viên top deal',
+        title: t('pages.dashboard.kpiStats.topEmployee'),
         value: 'Nguyễn Văn A',
         change: 8, // Number of deals
-        changeLabel: 'deal trong tháng',
+        changeLabel: t('pages.dashboard.kpiStats.closedThisMonth'),
         icon: <StarIcon />,
         color: theme.palette.secondary.main,
-        description: 'Nhân viên có hiệu suất cao nhất',
+        description: t('pages.dashboard.kpiStats.topEmployee'),
         lastUpdated: currentDate
       }
     ];
@@ -159,8 +161,8 @@ const DynamicKPIStats: React.FC = () => {
     const updates: DynamicUpdate[] = [
       {
         id: 'update_1',
-        title: 'Deal mới được tạo',
-        description: 'Hệ thống ERP cho Công ty ABC - Giá trị: 250K',
+        title: t('pages.dashboard.dynamicKPI.updates.dealCreated.title'),
+        description: t('pages.dashboard.dynamicKPI.updates.dealCreated.description', { value: '250K' }),
         timestamp: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes ago
         type: 'deal_closed',
         value: '250K',
@@ -168,16 +170,16 @@ const DynamicKPIStats: React.FC = () => {
       },
       {
         id: 'update_2',
-        title: 'Khách hàng mới đăng ký',
-        description: 'XYZ Corporation đã đăng ký dịch vụ',
+        title: t('pages.dashboard.dynamicKPI.updates.newCustomer.title'),
+        description: t('pages.dashboard.dynamicKPI.updates.newCustomer.description', { customer: 'XYZ Corporation' }),
         timestamp: new Date(Date.now() - 15 * 60 * 1000), // 15 minutes ago
         type: 'new_customer',
         isNew: true
       },
       {
         id: 'update_3',
-        title: 'Xu hướng thị trường',
-        description: 'AI/ML solutions tăng trưởng 35% trong quý',
+        title: t('pages.dashboard.dynamicKPI.updates.marketTrend.title'),
+        description: t('pages.dashboard.dynamicKPI.updates.marketTrend.description', { percent: 35 }),
         timestamp: new Date(Date.now() - 30 * 60 * 1000), // 30 minutes ago
         type: 'market_trend'
       }
@@ -207,18 +209,18 @@ const DynamicKPIStats: React.FC = () => {
   const addRandomUpdate = () => {
     const newUpdates = [
       {
-        title: 'Deal được cập nhật',
-        description: 'Deal CRM System chuyển sang giai đoạn Negotiation',
+        title: t('pages.dashboard.dynamicKPI.updates.dealUpdated.title'),
+        description: t('pages.dashboard.dynamicKPI.updates.dealUpdated.description', { deal: 'CRM System' }),
         type: 'deal_closed' as const
       },
       {
-        title: 'Khách hàng mới',
-        description: 'Tech Startup DEF đã quan tâm đến dịch vụ',
+        title: t('pages.dashboard.dynamicKPI.updates.newCustomer.title'),
+        description: t('pages.dashboard.dynamicKPI.updates.newCustomer.description', { customer: 'Tech Startup DEF' }),
         type: 'new_customer' as const
       },
       {
-        title: 'Cột mốc doanh thu',
-        description: 'Đạt 2M doanh thu trong tháng này',
+        title: t('pages.dashboard.dynamicKPI.updates.revenueMilestone.title'),
+        description: t('pages.dashboard.dynamicKPI.updates.revenueMilestone.description', { value: '2M' }),
         type: 'revenue_milestone' as const,
         value: '2M'
       }
@@ -269,10 +271,10 @@ const DynamicKPIStats: React.FC = () => {
     const diffMins = Math.floor(diffMs / 60000);
     const diffHours = Math.floor(diffMs / 3600000);
     
-    if (diffMins < 1) return 'vừa xong';
-    if (diffMins < 60) return `${diffMins} phút trước`;
-    if (diffHours < 24) return `${diffHours} giờ trước`;
-    return date.toLocaleDateString('vi-VN');
+    if (diffMins < 1) return t('pages.dashboard.dynamicKPI.timeAgo.justNow');
+    if (diffMins < 60) return t('pages.dashboard.dynamicKPI.timeAgo.minutes', { count: diffMins });
+    if (diffHours < 24) return t('pages.dashboard.dynamicKPI.timeAgo.hours', { count: diffHours });
+    return t('pages.dashboard.dynamicKPI.timeAgo.date', { date: date.toLocaleDateString() });
   };
 
   return (
@@ -286,11 +288,11 @@ const DynamicKPIStats: React.FC = () => {
       }}>
         <Box>
           <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
-            THÁNG NÀY TRÊN CRM
+            {t('pages.dashboard.dynamicKPI.header')}
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
             <Chip 
-              label={`${dynamicUpdates.length} cập nhật mới`}
+              label={t('pages.dashboard.dynamicKPI.updatesCount', { count: dynamicUpdates.length })}
               size="small"
               sx={{ 
                 backgroundColor: alpha(theme.palette.primary.main, 0.1),
@@ -299,12 +301,12 @@ const DynamicKPIStats: React.FC = () => {
               }}
             />
             <Typography variant="caption" color="text.secondary">
-              Cập nhật lần cuối: {formatTimeAgo(lastRefresh)}
+              {t('pages.dashboard.dynamicKPI.lastUpdated', { time: formatTimeAgo(lastRefresh) })}
             </Typography>
           </Box>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Tooltip title={showAllKpis ? "Hiển thị luân phiên" : "Hiển thị tất cả"}>
+          <Tooltip title={showAllKpis ? t('pages.dashboard.dynamicKPI.tooltip.showCarousel') : t('pages.dashboard.dynamicKPI.tooltip.showAll')}>
             <IconButton 
               size="small" 
               onClick={() => setShowAllKpis(!showAllKpis)}
@@ -312,7 +314,7 @@ const DynamicKPIStats: React.FC = () => {
               {showAllKpis ? <ViewCarouselIcon /> : <ViewModuleIcon />}
             </IconButton>
           </Tooltip>
-          <Tooltip title="Làm mới dữ liệu">
+          <Tooltip title={t('pages.dashboard.dynamicKPI.tooltip.refresh')}>
             <IconButton onClick={handleRefresh} color="primary">
               <RefreshIcon />
             </IconButton>
@@ -432,10 +434,10 @@ const DynamicKPIStats: React.FC = () => {
           }}
         >
           <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            🔥 Hoạt động gần đây
+            {t('pages.dashboard.dynamicKPI.activity.title')}
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            Cập nhật theo thời gian thực từ hệ thống
+            {t('pages.dashboard.dynamicKPI.activity.subtitle')}
           </Typography>
         </Box>
 
@@ -461,7 +463,7 @@ const DynamicKPIStats: React.FC = () => {
                     </Typography>
                     {update.isNew && (
                       <Chip
-                        label="MỚI"
+                        label={t('pages.dashboard.dynamicKPI.activity.new')}
                         size="small"
                         sx={{
                           height: 18,

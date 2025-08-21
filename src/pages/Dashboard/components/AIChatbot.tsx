@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { 
   Box, 
   TextField, 
@@ -20,20 +22,20 @@ import {
   History as HistoryIcon
 } from '@mui/icons-material';
 
-// Danh sách gợi ý
-const SUGGESTIONS = [
-  "Cho tôi xem hôm nay có bao nhiêu khách hàng mới",
-  "Vẽ biểu đồ doanh thu theo nhân viên trong tháng này",
-  "Ai là người chốt deal nhiều nhất trong quý?",
-  "So sánh doanh thu tháng này với tháng trước",
-  "Tỉ lệ chuyển đổi từ lead sang khách hàng trong quý"
+// Suggestion translation keys
+const SUGGESTION_KEYS = [
+  'pages.dashboard.aiChatbot.suggestions.todayNewCustomers',
+  'pages.dashboard.aiChatbot.suggestions.revenueByEmployeeThisMonth',
+  'pages.dashboard.aiChatbot.suggestions.topCloserThisQuarter',
+  'pages.dashboard.aiChatbot.suggestions.compareRevenueThisVsLastMonth',
+  'pages.dashboard.aiChatbot.suggestions.conversionRateThisQuarter'
 ];
 
-// Lịch sử trò chuyện mẫu
+// Sample history (localized via t when rendered)
 const SAMPLE_HISTORY = [
-  { id: 1, query: "Doanh thu tháng này là bao nhiêu?", timestamp: "10:30 AM" },
-  { id: 2, query: "Top 5 nhân viên có doanh số cao nhất", timestamp: "Hôm qua" },
-  { id: 3, query: "Tỉ lệ chuyển đổi từ lead sang khách hàng", timestamp: "Thứ 2" }
+  { id: 1, queryKey: 'pages.dashboard.aiChatbot.history.q1', timestampKey: 'pages.dashboard.aiChatbot.history.time.1030am' },
+  { id: 2, queryKey: 'pages.dashboard.aiChatbot.history.q2', timestampKey: 'pages.dashboard.aiChatbot.history.time.yesterday' },
+  { id: 3, queryKey: 'pages.dashboard.aiChatbot.history.q3', timestampKey: 'pages.dashboard.aiChatbot.history.time.monday' }
 ];
 
 interface AIChatbotProps {
@@ -41,6 +43,7 @@ interface AIChatbotProps {
 }
 
 const AIChatbot: React.FC<AIChatbotProps> = ({ onGenerateReport }) => {
+  const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const [showHistory, setShowHistory] = useState(false);
 
@@ -64,7 +67,7 @@ const AIChatbot: React.FC<AIChatbotProps> = ({ onGenerateReport }) => {
     >
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
         <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 'bold', color: '#334155' }}>
-          🤖 AI Assistant - Báo cáo thông minh
+          {t('pages.dashboard.aiChatbot.title', { defaultValue: '🤖 AI Assistant - Smart Reports' })}
         </Typography>
         <IconButton 
           color={showHistory ? "primary" : "default"} 
@@ -80,7 +83,7 @@ const AIChatbot: React.FC<AIChatbotProps> = ({ onGenerateReport }) => {
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="Nhập câu hỏi hoặc yêu cầu báo cáo..."
+            placeholder={t('pages.dashboard.aiChatbot.placeholder', { defaultValue: 'Enter a question or report request...' })}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             sx={{ 
@@ -122,13 +125,14 @@ const AIChatbot: React.FC<AIChatbotProps> = ({ onGenerateReport }) => {
       </form>
 
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-        {SUGGESTIONS.map((suggestion, index) => (
+        {SUGGESTION_KEYS.map((key, index) => (
           <Chip
             key={index}
-            label={suggestion}
+            label={t(key)}
             onClick={() => {
-              setQuery(suggestion);
-              onGenerateReport(suggestion);
+              const text = t(key);
+              setQuery(text);
+              onGenerateReport(text);
               setQuery('');
             }}
             sx={{ 
@@ -144,7 +148,7 @@ const AIChatbot: React.FC<AIChatbotProps> = ({ onGenerateReport }) => {
       {showHistory && (
         <Box sx={{ mt: 2 }}>
           <Typography variant="subtitle2" sx={{ mb: 1, color: '#64748b' }}>
-            Báo cáo gần đây
+            {t('pages.dashboard.aiChatbot.recentReports', { defaultValue: 'Recent reports' })}
           </Typography>
           <Paper variant="outlined" sx={{ maxHeight: 200, overflow: 'auto', p: 1 }}>
             <List dense>
@@ -152,15 +156,16 @@ const AIChatbot: React.FC<AIChatbotProps> = ({ onGenerateReport }) => {
                 <React.Fragment key={item.id}>
                   <ListItem 
                     onClick={() => {
-                      setQuery(item.query);
-                      onGenerateReport(item.query);
+                      const q = t(item.queryKey);
+                      setQuery(q);
+                      onGenerateReport(q);
                       setQuery('');
                     }}
                     sx={{ cursor: 'pointer' }}
                   >
                     <ListItemText 
-                      primary={item.query} 
-                      secondary={item.timestamp} 
+                      primary={t(item.queryKey)} 
+                      secondary={t(item.timestampKey)} 
                     />
                     <Box>
                       <IconButton size="small">
@@ -186,14 +191,14 @@ const AIChatbot: React.FC<AIChatbotProps> = ({ onGenerateReport }) => {
           size="small" 
           sx={{ mr: 1 }}
         >
-          Lưu báo cáo
+          {t('pages.dashboard.aiChatbot.saveReport', { defaultValue: 'Save report' })}
         </Button>
         <Button 
           startIcon={<DownloadIcon />} 
           variant="outlined" 
           size="small"
         >
-          Tải xuống
+          {t('common.download')}
         </Button>
       </Box>
     </Paper>

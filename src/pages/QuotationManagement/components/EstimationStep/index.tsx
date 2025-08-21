@@ -20,6 +20,7 @@ import {
 } from '../../types/quoteTemplate';
 import FixedPriceTable from '../FixedPriceTable';
 import TimeAndMaterialTable from '../TimeAndMaterialTable';
+import { useTranslation } from 'react-i18next';
 
 // Các cột effort mặc định cho chế độ Fix Price
 const DEFAULT_EFFORT_COLUMNS: EffortColumn[] = [];
@@ -58,6 +59,7 @@ const EstimationStep: React.FC<EstimationStepProps> = ({
   onEstimationDataChange,
   initialData,
 }) => {
+  const { t } = useTranslation();
   // State cho chế độ Fix Price
   const [fixedPriceRows, setFixedPriceRows] = useState<EstimationRow[]>([]);
   const [effortColumns, setEffortColumns] = useState<EffortColumn[]>(DEFAULT_EFFORT_COLUMNS);
@@ -114,7 +116,10 @@ const EstimationStep: React.FC<EstimationStepProps> = ({
     // Thông báo khi chuyển chế độ
     setSnackbar({
       open: true,
-      message: `Đã chuyển sang chế độ ${newMode === 'fixed' ? 'Fix Price' : 'Time & Material'}`,
+      message:
+        newMode === 'fixed'
+          ? t('pages.quotations.estimation.modeSwitchedFixed', 'Switched to Fixed Price mode')
+          : t('pages.quotations.estimation.modeSwitchedTimeAndMaterial', 'Switched to Time & Material mode'),
       severity: 'info'
     });
   };
@@ -153,13 +158,13 @@ const EstimationStep: React.FC<EstimationStepProps> = ({
   return (
     <Box sx={{ mt: 3 }}>
       <Typography variant="h6" gutterBottom>
-        Bảng ước tính
+        {t('pages.quotations.estimation.table.title', 'Estimation table')}
       </Typography>
       
       <Paper elevation={0} sx={{ p: 3, mb: 3, border: '1px solid #e0e0e0', borderRadius: 1 }}>
         <FormControl component="fieldset" fullWidth>
           <FormLabel component="legend" sx={{ mb: 2, fontWeight: 'bold', color: 'text.primary' }}>
-            Chọn phương thức ước tính
+            {t('pages.quotations.estimation.chooseMethod', 'Choose estimation method')}
           </FormLabel>
           <RadioGroup
             row
@@ -171,7 +176,7 @@ const EstimationStep: React.FC<EstimationStepProps> = ({
             <FormControlLabel
               value="fixed"
               control={<Radio color="primary" />}
-              label="Fix Price"
+              label={t('pages.quotations.estimation.modes.fixed')}
               sx={{ 
                 mr: 4,
                 '& .MuiFormControlLabel-label': { fontWeight: 500 }
@@ -180,7 +185,7 @@ const EstimationStep: React.FC<EstimationStepProps> = ({
             <FormControlLabel
               value="timeAndMaterial"
               control={<Radio color="primary" />}
-              label="Time & Material"
+              label={t('pages.quotations.estimation.modes.timeAndMaterial')}
               sx={{ '& .MuiFormControlLabel-label': { fontWeight: 500 } }}
             />
           </RadioGroup>
@@ -189,8 +194,8 @@ const EstimationStep: React.FC<EstimationStepProps> = ({
           
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
             {mode === 'fixed' 
-              ? 'Chế độ Fix Price: Tạo bảng ước tính chi tiết với các cột effort tùy chỉnh.'
-              : 'Chế độ Time & Material: Tạo bảng ước tính dựa trên số giờ và đơn giá.'}
+              ? t('pages.quotations.estimation.modeDescriptions.fixed', 'Fixed Price mode: Create a detailed estimation table with customizable effort columns.')
+              : t('pages.quotations.estimation.modeDescriptions.timeAndMaterial', 'Time & Material mode: Create an estimation based on hours and rates.')}
           </Typography>
         </FormControl>
       </Paper>

@@ -36,6 +36,7 @@ import {
   Event as EventIcon,
   Label as LabelIcon
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 export interface SmartTableColumn {
   id: string;
@@ -83,6 +84,7 @@ const EditCellModal: React.FC<EditCellModalProps> = ({
   onClose
 }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -100,7 +102,7 @@ const EditCellModal: React.FC<EditCellModalProps> = ({
   // Validate value
   const validateValue = (val: any): string | null => {
     if (column.required && (!val || val.toString().trim() === '')) {
-      return `${column.label} là bắt buộc`;
+      return t('common.validation.requiredField', { field: column.label, defaultValue: `${column.label} is required` });
     }
     
     if (column.validate) {
@@ -126,10 +128,10 @@ const EditCellModal: React.FC<EditCellModalProps> = ({
       if (success) {
         onClose();
       } else {
-        setError('Không thể lưu thay đổi. Vui lòng thử lại.');
+        setError(t('components.editCellModal.errors.saveFailed', { defaultValue: 'Could not save changes. Please try again.' }));
       }
     } catch (err) {
-      setError('Có lỗi xảy ra khi lưu dữ liệu.');
+      setError(t('components.editCellModal.errors.saveError', { defaultValue: 'An error occurred while saving.' }));
     } finally {
       setSaving(false);
     }
@@ -198,7 +200,7 @@ const EditCellModal: React.FC<EditCellModalProps> = ({
           <Box>
             <TextField
               fullWidth
-              label="Tìm kiếm người dùng"
+              label={t('components.editCellModal.searchUser', { defaultValue: 'Search user' })}
               value={userSearchQuery}
               onChange={(e) => setUserSearchQuery(e.target.value)}
               InputProps={{
@@ -245,7 +247,7 @@ const EditCellModal: React.FC<EditCellModalProps> = ({
                 
                 {filteredUsers.length === 0 && (
                   <Typography variant="body2" color="text.secondary" sx={{ p: 2, textAlign: 'center' }}>
-                    Không tìm thấy người dùng nào
+                    {t('components.editCellModal.noUsersFound', { defaultValue: 'No users found' })}
                   </Typography>
                 )}
               </List>
@@ -397,7 +399,7 @@ const EditCellModal: React.FC<EditCellModalProps> = ({
     >
       <DialogTitle sx={{ pb: 1, pt: 2 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-          Chỉnh sửa cho {rowData.name || rowData.id}
+          {t('components.editCellModal.title', { name: rowData.name || rowData.id, defaultValue: `Edit for ${rowData.name || rowData.id}` })}
         </Typography>
       </DialogTitle>
 
@@ -413,24 +415,24 @@ const EditCellModal: React.FC<EditCellModalProps> = ({
             {error}
           </Alert>
         )}
-
+        
         {/* Help text for validation */}
         {column.type === 'email' && (
           <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-            Ví dụ: example@company.com
+            {t('components.editCellModal.examples.email', { defaultValue: 'Example: example@company.com' })}
           </Typography>
         )}
         
         {column.type === 'phone' && (
           <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-            Ví dụ: 0901234567 (10-11 số)
+            {t('components.editCellModal.examples.phone', { defaultValue: 'Example: 0901234567 (10-11 digits)' })}
           </Typography>
         )}
       </DialogContent>
 
       <DialogActions sx={{ px: 2, pb: 2, pt: 1 }}>
         <Button onClick={handleCancel} size="small">
-          Hủy
+          {t('common.cancel', { defaultValue: 'Cancel' })}
         </Button>
         <Button 
           onClick={handleSave}
@@ -438,7 +440,7 @@ const EditCellModal: React.FC<EditCellModalProps> = ({
           size="small"
           disabled={saving}
         >
-          {saving ? 'Đang lưu...' : 'Lưu'}
+          {saving ? t('common.saving', { defaultValue: 'Saving...' }) : t('common.save', { defaultValue: 'Save' })}
         </Button>
       </DialogActions>
     </Dialog>
