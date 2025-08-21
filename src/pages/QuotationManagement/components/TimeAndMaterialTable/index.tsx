@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Table,
   TableBody,
@@ -47,6 +48,7 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
   rates = [],
   onRatesChange,
 }) => {
+  const { t } = useTranslation();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [newRole, setNewRole] = useState('');
@@ -71,7 +73,7 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
     
     // Kiểm tra nếu vai trò đã tồn tại
     if (rates.some(rate => rate.role.toLowerCase() === roleToAdd.toLowerCase())) {
-      alert('Vai trò này đã tồn tại');
+      alert(t('pages.quotations.tnm.messages.roleExists'));
       return;
     }
 
@@ -122,14 +124,14 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <FormControl variant="outlined" size="small" sx={{ minWidth: 200 }}>
-            <InputLabel>Chọn vai trò</InputLabel>
+            <InputLabel>{t('pages.quotations.tnm.selectRole')}</InputLabel>
             <Select
               value={newRole}
               onChange={(e) => setNewRole(e.target.value as string)}
-              label="Chọn vai trò"
+              label={t('pages.quotations.tnm.selectRole')}
             >
               <MenuItem value="">
-                <em>Chọn vai trò</em>
+                <em>{t('pages.quotations.tnm.selectRole')}</em>
               </MenuItem>
               {DEFAULT_ROLES.map((role) => (
                 <MenuItem key={role} value={role}>
@@ -137,7 +139,7 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
                 </MenuItem>
               ))}
               <MenuItem value="custom">
-                <em>+ Thêm vai trò khác</em>
+                <em>{t('pages.quotations.tnm.addCustomRole')}</em>
               </MenuItem>
             </Select>
           </FormControl>
@@ -145,7 +147,7 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
           {newRole === 'custom' && (
             <TextField
               size="small"
-              label="Tên vai trò"
+              label={t('pages.quotations.tnm.roleName')}
               value={customRole}
               onChange={(e) => setCustomRole(e.target.value)}
               sx={{ minWidth: 200 }}
@@ -159,7 +161,7 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
             onClick={handleAddRow}
             disabled={!newRole || (newRole === 'custom' && !customRole.trim())}
           >
-            Thêm
+            {t('common.add')}
           </Button>
         </Box>
       </Box>
@@ -169,12 +171,12 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell width={50}>#</TableCell>
-              <TableCell>Vai trò</TableCell>
-              <TableCell align="right">Số giờ/MD</TableCell>
-              <TableCell>Đơn vị</TableCell>
-              <TableCell align="right">Đơn giá</TableCell>
-              <TableCell align="right">Thành tiền</TableCell>
+              <TableCell width={50}>{t('pages.quotations.preview.table.no')}</TableCell>
+              <TableCell>{t('pages.quotations.tnm.columns.role')}</TableCell>
+              <TableCell align="right">{t('pages.quotations.tnm.columns.hoursOrMd')}</TableCell>
+              <TableCell>{t('pages.quotations.tnm.columns.unit')}</TableCell>
+              <TableCell align="right">{t('pages.quotations.tnm.columns.unitPrice')}</TableCell>
+              <TableCell align="right">{t('pages.quotations.tnm.columns.amount')}</TableCell>
               <TableCell width={80}></TableCell>
             </TableRow>
           </TableHead>
@@ -213,8 +215,8 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
                       size="small"
                       fullWidth
                     >
-                      <MenuItem value="hour">Giờ</MenuItem>
-                      <MenuItem value="day">Ngày công (MD)</MenuItem>
+                      <MenuItem value="hour">{t('pages.quotations.tnm.units.hour')}</MenuItem>
+                      <MenuItem value="day">{t('pages.quotations.tnm.units.day')}</MenuItem>
                     </Select>
                   </TableCell>
                   
@@ -224,7 +226,7 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
                       currency: 'VND',
                     }).format(rate.rate || 0)}
                     <Typography variant="caption" display="block" color="text.secondary">
-                      /{rate.unit === 'hour' ? 'giờ' : 'MD'}
+                      /{rate.unit === 'hour' ? t('pages.quotations.tnm.perHour') : t('pages.quotations.tnm.perMd')}
                     </Typography>
                   </TableCell>
                   
@@ -234,12 +236,12 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
                       currency: 'VND',
                     }).format(rate.rate * (rate.unit === 'hour' ? 1 : 8) || 0)}
                     <Typography variant="caption" display="block" color="text.secondary">
-                      ({rate.unit === 'hour' ? '1 giờ' : '1 MD = 8 giờ'})
+                      ({rate.unit === 'hour' ? t('pages.quotations.tnm.hourHint') : t('pages.quotations.tnm.mdHint')})
                     </Typography>
                   </TableCell>
                   
                   <TableCell align="center">
-                    <Tooltip title="Xóa">
+                    <Tooltip title={t('common.delete')}>
                       <IconButton 
                         size="small" 
                         color="error"
@@ -257,7 +259,7 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
           <TableFooter>
             <TableRow>
               <TableCell colSpan={4} align="right">
-                <strong>Tổng cộng:</strong>
+                <strong>{t('pages.quotations.tnm.total')}:</strong>
               </TableCell>
               <TableCell align="right">
                 <strong>
@@ -275,7 +277,7 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
                   }).format(calculateTotalHours())}
                 </strong>
                 <Typography variant="caption" display="block" color="text.secondary">
-                  ({calculateTotalHours()} giờ)
+                  ({t('pages.quotations.tnm.totalHours', { hours: calculateTotalHours() })})
                 </Typography>
               </TableCell>
               <TableCell />
@@ -293,9 +295,9 @@ const TimeAndMaterialTable: React.FC<TimeAndMaterialTableProps> = ({
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        labelRowsPerPage="Số dòng mỗi trang:"
+        labelRowsPerPage={t('pages.quotations.pagination.rowsPerPage')}
         labelDisplayedRows={({ from, to, count }) => 
-          `${from}-${to} trong tổng số ${count}`
+          t('pages.quotations.pagination.displayedRows', { from, to, count })
         }
       />
     </Box>

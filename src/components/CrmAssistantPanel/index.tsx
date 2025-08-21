@@ -40,6 +40,7 @@ import {
   Task as TaskIcon,
   OpenInNew as OpenIcon
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 // Types
 export interface ChatMessage {
@@ -181,6 +182,12 @@ const MiniTable: React.FC<{
   onAction: (action: string, id: string) => void;
 }> = ({ type, data, onAction }) => {
   const theme = useTheme();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language && i18n.language.startsWith('ja') ? 'ja-JP' : 'en-US';
+  const formatDate = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return new Intl.DateTimeFormat(locale, { year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
+  };
 
   if (type === 'contacts') {
     const contacts = data as ContactData[];
@@ -189,11 +196,11 @@ const MiniTable: React.FC<{
         <Table size="small" stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>Name</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>Contact</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>Owner</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>Status</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>Action</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>{t('pages.contacts.columns.name')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>{t('pages.contacts.columns.email')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>{t('pages.contacts.columns.owner')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>{t('pages.contacts.columns.leadStatus')}</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>{t('pages.contacts.columns.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -222,7 +229,7 @@ const MiniTable: React.FC<{
                     onClick={() => onAction('open', contact.id)}
                     sx={{ fontSize: '0.7rem', minWidth: 'auto', px: 1 }}
                   >
-                    Open
+                    {t('pages.assistant.buttons.open')}
                   </Button>
                 </TableCell>
               </TableRow>
@@ -239,12 +246,12 @@ const MiniTable: React.FC<{
       <Table size="small" stickyHeader>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>Deal</TableCell>
-            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>Customer</TableCell>
-            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>Value</TableCell>
-            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>Stage</TableCell>
-            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>Deadline</TableCell>
-            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>Action</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>{t('pages.deals.columns.dealName')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>{t('pages.deals.columns.customer')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>{t('pages.deals.columns.amount')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>{t('pages.deals.columns.stage')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>{t('pages.deals.columns.expectedCloseDate')}</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', fontSize: '0.75rem' }}>{t('pages.deals.columns.actions')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -268,7 +275,7 @@ const MiniTable: React.FC<{
                   }}
                 />
               </TableCell>
-              <TableCell sx={{ fontSize: '0.75rem' }}>{deal.deadline}</TableCell>
+              <TableCell sx={{ fontSize: '0.75rem' }}>{formatDate(deal.deadline)}</TableCell>
               <TableCell>
                 <Box sx={{ display: 'flex', gap: 0.5 }}>
                   <Button
@@ -277,7 +284,7 @@ const MiniTable: React.FC<{
                     onClick={() => onAction('open', deal.id)}
                     sx={{ fontSize: '0.7rem', minWidth: 'auto', px: 1 }}
                   >
-                    Open
+                    {t('pages.assistant.buttons.open')}
                   </Button>
                   <Button
                     size="small"
@@ -285,7 +292,7 @@ const MiniTable: React.FC<{
                     onClick={() => onAction('task', deal.id)}
                     sx={{ fontSize: '0.7rem', minWidth: 'auto', px: 1 }}
                   >
-                    Task
+                    {t('pages.assistant.buttons.task')}
                   </Button>
                 </Box>
               </TableCell>
@@ -305,6 +312,7 @@ const AssistantCard: React.FC<{
   onAction: (action: string, id?: string) => void;
 }> = ({ data, loading, onToggleSection, onAction }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   if (loading) {
     return (
@@ -330,7 +338,7 @@ const AssistantCard: React.FC<{
       backgroundColor: alpha(theme.palette.primary.main, 0.02)
     }}>
       <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, color: 'primary.main' }}>
-        Kết quả cho: "{data.query}"
+        {t('pages.assistant.resultsFor', { query: data.query })}
       </Typography>
 
       {/* Summary */}
@@ -347,7 +355,7 @@ const AssistantCard: React.FC<{
       <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
         <Chip
           icon={<PersonIcon fontSize="small" />}
-          label="Contacts"
+          label={t('common.contacts')}
           variant={data.showContacts ? 'filled' : 'outlined'}
           color={data.showContacts ? 'primary' : 'default'}
           onClick={() => onToggleSection('contacts')}
@@ -355,7 +363,7 @@ const AssistantCard: React.FC<{
         />
         <Chip
           icon={<BusinessIcon fontSize="small" />}
-          label="Deals"
+          label={t('common.deals')}
           variant={data.showDeals ? 'filled' : 'outlined'}
           color={data.showDeals ? 'primary' : 'default'}
           onClick={() => onToggleSection('deals')}
@@ -367,7 +375,7 @@ const AssistantCard: React.FC<{
       {data.showContacts && (
         <Box sx={{ mb: 3 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 1.5 }}>
-            Top Contacts
+            {t('pages.assistant.topContacts')}
           </Typography>
           <MiniTable type="contacts" data={data.contacts} onAction={onAction} />
         </Box>
@@ -377,7 +385,7 @@ const AssistantCard: React.FC<{
       {data.showDeals && (
         <Box sx={{ mb: 3 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 1.5 }}>
-            Open Deals
+            {t('pages.assistant.openDeals')}
           </Typography>
           <MiniTable type="deals" data={data.deals} onAction={onAction} />
         </Box>
@@ -386,7 +394,7 @@ const AssistantCard: React.FC<{
       {/* Suggested Actions */}
       <Box>
         <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 1.5 }}>
-          Gợi ý tiếp theo
+          {t('pages.assistant.nextSuggestions')}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           <Button
@@ -395,7 +403,7 @@ const AssistantCard: React.FC<{
             variant="outlined"
             onClick={() => onAction('create-contact')}
           >
-            Tạo liên hệ
+            {t('pages.assistant.actions.createContact')}
           </Button>
           <Button
             size="small"
@@ -403,7 +411,7 @@ const AssistantCard: React.FC<{
             variant="outlined"
             onClick={() => onAction('create-deal')}
           >
-            Tạo cơ hội
+            {t('pages.assistant.actions.createDeal')}
           </Button>
           <Button
             size="small"
@@ -411,7 +419,7 @@ const AssistantCard: React.FC<{
             variant="outlined"
             onClick={() => onAction('send-email')}
           >
-            Gửi email nháp
+            {t('pages.assistant.actions.sendDraftEmail')}
           </Button>
         </Box>
       </Box>
@@ -467,6 +475,8 @@ const CrmAssistantPanel: React.FC<CrmAssistantPanelProps> = ({
   onMinimize
 }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
+
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -686,7 +696,7 @@ const CrmAssistantPanel: React.FC<CrmAssistantPanelProps> = ({
               }}>
                 <AIIcon sx={{ fontSize: 48, mb: 2, opacity: 0.5 }} />
                 <Typography variant="body1">
-                  Chưa có câu hỏi. Hãy nhập gì đó...
+                  {t('pages.assistant.emptyPrompt')}
                 </Typography>
               </Box>
             ) : (
@@ -709,7 +719,7 @@ const CrmAssistantPanel: React.FC<CrmAssistantPanelProps> = ({
                       maxWidth: 'fit-content'
                     }}>
                       <Typography variant="body2" color="text.secondary">
-                        Đang gõ...
+                        {t('pages.assistant.typing')}
                       </Typography>
                     </Paper>
                   </Box>
@@ -732,7 +742,7 @@ const CrmAssistantPanel: React.FC<CrmAssistantPanelProps> = ({
               fullWidth
               multiline
               maxRows={3}
-              placeholder="Nhập câu hỏi..."
+              placeholder={t('pages.assistant.inputPlaceholder')}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -761,7 +771,7 @@ const CrmAssistantPanel: React.FC<CrmAssistantPanelProps> = ({
               }}
             />
             <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
-              Câu trả lời chỉ là mô phỏng cho mockup.
+              {t('pages.assistant.mock.disclaimer')}
             </Typography>
           </Box>
         </DialogContent>

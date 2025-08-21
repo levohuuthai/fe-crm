@@ -12,6 +12,7 @@ import {
 import {
   Close as CloseIcon
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface NoteDialogProps {
   open: boolean;
@@ -19,6 +20,7 @@ interface NoteDialogProps {
 }
 
 const NoteDialog: React.FC<NoteDialogProps> = ({ open, onClose }) => {
+  const { t } = useTranslation();
   return (
     <Dialog 
       open={open} 
@@ -28,7 +30,7 @@ const NoteDialog: React.FC<NoteDialogProps> = ({ open, onClose }) => {
     >
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          Add Note
+          {t('pages.contacts.note.title')}
           <IconButton onClick={onClose} size="small">
             <CloseIcon />
           </IconButton>
@@ -39,7 +41,7 @@ const NoteDialog: React.FC<NoteDialogProps> = ({ open, onClose }) => {
           autoFocus
           margin="dense"
           id="note"
-          label="Note"
+          label={t('pages.contacts.note.fields.note')}
           multiline
           rows={4}
           fullWidth
@@ -50,7 +52,7 @@ const NoteDialog: React.FC<NoteDialogProps> = ({ open, onClose }) => {
           component="label"
           sx={{ mt: 2 }}
         >
-          Attach File
+          {t('pages.contacts.note.actions.attachFile')}
           <input
             type="file"
             hidden
@@ -58,9 +60,9 @@ const NoteDialog: React.FC<NoteDialogProps> = ({ open, onClose }) => {
         </Button>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>{t('pages.contacts.note.actions.cancel')}</Button>
         <Button onClick={onClose} variant="contained" color="primary">
-          Save
+          {t('pages.contacts.note.actions.save')}
         </Button>
       </DialogActions>
     </Dialog>

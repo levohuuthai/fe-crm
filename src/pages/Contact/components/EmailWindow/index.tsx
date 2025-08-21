@@ -37,6 +37,7 @@ import {
   Edit as EditIcon,
   ContentCopy as ContentCopyIcon
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface EmailWindowProps {
   open: boolean;
@@ -46,6 +47,7 @@ interface EmailWindowProps {
 }
 
 const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail = '', fromContactDetails = false }) => {
+  const { t } = useTranslation();
   // Default position in the center of the screen
   const defaultPosition = { x: window.innerWidth / 2 - 375, y: window.innerHeight / 2 - 300 };
   const [position, setPosition] = useState(defaultPosition);
@@ -165,7 +167,7 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
   // Handle send actions with Gmail integration
   const handleSendNow = () => {
     if (!emailTo) {
-      alert('Please enter a recipient email address');
+      alert(t('pages.contacts.emailWindow.messages.missingRecipient'));
       return;
     }
     
@@ -180,7 +182,7 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
     setIsMinimized(true);
     
     console.log('Sending email now');
-    alert('Email opened in your default mail client!');
+    alert(t('pages.contacts.emailWindow.messages.openedClient'));
     onClose();
   };
 
@@ -248,7 +250,7 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
   if (!open) return null;
 
   return (
-    <>
+    <React.Fragment>
       {/* Overlay mờ chỉ khi modal được mở rộng (maximize) */}
       {open && isMaximized && (
         <Box
@@ -345,7 +347,7 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
             {isMinimized ? <ExpandMoreIcon fontSize="small" /> : <MinimizeIcon fontSize="small" />}
           </IconButton>
           <Typography variant="subtitle1" fontWeight="medium">
-            New Email
+            {t('pages.contacts.emailWindow.title')}
           </Typography>
         </Box>
         <Box>
@@ -367,67 +369,66 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
           {/* Gmail/HubSpot style tabs - Orange theme */}
           <Box sx={{ bgcolor: '#f5f5f5', borderBottom: '1px solid #ddd' }}>
             <Box sx={{ display: 'flex', px: 2, py: 0.5 }}>
-              <Typography sx={{ mr: 2, fontWeight: 'bold', fontSize: '13px', color: '#ff7a59' }}>Templates</Typography>
+              <Typography sx={{ mr: 2, fontWeight: 'bold', fontSize: '13px', color: '#ff7a59' }}>{t('pages.contacts.emailWindow.tabs.templates')}</Typography>
               <Typography sx={{ mr: 2, fontSize: '13px', display: 'flex', alignItems: 'center' }}>
-                Sequences <Box component="span" sx={{ ml: 0.5, fontSize: '14px' }}>🔒</Box>
+                {t('pages.contacts.emailWindow.tabs.sequences')} <Box component="span" sx={{ ml: 0.5, fontSize: '14px' }}>🔒</Box>
               </Typography>
-              <Typography sx={{ mr: 2, fontSize: '13px' }}>Documents</Typography>
+              <Typography sx={{ mr: 2, fontSize: '13px' }}>{t('pages.contacts.emailWindow.tabs.documents')}</Typography>
               <Typography sx={{ mr: 2, fontSize: '13px', display: 'flex', alignItems: 'center' }}>
-                Meetings <ExpandMoreIcon fontSize="small" />
+                {t('pages.contacts.emailWindow.tabs.meetings')} <ExpandMoreIcon fontSize="small" />
               </Typography>
               <Typography sx={{ fontSize: '13px', display: 'flex', alignItems: 'center' }}>
-                Quotes <ExpandMoreIcon fontSize="small" />
+                {t('pages.contacts.emailWindow.tabs.quotes')} <ExpandMoreIcon fontSize="small" />
               </Typography>
             </Box>
           </Box>
-          
           {/* Email form fields - Simplified with underlines instead of boxes */}
           <Box sx={{ p: 1.5 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
-              <Typography sx={{ width: 30, fontSize: '13px', mr: 2 }}>To</Typography>
+              <Typography sx={{ width: 30, fontSize: '13px', mr: 2 }}>{t('pages.contacts.emailWindow.fields.to')}</Typography>
               <TextField
                 fullWidth
                 value={emailTo}
                 onChange={(e) => setEmailTo(e.target.value)}
                 size="small"
                 variant="standard"
-                placeholder="recipient@example.com"
+                placeholder={t('pages.contacts.emailWindow.placeholders.to')}
                 sx={{ '& .MuiInputBase-input': { fontSize: '13px' } }}
               />
             </Box>
             
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
-              <Typography sx={{ width: 30, fontSize: '13px', mr: 2 }}>From</Typography>
+              <Typography sx={{ width: 30, fontSize: '13px', mr: 2 }}>{t('pages.contacts.emailWindow.fields.from')}</Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
                 <Typography sx={{ fontSize: '13px' }}>
                   Tô Thế Mẫn <Typography component="span" sx={{ color: 'text.secondary', fontSize: '13px' }}>(totheman2@gmail.com)</Typography>
                 </Typography>
               </Box>
-              <Typography sx={{ fontSize: '13px', color: '#ff7a59', ml: 2, cursor: 'pointer' }}>Cc</Typography>
-              <Typography sx={{ fontSize: '13px', color: '#ff7a59', ml: 2, cursor: 'pointer' }}>Bcc</Typography>
+              <Typography sx={{ fontSize: '13px', color: '#ff7a59', ml: 2, cursor: 'pointer' }}>{t('pages.contacts.emailWindow.fields.cc')}</Typography>
+              <Typography sx={{ fontSize: '13px', color: '#ff7a59', ml: 2, cursor: 'pointer' }}>{t('pages.contacts.emailWindow.fields.bcc')}</Typography>
             </Box>
             
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
-              <Typography sx={{ width: 30, fontSize: '13px', mr: 2}}>Subject</Typography>
+              <Typography sx={{ width: 30, fontSize: '13px', mr: 2}}>{t('pages.contacts.emailWindow.fields.subject')}</Typography>
               <TextField
                 fullWidth
                 size="small"
                 variant="standard"
-                placeholder="Email subject"
+                placeholder={t('pages.contacts.emailWindow.placeholders.subject')}
                 value={emailSubject}
                 onChange={(e) => setEmailSubject(e.target.value)}
                 sx={{ '& .MuiInputBase-input': { fontSize: '13px' } }}
               />
             </Box>
           </Box>
-          
+
           <Divider />
-          
+
           {/* Message body - Only this area should scroll */}
           <Box sx={{ p: 1.5, flexGrow: 1, display: 'flex', flexDirection: 'column', overflow: 'auto', maxHeight: isMaximized ? '400px' : '200px', '@media (min-width: 1600px)': { maxHeight: isMaximized ? '450px' : '200px' } }}>
             <TextField
               multiline
-              placeholder="Type your message here..."
+              placeholder={t('pages.contacts.emailWindow.placeholders.body')}
               minRows={3}
               maxRows={isMaximized ? 15 : 8}
               fullWidth
@@ -492,16 +493,16 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
                   setEmailBody(prev => `<u>${prev}</u>`);
                 }
               }}><FormatUnderlinedIcon fontSize="small" /></IconButton>
-              <Typography sx={{ fontSize: '12px', color: '#ff7a59', mx: 1, cursor: 'pointer' }}>More</Typography>
+              <Typography sx={{ fontSize: '12px', color: '#ff7a59', mx: 1, cursor: 'pointer' }}>{t('pages.contacts.emailWindow.toolbar.more')}</Typography>
               <IconButton size="small" onClick={() => {
                 alert('Attach file functionality would be implemented here');
               }}><AttachFileIcon fontSize="small" /></IconButton>
               <IconButton size="small" onClick={() => {
                 alert('Insert image functionality would be implemented here');
               }}><ImageIcon fontSize="small" /></IconButton>
-              <Typography sx={{ fontSize: '12px', color: '#ff7a59', mx: 1, cursor: 'pointer' }}>Insert</Typography>
+              <Typography sx={{ fontSize: '12px', color: '#ff7a59', mx: 1, cursor: 'pointer' }}>{t('pages.contacts.emailWindow.toolbar.insert')}</Typography>
               <IconButton size="small" onClick={() => {
-                const url = prompt('Enter URL:');
+                const url = prompt(t('pages.contacts.emailWindow.prompts.enterUrl'));
                 if (url) {
                   const textarea = document.querySelector('textarea');
                   if (textarea) {
@@ -522,7 +523,7 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
               <Box sx={{ flexGrow: 1 }} />
               
               <Typography sx={{ fontSize: '12px', color: '#ff7a59', display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-                Associated with 1 record <ExpandMoreIcon fontSize="small" />
+                {t('pages.contacts.emailWindow.associated', { count: 1 })} <ExpandMoreIcon fontSize="small" />
               </Typography>
             </Box>
           </Box>
@@ -540,7 +541,7 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
                   }
                 }}
               >
-                {sendLaterSelected ? 'Send Later' : 'Send'}
+                {sendLaterSelected ? t('pages.contacts.emailWindow.actions.sendLater') : t('pages.contacts.emailWindow.actions.send')}
               </Button>
               <Button
                 onClick={handleSendOptionsClick}
@@ -577,10 +578,10 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
               }}
             >
               <MenuItem onClick={handleSendNow} sx={{ py: 1 }}>
-                Send Now
+                {t('pages.contacts.emailWindow.actions.sendNow')}
               </MenuItem>
               <MenuItem onClick={handleSendLaterClick} sx={{ py: 1 }}>
-                Send Later
+                {t('pages.contacts.emailWindow.actions.sendLater')}
               </MenuItem>
             </Popover>
             
@@ -602,18 +603,18 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
               }}
             >
               <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 2 }}>
-                Send later
+                {t('pages.contacts.emailWindow.sendLater.title')}
               </Typography>
               <FormControl component="fieldset">
                 <RadioGroup
                   value={sendLaterOption}
                   onChange={handleSendLaterOptionChange}
                 >
-                  <FormControlLabel value="1hour" control={<Radio />} label="In 1 hour" />
-                  <FormControlLabel value="2hours" control={<Radio />} label="In 2 hours" />
-                  <FormControlLabel value="tomorrow_morning" control={<Radio />} label="Tomorrow morning (8am)" />
-                  <FormControlLabel value="tomorrow_afternoon" control={<Radio />} label="Tomorrow afternoon (1pm)" />
-                  <FormControlLabel value="custom" control={<Radio />} label="Custom" />
+                  <FormControlLabel value="1hour" control={<Radio />} label={t('pages.contacts.emailWindow.sendLater.options.in1hour')} />
+                  <FormControlLabel value="2hours" control={<Radio />} label={t('pages.contacts.emailWindow.sendLater.options.in2hours')} />
+                  <FormControlLabel value="tomorrow_morning" control={<Radio />} label={t('pages.contacts.emailWindow.sendLater.options.tomorrowMorning')} />
+                  <FormControlLabel value="tomorrow_afternoon" control={<Radio />} label={t('pages.contacts.emailWindow.sendLater.options.tomorrowAfternoon')} />
+                  <FormControlLabel value="custom" control={<Radio />} label={t('pages.contacts.emailWindow.sendLater.options.custom')} />
                 </RadioGroup>
               </FormControl>
               
@@ -650,10 +651,10 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
                     }
                   }}
                 >
-                  Schedule
+                  {t('pages.contacts.emailWindow.sendLater.actions.schedule')}
                 </Button>
                 <Button variant="outlined" onClick={handleSendLaterClose}>
-                  Cancel
+                  {t('pages.contacts.emailWindow.sendLater.actions.cancel')}
                 </Button>
               </Box>
             </Popover>
@@ -661,7 +662,7 @@ const EmailWindow: React.FC<EmailWindowProps> = ({ open, onClose, recipientEmail
         </Box>
       )}
     </Paper>
-    </>
+    </React.Fragment>
   );
 };
 

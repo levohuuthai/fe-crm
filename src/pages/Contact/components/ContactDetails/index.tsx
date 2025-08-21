@@ -20,6 +20,7 @@ import {
   Edit as EditIcon,
   ContentCopy as ContentCopyIcon
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface Contact {
   id: number;
@@ -47,15 +48,16 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
 }) => {
   const [hoverName, setHoverName] = useState(false);
   const [hoverEmail, setHoverEmail] = useState(false);
+  const { t } = useTranslation();
   
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(contact.email);
-    alert('Email copied to clipboard!');
+    alert(t('pages.contacts.details.messages.emailCopied'));
   };
   return (
     <Box sx={{ fontSize: '0.9rem' }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={1.5}>
-        <Typography variant="h6" sx={{ fontSize: '1.1rem' }}>Contact Details</Typography>
+        <Typography variant="h6" sx={{ fontSize: '1.1rem' }}>{t('pages.contacts.details.title')}</Typography>
         <IconButton onClick={onClose} size="small">
           <CloseIcon fontSize="small" />
         </IconButton>
@@ -91,27 +93,27 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
           )}
         </Box>
         <Box display="flex" gap={0.5} mt={1.5}>
-          <Tooltip title="Add Note">
+          <Tooltip title={t('pages.contacts.details.actions.addNote')}>
             <IconButton color="primary" onClick={onOpenNoteDialog} size="small">
               <NoteIcon fontSize="small" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Send Email">
+          <Tooltip title={t('pages.contacts.details.actions.sendEmail')}>
             <IconButton color="primary" onClick={onOpenEmailWindow} size="small">
               <EmailIcon fontSize="small" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Call">
+          <Tooltip title={t('pages.contacts.details.actions.call')}>
             <IconButton color="primary" size="small">
               <PhoneIcon fontSize="small" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Schedule">
+          <Tooltip title={t('pages.contacts.details.actions.schedule')}>
             <IconButton color="primary" size="small">
               <EventIcon fontSize="small" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Create Task">
+          <Tooltip title={t('pages.contacts.details.actions.createTask')}>
             <IconButton color="primary" size="small">
               <TaskIcon fontSize="small" />
             </IconButton>
@@ -125,14 +127,14 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
         <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Typography variant="subtitle1" fontWeight="bold" sx={{ fontSize: '0.9rem' }}>
-              About this contact
+              {t('pages.contacts.details.sections.about')}
             </Typography>
             <ExpandMoreIcon fontSize="small" />
           </Box>
           <Box mt={1.5} sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
             <Box sx={{ flex: '1 1 calc(50% - 8px)' }}>
               <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
-                Phone
+                {t('pages.contacts.details.fields.phone')}
               </Typography>
               <Typography variant="body1" sx={{ fontSize: '0.85rem' }}>
                 {contact.phone}
@@ -140,7 +142,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
             </Box>
             <Box sx={{ flex: '1 1 calc(50% - 8px)' }}>
               <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
-                Lead Status
+                {t('pages.contacts.details.fields.leadStatus')}
               </Typography>
               <Chip 
                 label={contact.leadStatus} 
@@ -155,7 +157,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
             </Box>
             <Box sx={{ flex: '1 1 calc(50% - 8px)' }}>
               <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
-                Owner
+                {t('pages.contacts.details.fields.owner')}
               </Typography>
               <Typography variant="body1" sx={{ fontSize: '0.85rem' }}>
                 {contact.owner}
@@ -163,7 +165,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
             </Box>
             <Box sx={{ flex: '1 1 calc(50% - 8px)' }}>
               <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
-                Created
+                {t('pages.contacts.details.fields.created')}
               </Typography>
               <Typography variant="body1" sx={{ fontSize: '0.85rem' }}>
                 {contact.createDate}
@@ -176,11 +178,11 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
       <Card variant="outlined">
         <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
           <Typography variant="subtitle1" fontWeight="bold" sx={{ fontSize: '0.9rem' }}>
-            Activity Timeline
+            {t('pages.contacts.details.timeline.title')}
           </Typography>
           <Box mt={1.5} display="flex" justifyContent="center" alignItems="center" height={80}>
             <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
-              No activities yet
+              {t('pages.contacts.details.timeline.empty')}
             </Typography>
           </Box>
         </CardContent>

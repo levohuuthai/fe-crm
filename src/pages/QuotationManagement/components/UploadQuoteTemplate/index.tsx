@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogTitle,
@@ -36,6 +37,7 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
   onClose,
   onSubmit,
 }) => {
+  const { t } = useTranslation();
   const [values, setValues] = useState<UploadQuoteTemplateFormValues>({
     name: '',
     description: '',
@@ -58,24 +60,24 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
     const file = e.target.files?.[0] || null;
     
     if (file) {
-      // Kiểm tra định dạng file
+      // Validate file type
       if (!file.name.endsWith('.docx') && !file.name.endsWith('.doc') && !file.name.endsWith('.pdf')) {
-        alert('Chỉ chấp nhận file .doc, .docx hoặc .pdf');
+        alert(t('pages.quotations.templateUpload.validations.invalidFormat'));
         return;
       }
       
-      // Kiểm tra kích thước file (tối đa 5MB)
+      // Validate file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
-        alert('Kích thước file không được vượt quá 5MB');
+        alert(t('pages.quotations.templateUpload.validations.oversize'));
         return;
       }
       
       setValues((prev) => ({ ...prev, file }));
       setAnalyzing(true);
       
-      // Giả lập phân tích AI
+      // Mock AI analysis
       setTimeout(() => {
-        // Mock dữ liệu được phân tích từ file
+        // Mock extracted fields from file
         const mockExtractedFields: ExtractedField[] = [
           {
             originalText: 'CÔNG TY TNHH GIẤY CAO PHÁT',
@@ -161,12 +163,12 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
     e.preventDefault();
     
     if (!values.name.trim()) {
-      alert('Vui lòng nhập tên mẫu báo giá');
+      alert(t('pages.quotations.templateUpload.validations.missingName'));
       return;
     }
     
     if (!values.file) {
-      alert('Vui lòng chọn file mẫu báo giá');
+      alert(t('pages.quotations.templateUpload.validations.missingFile'));
       return;
     }
     
@@ -197,7 +199,7 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="h6">Tải lên mẫu báo giá</Typography>
+          <Typography variant="h6">{t('pages.quotations.templateUpload.title')}</Typography>
           <IconButton onClick={handleClose} size="small">
             <CloseIcon />
           </IconButton>
@@ -208,7 +210,7 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 2fr' }, gap: 3 }}>
             <Box>
               <TextField
-                label="Tên mẫu báo giá"
+                label={t('pages.quotations.templateUpload.fields.name')}
                 name="name"
                 value={values.name}
                 onChange={handleChange}
@@ -219,7 +221,7 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
               />
               
               <TextField
-                label="Mô tả"
+                label={t('pages.quotations.templateUpload.fields.description')}
                 name="description"
                 value={values.description}
                 onChange={handleChange}
@@ -231,22 +233,22 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
               />
               
               <FormControl fullWidth margin="normal">
-                <InputLabel>Loại mẫu</InputLabel>
+                <InputLabel>{t('pages.quotations.templateUpload.fields.type')}</InputLabel>
                 <Select
-                  label="Loại mẫu"
+                  label={t('pages.quotations.templateUpload.fields.type')}
                   name="type"
                   value={values.type}
                   onChange={handleChange}
                   disabled={loading}
                 >
-                  <MenuItem value="customer">Cho khách hàng</MenuItem>
-                  <MenuItem value="internal">Nội bộ</MenuItem>
+                  <MenuItem value="customer">{t('pages.quotations.templateUpload.options.type.customer')}</MenuItem>
+                  <MenuItem value="internal">{t('pages.quotations.templateUpload.options.type.internal')}</MenuItem>
                 </Select>
               </FormControl>
               
               <Box mt={2} mb={2}>
                 <input
-                  accept=".docx,.doc,.pdf"
+                  accept={t('pages.quotations.templateUpload.file.accept') as string}
                   style={{ display: 'none' }}
                   id="template-upload"
                   type="file"
@@ -260,12 +262,12 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
                     startIcon={<UploadIcon />}
                     disabled={loading || analyzing}
                   >
-                    Chọn file mẫu (.docx, .doc, .pdf)
+                    {t('pages.quotations.templateUpload.file.choose')}
                   </Button>
                 </label>
                 {values.file && (
                   <Typography variant="body2" sx={{ mt: 1 }}>
-                    Đã chọn: {values.file.name}
+                    {t('pages.quotations.templateUpload.file.selected')} {values.file.name}
                   </Typography>
                 )}
               </Box>
@@ -274,14 +276,14 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
             <Box>
               <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
                 <Typography variant="subtitle1" gutterBottom>
-                  Các trường được phân tích từ mẫu báo giá:
+                  {t('pages.quotations.templateUpload.extracted.title')}
                 </Typography>
                 
                 {analyzing ? (
                   <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" py={4}>
                     <CircularProgress size={40} />
                     <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
-                      Đang phân tích nội dung mẫu báo giá...
+                      {t('pages.quotations.templateUpload.analyzing')}
                     </Typography>
                   </Box>
                 ) : extractedFields.length > 0 ? (
@@ -289,11 +291,11 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
                     <Table size="small">
                       <TableHead>
                         <TableRow>
-                          <TableCell>Trường gốc trong file</TableCell>
-                          <TableCell>Placeholder gợi ý</TableCell>
-                          <TableCell>Kiểu dữ liệu</TableCell>
-                          <TableCell>Mô tả</TableCell>
-                          <TableCell align="center">Thao tác</TableCell>
+                          <TableCell>{t('pages.quotations.templateUpload.extracted.columns.original')}</TableCell>
+                          <TableCell>{t('pages.quotations.templateUpload.extracted.columns.placeholder')}</TableCell>
+                          <TableCell>{t('pages.quotations.templateUpload.extracted.columns.type')}</TableCell>
+                          <TableCell>{t('pages.quotations.templateUpload.extracted.columns.description')}</TableCell>
+                          <TableCell align="center">{t('pages.quotations.templateUpload.extracted.columns.actions')}</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -316,12 +318,12 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
                                   onChange={(e) => handleUpdatePlaceholder(index, 'type', e.target.value)}
                                   disabled={loading}
                                 >
-                                  <MenuItem value="text">Văn bản</MenuItem>
-                                  <MenuItem value="number">Số</MenuItem>
-                                  <MenuItem value="date">Ngày tháng</MenuItem>
-                                  <MenuItem value="phone">Điện thoại</MenuItem>
-                                  <MenuItem value="email">Email</MenuItem>
-                                  <MenuItem value="taxcode">Mã số thuế</MenuItem>
+                                  <MenuItem value="text">{t('pages.quotations.templateUpload.fieldTypes.text')}</MenuItem>
+                                  <MenuItem value="number">{t('pages.quotations.templateUpload.fieldTypes.number')}</MenuItem>
+                                  <MenuItem value="date">{t('pages.quotations.templateUpload.fieldTypes.date')}</MenuItem>
+                                  <MenuItem value="phone">{t('pages.quotations.templateUpload.fieldTypes.phone')}</MenuItem>
+                                  <MenuItem value="email">{t('pages.quotations.templateUpload.fieldTypes.email')}</MenuItem>
+                                  <MenuItem value="taxcode">{t('pages.quotations.templateUpload.fieldTypes.taxcode')}</MenuItem>
                                 </Select>
                               </FormControl>
                             </TableCell>
@@ -351,24 +353,24 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
                   </TableContainer>
                 ) : values.file ? (
                   <Typography variant="body2" color="textSecondary">
-                    Không tìm thấy trường nào có thể trích xuất từ file. Vui lòng kiểm tra lại nội dung file.
+                    {t('pages.quotations.templateUpload.extracted.empty')}
                   </Typography>
                 ) : (
                   <Typography variant="body2" color="textSecondary">
-                    Vui lòng tải lên file mẫu báo giá để AI phân tích và đề xuất các trường dữ liệu.
+                    {t('pages.quotations.templateUpload.extracted.needFile')}
                   </Typography>
                 )}
                 
                 <Box mt={3}>
                   <Typography variant="subtitle2" gutterBottom>
-                    Hướng dẫn sử dụng:
+                    {t('pages.quotations.templateUpload.guide.title')}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    - AI sẽ tự động phân tích nội dung mẫu báo giá và đề xuất các trường cần điền
+                    - {t('pages.quotations.templateUpload.guide.line1')}
                     <br />
-                    - Bạn có thể chỉnh sửa tên placeholder và mô tả cho phù hợp
+                    - {t('pages.quotations.templateUpload.guide.line2')}
                     <br />
-                    - Khi tạo báo giá, hệ thống sẽ tự động điền các thông tin vào các vị trí tương ứng
+                    - {t('pages.quotations.templateUpload.guide.line3')}
                   </Typography>
                 </Box>
               </Paper>
@@ -378,7 +380,7 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
         
         <DialogActions sx={{ p: 2, borderTop: 1, borderColor: 'divider' }}>
           <Button onClick={handleClose} disabled={loading}>
-            Hủy
+            {t('common.cancel')}
           </Button>
           <Button
             type="submit"
@@ -387,7 +389,7 @@ const UploadQuoteTemplate: React.FC<UploadQuoteTemplateProps> = ({
             disabled={loading || analyzing || extractedFields.length === 0}
             startIcon={loading ? <CircularProgress size={20} /> : null}
           >
-            {loading ? 'Đang tải lên...' : 'Lưu mẫu báo giá'}
+            {loading ? t('pages.quotations.templateUpload.actions.uploading') : t('pages.quotations.templateUpload.actions.saveTemplate')}
           </Button>
         </DialogActions>
       </form>

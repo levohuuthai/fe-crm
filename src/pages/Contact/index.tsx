@@ -9,6 +9,7 @@ import {
 import {
   FileUpload as FileUploadIcon
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 // Import custom components
 import ContactList from './components/ContactList';
@@ -83,6 +84,7 @@ const columns = [
 ];
 
 const ContactManagement: React.FC = () => {
+  const { t } = useTranslation();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
@@ -186,7 +188,7 @@ const ContactManagement: React.FC = () => {
     console.log('Creating contact:', newContact);
     handleCloseCreateDialog();
     // Show success notification (would use a proper notification system in a real app)
-    alert('✅ Contact created successfully!');
+    alert(t('pages.contacts.notifications.createSuccess'));
   };
 
   // Handle contact drawer

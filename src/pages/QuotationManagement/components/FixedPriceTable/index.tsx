@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Table,
   TableBody,
@@ -49,6 +50,7 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
   onRowsChange,
   onColumnsChange,
 }) => {
+  const { t } = useTranslation();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [newColumnName, setNewColumnName] = useState('');
@@ -183,7 +185,7 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
   // Thêm cột Subtotal (days) với thứ tự cao
   const subtotalColumn = {
     id: 'subtotal-column',
-    name: 'Subtotal (days)',
+    name: t('pages.quotations.estimation.fixed.subtotalDays'),
     key: 'subtotal',
     order: 950, // Thứ tự cao để đảm bảo nằm sau các cột effort nhưng trước cột hành động
     isFixed: true,
@@ -209,14 +211,14 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
             size="small"
             sx={{ mr: 1 }}
           >
-            Thêm dòng
+            {t('pages.quotations.estimation.fixed.addRow')}
           </Button>
         </Box>
         
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <TextField
             size="small"
-            placeholder="Tên cột mới"
+            placeholder={t('pages.quotations.estimation.fixed.newColumnPlaceholder')}
             value={newColumnName}
             onChange={(e) => setNewColumnName(e.target.value)}
             sx={{ mr: 1, minWidth: 150 }}
@@ -228,7 +230,7 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
             size="small"
             disabled={!newColumnName.trim()}
           >
-            Thêm cột
+            {t('pages.quotations.estimation.fixed.addColumn')}
           </Button>
         </Box>
       </Box>
@@ -279,7 +281,27 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
                     ) : (
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Typography variant="subtitle2">
-                          {column.name}
+                          {(() => {
+                            // Map fixed column keys to i18n labels; fallback to column.name for dynamic columns
+                            switch (column.key) {
+                              case 'feature':
+                                return t('pages.quotations.estimation.table.feature');
+                              case 'detail':
+                                return t('pages.quotations.estimation.table.detail');
+                              case 'description':
+                                return t('pages.quotations.estimation.table.description');
+                              case 'notes':
+                                return t('pages.quotations.estimation.table.note');
+                              case 'it-req':
+                                return t('pages.quotations.estimation.fixed.columns.itReq');
+                              case 'ux/ui':
+                                return t('pages.quotations.estimation.fixed.columns.uxUi');
+                              case 'subtotal':
+                                return t('pages.quotations.estimation.fixed.subtotalDays');
+                              default:
+                                return column.name;
+                            }
+                          })()}
                         </Typography>
                         {!column.isFixed && (
                           <Box sx={{ ml: 1 }}>
@@ -305,8 +327,8 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
                   </Box>
                 </TableCell>
               ))}
-              {/* Cột hành động luôn ở cuối */}
-              <TableCell width={80}>Hành động</TableCell>
+              {/* Action column always at the end */}
+              <TableCell width={80}>{t('pages.quotations.tables.actions')}</TableCell>
             </TableRow>
           </TableHead>
           
@@ -375,7 +397,7 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
                   })}
                   
                   <TableCell>
-                    <Tooltip title="Xóa dòng">
+                    <Tooltip title={t('pages.quotations.estimation.fixed.deleteRow')}>
                       <IconButton 
                         size="small" 
                         color="error"
@@ -393,7 +415,7 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
           <TableFooter>
             <TableRow>
               <TableCell colSpan={FIXED_COLUMNS.length + 1} align="right">
-                <strong>Tổng cộng:</strong>
+                <strong>{t('pages.quotations.estimation.fixed.total')}</strong>
               </TableCell>
               {effortColumns.map((column) => (
                 <TableCell key={`total-${column.key}`}>
@@ -416,7 +438,7 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
             {/* Thêm dòng Tổng cộng - Theo giai đoạn (ngày công) */}
             <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
               <TableCell colSpan={FIXED_COLUMNS.length + effortColumns.length + 1} align="right">
-                <strong>Tổng cộng - Theo giai đoạn (ngày công):</strong>
+                <strong>{t('pages.quotations.estimation.fixed.totalByPhase')}</strong>
               </TableCell>
               <TableCell>
                 <strong>
@@ -434,7 +456,7 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
         </Table>
       </TableContainer>
       
-      {/* Phân trang */}
+      {/* Pagination */}
       <TablePagination
         rowsPerPageOptions={[5, 10, 25, 50]}
         component="div"
@@ -443,9 +465,9 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        labelRowsPerPage="Số dòng mỗi trang:"
+        labelRowsPerPage={t('pages.quotations.pagination.rowsPerPage')}
         labelDisplayedRows={({ from, to, count }) => 
-          `${from}-${to} trong tổng số ${count}`
+          t('pages.quotations.pagination.displayedRows', { from, to, count })
         }
       />
     </Box>

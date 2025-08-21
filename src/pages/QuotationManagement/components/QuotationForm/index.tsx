@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -13,7 +14,6 @@ import {
   Step,
   StepLabel,
   Paper,
-  Divider,
   FormControl,
   InputLabel,
   Select,
@@ -44,6 +44,7 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
   requirements,
   templates,
 }) => {
+  const { t } = useTranslation();
   // Form state
   const [activeStep, setActiveStep] = useState(0);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -197,9 +198,9 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
   };
 
   const steps = [
-    'Thông tin báo giá',
-    'Bảng ước tính',
-    'Xem trước báo giá',
+    t('pages.quotations.steps.basicInfo'),
+    t('pages.quotations.estimation.chooseMethod'),
+    t('pages.quotations.steps.preview'),
   ];
 
   return (
@@ -209,7 +210,7 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
       maxWidth="lg"
       fullWidth
     >
-      <DialogTitle>Tạo báo giá mới</DialogTitle>
+      <DialogTitle>{t('pages.quotations.dialogs.createTitle')}</DialogTitle>
       <DialogContent>
         <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
           {steps.map((label) => (
@@ -221,12 +222,12 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
 
         {activeStep === 0 && (
           <Box>
-            <Typography variant="h6" gutterBottom>Thông tin cơ bản</Typography>
+            <Typography variant="h6" gutterBottom>{t('pages.quotations.steps.basicInfo')}</Typography>
             
             <Box sx={{ mb: 3, border: '1px solid #e0e0e0', borderRadius: 1, p: 2, bgcolor: '#f9f9f9' }}>
               <Typography variant="subtitle2" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
                 <TemplateIcon fontSize="small" sx={{ mr: 1 }} /> 
-                Chọn mẫu báo giá
+                {t('pages.quotations.fields.template')}
               </Typography>
               <FormControl 
                 fullWidth 
@@ -234,12 +235,12 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
                 required 
                 error={touched.templateId && !newQuotation.templateId}
               >
-                <InputLabel id="template-select-label">Mẫu báo giá</InputLabel>
+                <InputLabel id="template-select-label">{t('pages.quotations.fields.template')}</InputLabel>
                 <Select
                   labelId="template-select-label"
                   id="template-select"
                   value={newQuotation.templateId || ''}
-                  label="Mẫu báo giá"
+                  label={t('pages.quotations.fields.template')}
                   onChange={(e) => {
                     const templateId = e.target.value;
                     const selectedTemplate = templates.find(t => t.id === templateId);
@@ -254,29 +255,29 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
                   size="small"
                 >
                   <MenuItem value="">
-                    <em>Chọn mẫu báo giá</em>
+                    <em>{t('pages.quotations.placeholders.selectTemplate')}</em>
                   </MenuItem>
                   {templates.map((template) => (
                     <MenuItem key={template.id} value={template.id}>
-                      {template.name} {template.type === 'internal' ? '(Nội bộ)' : '(Khách hàng)'}
+                      {template.name}
                     </MenuItem>
                   ))}
                 </Select>
                 {touched.templateId && !newQuotation.templateId && (
-                  <FormHelperText>Vui lòng chọn mẫu báo giá</FormHelperText>
+                  <FormHelperText>{t('pages.quotations.validation.selectTemplate')}</FormHelperText>
                 )}
               </FormControl>
             </Box>
             
             <TextField
-              label="Tên báo giá"
+              label={t('pages.quotations.fields.name')}
               fullWidth
               required
               value={newQuotation.name || ''}
               onChange={(e) => setNewQuotation({...newQuotation, name: e.target.value})}
               margin="normal"
               size="small"
-              placeholder="Nhập tên báo giá"
+              placeholder={t('pages.quotations.placeholders.name')}
             />
             <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
               <Autocomplete
@@ -286,7 +287,7 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Khách hàng"
+                    label={t('pages.quotations.fields.customer')}
                     size="small"
                     sx={{ minWidth: 250, flex: 1 }}
                     required
@@ -302,7 +303,7 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Deal"
+                    label={t('pages.quotations.fields.deal')}
                     size="small"
                     sx={{ minWidth: 250, flex: 1 }}
                     required
@@ -321,7 +322,7 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Requirement"
+                    label={t('pages.quotations.fields.requirement')}
                     size="small"
                     required
                   />
@@ -330,19 +331,19 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
               />
             </Box>
             <TextField
-              label="Trạng thái"
-              value="Draft"
+              label={t('pages.quotations.fields.status')}
+              value={t('pages.quotations.status.draft')}
               size="small"
               disabled
               fullWidth
               margin="normal"
             />
             <TextField
-              label="Ghi chú"
+              label={t('pages.quotations.fields.note')}
               multiline
               rows={4}
               fullWidth
-              placeholder="Nhập ghi chú (nếu có)..."
+              placeholder={t('pages.quotations.placeholders.note')}
               variant="outlined"
               sx={{ mb: 2, mt: 2 }}
               value={newQuotation.note || ''}
@@ -354,7 +355,7 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
         {activeStep === 1 && (
           <Box>
             <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
-              <Typography variant="subtitle2" gutterBottom>Chọn phương thức ước tính</Typography>
+              <Typography variant="subtitle2" gutterBottom>{t('pages.quotations.estimation.chooseMethod')}</Typography>
               <EstimationStep
                 mode={estimationMode as EstimationMode}
                 onModeChange={(newMode) => {
@@ -425,33 +426,31 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
 
         {activeStep === 2 && (
           <Box>
-            <Typography variant="h6" gutterBottom>Xem trước báo giá</Typography>
+            <Typography variant="h6" gutterBottom>{t('pages.quotations.steps.preview')}</Typography>
             <Paper variant="outlined" sx={{ p: 3 }}>
-              <Typography variant="h5" gutterBottom sx={{ mb: 3, textAlign: 'center', fontWeight: 'bold' }}>
-                BÁO GIÁ DỊCH VỤ
-              </Typography>
+              
               
               <Box sx={{ mb: 3 }}>
-                <Typography variant="subtitle1" gutterBottom>Thông tin khách hàng</Typography>
+                <Typography variant="subtitle1" gutterBottom>{t('pages.quotations.preview.customerInfo')}</Typography>
                 <Box sx={{ pl: 2 }}>
-                  <Typography><strong>Tên khách hàng:</strong> {newQuotation.customer}</Typography>
-                  <Typography><strong>Dự án:</strong> {newQuotation.dealName}</Typography>
-                  <Typography><strong>Yêu cầu:</strong> {newQuotation.requirementName}</Typography>
+                  <Typography><strong>{t('pages.quotations.fields.customer')}:</strong> {newQuotation.customer}</Typography>
+                  <Typography><strong>{t('pages.quotations.fields.deal')}:</strong> {newQuotation.dealName}</Typography>
+                  <Typography><strong>{t('pages.quotations.fields.requirement')}:</strong> {newQuotation.requirementName}</Typography>
                 </Box>
               </Box>
 
               <Box sx={{ mb: 3 }}>
-                <Typography variant="subtitle1" gutterBottom>Chi tiết báo giá</Typography>
+                <Typography variant="subtitle1" gutterBottom>{t('pages.quotations.preview.quotationDetails')}</Typography>
                 <TableContainer component={Paper} variant="outlined">
                   <Table size="small">
                     <TableHead>
                       <TableRow>
-                        <TableCell>STT</TableCell>
-                        <TableCell>Hạng mục</TableCell>
-                        <TableCell>Mô tả</TableCell>
-                        <TableCell>Số ngày</TableCell>
-                        <TableCell>Đơn giá</TableCell>
-                        <TableCell>Thành tiền</TableCell>
+                        <TableCell>{t('pages.quotations.preview.table.no')}</TableCell>
+                        <TableCell>{t('pages.quotations.preview.table.item')}</TableCell>
+                        <TableCell>{t('pages.quotations.preview.table.description')}</TableCell>
+                        <TableCell>{t('pages.quotations.preview.table.days')}</TableCell>
+                        <TableCell>{t('pages.quotations.preview.table.unitPrice')}</TableCell>
+                        <TableCell>{t('pages.quotations.preview.table.amount')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -466,7 +465,7 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
                         </TableRow>
                       ))}
                       <TableRow>
-                        <TableCell colSpan={5} align="right"><strong>Tổng cộng:</strong></TableCell>
+                        <TableCell colSpan={5} align="right"><strong>{t('pages.quotations.preview.table.total')}</strong></TableCell>
                         <TableCell><strong>{newQuotation.totalAmount?.toLocaleString('vi-VN')} VNĐ</strong></TableCell>
                       </TableRow>
                     </TableBody>
@@ -475,9 +474,9 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
               </Box>
 
               <Box sx={{ mb: 3 }}>
-                <Typography variant="subtitle1" gutterBottom>Ghi chú</Typography>
+                <Typography variant="subtitle1" gutterBottom>{t('pages.quotations.preview.notes')}</Typography>
                 <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
-                  {newQuotation.note || 'Không có ghi chú'}
+                  {newQuotation.note || t('pages.quotations.preview.noNotes')}
                 </Typography>
               </Box>
             </Paper>
@@ -485,10 +484,10 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
         )}
       </DialogContent>
       <DialogActions sx={{ p: 2, pt: 3 }}>
-        <Button onClick={onClose}>Hủy</Button>
+        <Button onClick={onClose}>{t('common.cancel')}</Button>
         {activeStep > 0 && (
           <Button onClick={handleBack}>
-            Quay lại
+            {t('common.back')}
           </Button>
         )}
         {activeStep < 2 ? (
@@ -498,7 +497,7 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
             endIcon={<NextIcon />}
             disabled={activeStep === 0 ? !isStepOneValid() : false}
           >
-            {activeStep === 1 ? 'Xem trước báo giá' : 'Tiếp theo'}
+            {activeStep === 1 ? t('pages.quotations.steps.preview') : t('common.next')}
           </Button>
         ) : (
           <Button 
@@ -507,7 +506,7 @@ const QuotationForm: React.FC<QuotationFormProps> = ({
             onClick={handleSave}
             startIcon={<SaveIcon />}
           >
-            Lưu báo giá
+            {t('common.save')}
           </Button>
         )}
       </DialogActions>

@@ -22,6 +22,7 @@ import {
 } from '@mui/material';
 // Using textarea instead of TinyMCE to avoid additional dependencies
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { useTranslation } from 'react-i18next';
 
 interface AppendixTemplate {
   id: string;
@@ -68,6 +69,7 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
   onSave,
   templates 
 }) => {
+  const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   const [creationMethod, setCreationMethod] = useState<'template' | 'manual'>('template');
   const [selectedTemplate, setSelectedTemplate] = useState<string>('');
@@ -88,9 +90,9 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
     if (open) {
       // Mock contracts data - in a real app this would be an API call
       const mockContracts: Contract[] = [
-        { id: 'HĐ-001', name: 'Hợp đồng mua bán thiết bị', status: 'active' },
-        { id: 'HĐ-002', name: 'Hợp đồng cung cấp dịch vụ', status: 'active' },
-        { id: 'HĐ-003', name: 'Hợp đồng bảo trì', status: 'active' }
+        { id: 'HĐ-001', name: t('pages.appendices.sample.contract1', 'CRM development contract'), status: 'active' },
+        { id: 'HĐ-002', name: t('pages.appendices.sample.contract2', 'Consulting contract'), status: 'active' },
+        { id: 'HĐ-003', name: t('pages.appendices.sample.contract3', 'Maintenance contract'), status: 'active' }
       ];
       setContracts(mockContracts);
     }
@@ -118,7 +120,7 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
       setAppendix(prev => ({
         ...prev,
         templateId: templateId,
-        name: `Phụ lục ${template.type === 'extension' ? 'gia hạn' : 'thay đổi giá trị'}`
+        name: template.type === 'extension' ? t('pages.appendices.defaults.extensionAppendixName') : t('pages.appendices.defaults.valueAppendixName')
       }));
     }
   };
@@ -188,20 +190,20 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle>Tạo phụ lục hợp đồng mới</DialogTitle>
+      <DialogTitle>{t('pages.appendices.dialogs.createAppendixTitle')}</DialogTitle>
       <DialogContent>
         <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
           <Step>
-            <StepLabel>Chọn cách tạo</StepLabel>
+            <StepLabel>{t('pages.appendices.dialogs.steps.chooseMethod')}</StepLabel>
           </Step>
           <Step>
-            <StepLabel>Điền thông tin</StepLabel>
+            <StepLabel>{t('pages.appendices.dialogs.steps.fillInformation')}</StepLabel>
           </Step>
         </Stepper>
 
         {activeStep === 0 ? (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Typography variant="subtitle1">Chọn cách tạo phụ lục:</Typography>
+            <Typography variant="subtitle1">{t('pages.appendices.dialogs.chooseMethodTitle')}</Typography>
             <RadioGroup
               value={creationMethod}
               onChange={handleMethodChange}
@@ -210,27 +212,27 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
               <FormControlLabel 
                 value="template" 
                 control={<Radio />} 
-                label="Sử dụng mẫu phụ lục" 
+                label={t('pages.appendices.dialogs.methods.useTemplate')} 
               />
               {creationMethod === 'template' && (
                 <FormControl fullWidth sx={{ ml: 4, mb: 2 }}>
-                  <InputLabel>Chọn mẫu</InputLabel>
+                  <InputLabel>{t('pages.appendices.dialogs.fields.selectTemplate')}</InputLabel>
                   <Select
                     value={selectedTemplate}
                     onChange={(e) => handleTemplateChange(e as any)}
-                    label="Chọn mẫu"
+                    label={t('pages.appendices.dialogs.fields.selectTemplate')}
                     name="templateId"
                     disabled={templates.length === 0}
                   >
                     {templates.map((template) => (
                       <MenuItem key={template.id} value={template.id}>
-                        {template.name} - {template.type === 'extension' ? 'Gia hạn' : template.type === 'value' ? 'Thay đổi giá trị' : 'Khác'}
+                        {template.name} - {template.type === 'extension' ? t('pages.appendices.types.extension') : template.type === 'value' ? t('pages.appendices.types.value') : t('pages.appendices.types.other')}
                       </MenuItem>
                     ))}
                   </Select>
                   {templates.length === 0 && (
                     <Typography variant="caption" color="error">
-                      Chưa có mẫu phụ lục nào. Vui lòng tạo mẫu trước.
+                      {t('pages.appendices.dialogs.noTemplatesWarning')}
                     </Typography>
                   )}
                 </FormControl>
@@ -238,7 +240,7 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
               <FormControlLabel 
                 value="manual" 
                 control={<Radio />} 
-                label="Tạo mới thủ công" 
+                label={t('pages.appendices.dialogs.methods.manual')} 
               />
             </RadioGroup>
           </Box>
@@ -246,7 +248,7 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <TextField
               name="name"
-              label="Tên phụ lục"
+              label={t('pages.appendices.dialogs.fields.appendixName')}
               value={appendix.name}
               onChange={handleChange}
               fullWidth
@@ -255,12 +257,12 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
             />
             
             <FormControl fullWidth margin="normal">
-              <InputLabel>Gắn với hợp đồng</InputLabel>
+              <InputLabel>{t('pages.appendices.dialogs.fields.linkedContract')}</InputLabel>
               <Select
                 name="contractId"
                 value={appendix.contractId}
                 onChange={(e) => handleSelectChange(e as any)}
-                label="Gắn với hợp đồng"
+                label={t('pages.appendices.dialogs.fields.linkedContract')}
                 required
               >
                 {contracts.map((contract) => (
@@ -273,7 +275,7 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
             
             <TextField
               name="createdAt"
-              label="Ngày tạo"
+              label={t('pages.appendices.dialogs.fields.createdAt')}
               type="date"
               value={appendix.createdAt || new Date().toISOString().split('T')[0]}
               onChange={handleChange}
@@ -291,7 +293,7 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
                 startIcon={<CloudUploadIcon />}
                 sx={{ mb: 1 }}
               >
-                Upload file đính kèm
+                {t('pages.appendices.dialogs.actions.uploadAttachment')}
                 <input
                   type="file"
                   hidden
@@ -301,29 +303,29 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
               </Button>
               {selectedFile && (
                 <Typography variant="body2" color="textSecondary">
-                  File đã chọn: {selectedFile.name}
+                  {t('pages.appendices.dialogs.selectedFile')}: {selectedFile.name}
                 </Typography>
               )}
             </Box>
             
-            <Typography variant="subtitle1" sx={{ mt: 2 }}>Nội dung phụ lục:</Typography>
+            <Typography variant="subtitle1" sx={{ mt: 2 }}>{t('pages.appendices.dialogs.fields.appendixContent')}</Typography>
             <Paper variant="outlined" sx={{ p: 1 }}>
               <TextField
                 fullWidth
                 multiline
                 rows={10}
-                placeholder="Nhập nội dung phụ lục..."
+                placeholder={t('pages.appendices.dialogs.placeholders.appendixContent')}
                 value={editorContent}
                 onChange={(e) => handleEditorChange(e.target.value)}
                 variant="outlined"
                 sx={{ '& .MuiOutlinedInput-root': { p: 1 } }}
-                defaultValue={creationMethod === 'template' && selectedTemplate ? "Nội dung từ mẫu phụ lục..." : ""}
+                defaultValue={creationMethod === 'template' && selectedTemplate ? t('pages.appendices.dialogs.defaults.contentFromTemplate') : ""}
               />
             </Paper>
             
             <TextField
               name="notes"
-              label="Ghi chú nội bộ (tuỳ chọn)"
+              label={t('pages.appendices.dialogs.fields.internalNotes')}
               value={appendix.notes}
               onChange={handleChange}
               fullWidth
@@ -335,10 +337,10 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Huỷ</Button>
+        <Button onClick={onClose}>{t('common.cancel')}</Button>
         {activeStep > 0 && (
           <Button onClick={handleBack}>
-            Quay lại
+            {t('common.back')}
           </Button>
         )}
         {activeStep === 0 ? (
@@ -348,7 +350,7 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
             color="primary"
             disabled={creationMethod === 'template' && !selectedTemplate}
           >
-            Tiếp theo
+            {t('common.next')}
           </Button>
         ) : (
           <>
@@ -356,7 +358,7 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
               onClick={() => handleSave('draft')} 
               variant="outlined"
             >
-              Lưu nháp
+              {t('pages.appendices.dialogs.actions.saveDraft')}
             </Button>
             <Button 
               onClick={() => handleSave('submit')} 
@@ -364,7 +366,7 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
               color="primary"
               disabled={!appendix.name || !appendix.contractId}
             >
-              Gửi duyệt
+              {t('pages.appendices.dialogs.actions.submit')}
             </Button>
             <Button 
               onClick={() => handleSave('sign')} 
@@ -372,7 +374,7 @@ const CreateAppendixDialog: React.FC<CreateAppendixDialogProps> = ({
               color="success"
               disabled={!appendix.name || !appendix.contractId}
             >
-              Ký phụ lục
+              {t('pages.appendices.dialogs.actions.signAppendix')}
             </Button>
           </>
         )}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box, Typography, Paper, Tabs, Tab, Button, TextField, Table, TableBody,
   TableCell, TableContainer, TableHead, TableRow, IconButton, Chip, Dialog,
@@ -28,6 +29,8 @@ interface AcceptanceReport {
 type AcceptanceTab = 'templates' | 'reports';
 
 const AcceptanceManagement: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language && i18n.language.startsWith('ja') ? 'ja-JP' : 'en-US';
   const [currentTab, setCurrentTab] = useState<AcceptanceTab>('templates');
   const [templates, setTemplates] = useState<AcceptanceTemplate[]>([]);
   const [reports, setReports] = useState<AcceptanceReport[]>([]);
@@ -82,14 +85,14 @@ const AcceptanceManagement: React.FC = () => {
     }
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+  const formatCurrency = (amount: number, locale: string) => {
+    return new Intl.NumberFormat(locale, { style: 'currency', currency: 'VND' }).format(amount);
   };
 
   const handleCreate = () => {
     setSnackbar({ 
       open: true, 
-      message: currentTab === 'templates' ? 'Tạo mẫu nghiệm thu thành công!' : 'Tạo biên bản nghiệm thu thành công!', 
+      message: currentTab === 'templates' ? t('pages.acceptance.notifications.createTemplateSuccess') : t('pages.acceptance.notifications.createReportSuccess'), 
       severity: 'success' 
     });
     setCreateDialogOpen(false);
@@ -110,20 +113,20 @@ const AcceptanceManagement: React.FC = () => {
   return (
     <Box sx={{ width: '100%', p: 3 }}>
       <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3 }}>
-        ✅ Quản lý Nghiệm thu
+        {t('pages.acceptance.title')}
       </Typography>
 
       {/* Dashboard Overview */}
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mb: 3 }}>
         <Box sx={{ flex: '1 1 220px', maxWidth: { xs: '100%', sm: '220px' } }}>
           <Card><CardContent>
-            <Typography color="textSecondary" gutterBottom>Tổng số mẫu</Typography>
+            <Typography color="textSecondary" gutterBottom>{t('pages.acceptance.overview.totalTemplates')}</Typography>
             <Typography variant="h4">{templates.length}</Typography>
           </CardContent></Card>
         </Box>
         <Box sx={{ flex: '1 1 220px', maxWidth: { xs: '100%', sm: '220px' } }}>
           <Card><CardContent>
-            <Typography color="textSecondary" gutterBottom>Biên bản đã ký</Typography>
+            <Typography color="textSecondary" gutterBottom>{t('pages.acceptance.overview.signedReports')}</Typography>
             <Typography variant="h4" color="success.main">
               {reports.filter(r => r.status === 'signed').length}
             </Typography>
@@ -131,7 +134,7 @@ const AcceptanceManagement: React.FC = () => {
         </Box>
         <Box sx={{ flex: '1 1 220px', maxWidth: { xs: '100%', sm: '220px' } }}>
           <Card><CardContent>
-            <Typography color="textSecondary" gutterBottom>Chờ ký</Typography>
+            <Typography color="textSecondary" gutterBottom>{t('pages.acceptance.overview.pending')}</Typography>
             <Typography variant="h4" color="warning.main">
               {reports.filter(r => r.status === 'pending').length}
             </Typography>
@@ -139,9 +142,9 @@ const AcceptanceManagement: React.FC = () => {
         </Box>
         <Box sx={{ flex: '1 1 220px', maxWidth: { xs: '100%', sm: '220px' } }}>
           <Card><CardContent>
-            <Typography color="textSecondary" gutterBottom>Tổng giá trị</Typography>
+            <Typography color="textSecondary" gutterBottom>{t('pages.acceptance.overview.totalValue')}</Typography>
             <Typography variant="h6">
-              {formatCurrency(reports.reduce((sum, r) => sum + r.value, 0))}
+              {formatCurrency(reports.reduce((sum, r) => sum + r.value, 0), locale)}
             </Typography>
           </CardContent></Card>
         </Box>
@@ -149,14 +152,14 @@ const AcceptanceManagement: React.FC = () => {
 
       <Paper sx={{ width: '100%' }}>
         <Tabs value={currentTab} onChange={(e, v) => setCurrentTab(v)} sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tab label={<Badge badgeContent={templates.length} color="primary">Mẫu Nghiệm thu</Badge>} value="templates" />
-          <Tab label={<Badge badgeContent={reports.length} color="primary">Biên bản Nghiệm thu</Badge>} value="reports" />
+          <Tab label={<Badge badgeContent={templates.length} color="primary">{t('pages.acceptance.tabs.templates')}</Badge>} value="templates" />
+          <Tab label={<Badge badgeContent={reports.length} color="primary">{t('pages.acceptance.tabs.reports')}</Badge>} value="reports" />
         </Tabs>
 
         {/* Search and Filter Bar */}
         <Box sx={{ p: 2, display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
           <TextField
-            placeholder="Tìm kiếm..."
+            placeholder={t('pages.acceptance.searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             InputProps={{ startAdornment: <SearchIcon sx={{ mr: 1, color: 'text.secondary' }} /> }}
@@ -164,20 +167,20 @@ const AcceptanceManagement: React.FC = () => {
           />
           
           <FormControl sx={{ minWidth: 150 }}>
-            <InputLabel>Trạng thái</InputLabel>
-            <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} label="Trạng thái">
-              <MenuItem value="all">Tất cả</MenuItem>
+            <InputLabel>{t('pages.acceptance.filters.status')}</InputLabel>
+            <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} label={t('pages.acceptance.filters.status')}>
+              <MenuItem value="all">{t('pages.acceptance.filters.all')}</MenuItem>
               {currentTab === 'templates' ? (
-                <><MenuItem value="active">Hoạt động</MenuItem><MenuItem value="inactive">Ngưng</MenuItem></>
+                <><MenuItem value="active">{t('pages.acceptance.status.active')}</MenuItem><MenuItem value="inactive">{t('pages.acceptance.status.inactive')}</MenuItem></>
               ) : (
-                <><MenuItem value="draft">Bản nháp</MenuItem><MenuItem value="pending">Chờ ký</MenuItem>
-                <MenuItem value="signed">Đã ký</MenuItem><MenuItem value="rejected">Từ chối</MenuItem></>
+                <><MenuItem value="draft">{t('pages.acceptance.status.draft')}</MenuItem><MenuItem value="pending">{t('pages.acceptance.status.pending')}</MenuItem>
+                <MenuItem value="signed">{t('pages.acceptance.status.signed')}</MenuItem><MenuItem value="rejected">{t('pages.acceptance.status.rejected')}</MenuItem></>
               )}
             </Select>
           </FormControl>
 
           <Button variant="contained" startIcon={<AddIcon />} onClick={() => setCreateDialogOpen(true)} sx={{ ml: 'auto' }}>
-            {currentTab === 'templates' ? 'Tạo mẫu mới' : 'Tạo nghiệm thu mới'}
+            {currentTab === 'templates' ? t('pages.acceptance.actions.createTemplate') : t('pages.acceptance.actions.createReport')}
           </Button>
         </Box>
 
@@ -187,13 +190,13 @@ const AcceptanceManagement: React.FC = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Mã</TableCell>
-                  <TableCell>Tên mẫu</TableCell>
-                  <TableCell>Mô tả</TableCell>
-                  <TableCell>Loại</TableCell>
-                  <TableCell>Sử dụng</TableCell>
-                  <TableCell>Trạng thái</TableCell>
-                  <TableCell>Hành động</TableCell>
+                  <TableCell>{t('pages.acceptance.templates.columns.code')}</TableCell>
+                  <TableCell>{t('pages.acceptance.templates.columns.name')}</TableCell>
+                  <TableCell>{t('pages.acceptance.templates.columns.description')}</TableCell>
+                  <TableCell>{t('pages.acceptance.templates.columns.type')}</TableCell>
+                  <TableCell>{t('pages.acceptance.templates.columns.usage')}</TableCell>
+                  <TableCell>{t('pages.acceptance.templates.columns.status')}</TableCell>
+                  <TableCell>{t('pages.acceptance.templates.columns.actions')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -203,19 +206,19 @@ const AcceptanceManagement: React.FC = () => {
                     <TableCell>{template.name}</TableCell>
                     <TableCell>{template.description}</TableCell>
                     <TableCell>
-                      <Chip label={template.type === 'full' ? 'Đầy đủ' : template.type === 'simple' ? 'Đơn giản' : 'Giai đoạn'} size="small" />
+                      <Chip label={template.type === 'full' ? t('pages.acceptance.types.full') : template.type === 'simple' ? t('pages.acceptance.types.simple') : t('pages.acceptance.types.phase')} size="small" />
                     </TableCell>
                     <TableCell>
                       <Badge badgeContent={template.usageCount} color="primary"><AssignmentIcon /></Badge>
                     </TableCell>
                     <TableCell>
-                      <Chip label={template.status === 'active' ? 'Hoạt động' : 'Ngưng'} color={getStatusColor(template.status) as any} size="small" />
+                      <Chip label={template.status === 'active' ? t('pages.acceptance.status.active') : t('pages.acceptance.status.inactive')} color={getStatusColor(template.status) as any} size="small" />
                     </TableCell>
                     <TableCell>
                       <Stack direction="row" spacing={1}>
-                        <Tooltip title="Xem chi tiết"><IconButton size="small"><ViewIcon /></IconButton></Tooltip>
-                        <Tooltip title="Sửa"><IconButton size="small"><EditIcon /></IconButton></Tooltip>
-                        <Tooltip title="Xóa"><IconButton size="small" color="error"><DeleteIcon /></IconButton></Tooltip>
+                        <Tooltip title={t('common.viewDetails')}><IconButton size="small"><ViewIcon /></IconButton></Tooltip>
+                        <Tooltip title={t('common.edit')}><IconButton size="small"><EditIcon /></IconButton></Tooltip>
+                        <Tooltip title={t('common.delete')}><IconButton size="small" color="error"><DeleteIcon /></IconButton></Tooltip>
                       </Stack>
                     </TableCell>
                   </TableRow>
@@ -231,14 +234,14 @@ const AcceptanceManagement: React.FC = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Mã NT</TableCell>
-                  <TableCell>Tên nghiệm thu</TableCell>
-                  <TableCell>Hợp đồng</TableCell>
-                  <TableCell>Phụ lục</TableCell>
-                  <TableCell>Ngày nghiệm thu</TableCell>
-                  <TableCell>Giá trị</TableCell>
-                  <TableCell>Trạng thái</TableCell>
-                  <TableCell>Hành động</TableCell>
+                  <TableCell>{t('pages.acceptance.reports.columns.code')}</TableCell>
+                  <TableCell>{t('pages.acceptance.reports.columns.name')}</TableCell>
+                  <TableCell>{t('pages.acceptance.reports.columns.contract')}</TableCell>
+                  <TableCell>{t('pages.acceptance.reports.columns.appendix')}</TableCell>
+                  <TableCell>{t('pages.acceptance.reports.columns.acceptanceDate')}</TableCell>
+                  <TableCell>{t('pages.acceptance.reports.columns.value')}</TableCell>
+                  <TableCell>{t('pages.acceptance.reports.columns.status')}</TableCell>
+                  <TableCell>{t('pages.acceptance.reports.columns.actions')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -255,24 +258,24 @@ const AcceptanceManagement: React.FC = () => {
                         <><Typography variant="body2">{report.appendixName}</Typography>
                         <Typography variant="caption" color="text.secondary">{report.appendixId}</Typography></>
                       ) : (
-                        <Typography variant="body2" color="text.secondary">Không có</Typography>
+                        <Typography variant="body2" color="text.secondary">{t('pages.acceptance.none')}</Typography>
                       )}
                     </TableCell>
-                    <TableCell>{new Date(report.acceptanceDate).toLocaleDateString('vi-VN')}</TableCell>
-                    <TableCell>{formatCurrency(report.value)}</TableCell>
+                    <TableCell>{new Date(report.acceptanceDate).toLocaleDateString(locale)}</TableCell>
+                    <TableCell>{formatCurrency(report.value, locale)}</TableCell>
                     <TableCell>
                       <Chip 
-                        label={report.status === 'draft' ? 'Bản nháp' : report.status === 'pending' ? 'Chờ ký' : report.status === 'signed' ? 'Đã ký' : 'Từ chối'}
+                        label={report.status === 'draft' ? t('pages.acceptance.status.draft') : report.status === 'pending' ? t('pages.acceptance.status.pending') : report.status === 'signed' ? t('pages.acceptance.status.signed') : t('pages.acceptance.status.rejected')}
                         color={getStatusColor(report.status) as any}
                         size="small"
                       />
                     </TableCell>
                     <TableCell>
                       <Stack direction="row" spacing={1}>
-                        <Tooltip title="Xem chi tiết"><IconButton size="small"><ViewIcon /></IconButton></Tooltip>
-                        <Tooltip title="Tải xuống"><IconButton size="small"><DownloadIcon /></IconButton></Tooltip>
-                        {report.status === 'draft' && <Tooltip title="Sửa"><IconButton size="small"><EditIcon /></IconButton></Tooltip>}
-                        {report.status === 'pending' && <Tooltip title="Ký"><IconButton size="small" color="success"><CheckCircleIcon /></IconButton></Tooltip>}
+                        <Tooltip title={t('common.viewDetails')}><IconButton size="small"><ViewIcon /></IconButton></Tooltip>
+                        <Tooltip title={t('common.download')}><IconButton size="small"><DownloadIcon /></IconButton></Tooltip>
+                        {report.status === 'draft' && <Tooltip title={t('common.edit')}><IconButton size="small"><EditIcon /></IconButton></Tooltip>}
+                        {report.status === 'pending' && <Tooltip title={t('pages.acceptance.actions.sign')}><IconButton size="small" color="success"><CheckCircleIcon /></IconButton></Tooltip>}
                       </Stack>
                     </TableCell>
                   </TableRow>
@@ -285,26 +288,26 @@ const AcceptanceManagement: React.FC = () => {
 
       {/* Create Dialog */}
       <Dialog open={createDialogOpen} onClose={() => setCreateDialogOpen(false)} maxWidth="md" fullWidth>
-        <DialogTitle>{currentTab === 'templates' ? 'Tạo mẫu nghiệm thu mới' : 'Tạo biên bản nghiệm thu mới'}</DialogTitle>
+        <DialogTitle>{currentTab === 'templates' ? t('pages.acceptance.dialogs.createTemplateTitle') : t('pages.acceptance.dialogs.createReportTitle')}</DialogTitle>
         <DialogContent>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 1 }}>
             <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
-              <TextField fullWidth label={currentTab === 'templates' ? 'Tên mẫu nghiệm thu' : 'Tên nghiệm thu'} />
+              <TextField fullWidth label={currentTab === 'templates' ? t('pages.acceptance.dialogs.fields.templateName') : t('pages.acceptance.dialogs.fields.reportName')} />
             </Box>
             <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
-              <TextField fullWidth label="Mã" />
+              <TextField fullWidth label={t('pages.acceptance.dialogs.fields.code')} />
             </Box>
             <Box sx={{ flex: '1 1 100%' }}>
-              <TextField fullWidth label="Mô tả" multiline rows={3} />
+              <TextField fullWidth label={t('pages.acceptance.dialogs.fields.description')} multiline rows={3} />
             </Box>
             {currentTab === 'templates' ? (
               <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
                 <FormControl fullWidth>
-                  <InputLabel>Loại</InputLabel>
-                  <Select label="Loại">
-                    <MenuItem value="full">Đầy đủ</MenuItem>
-                    <MenuItem value="simple">Đơn giản</MenuItem>
-                    <MenuItem value="phase">Giai đoạn</MenuItem>
+                  <InputLabel>{t('pages.acceptance.dialogs.fields.type')}</InputLabel>
+                  <Select label={t('pages.acceptance.dialogs.fields.type')}>
+                    <MenuItem value="full">{t('pages.acceptance.types.full')}</MenuItem>
+                    <MenuItem value="simple">{t('pages.acceptance.types.simple')}</MenuItem>
+                    <MenuItem value="phase">{t('pages.acceptance.types.phase')}</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -312,19 +315,19 @@ const AcceptanceManagement: React.FC = () => {
               <>
                 <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
                   <FormControl fullWidth>
-                    <InputLabel>Hợp đồng liên kết</InputLabel>
-                    <Select label="Hợp đồng liên kết">
-                      <MenuItem value="HD001">HD001 - Hợp đồng phát triển CRM</MenuItem>
-                      <MenuItem value="HD002">HD002 - Hợp đồng tư vấn</MenuItem>
+                    <InputLabel>{t('pages.acceptance.dialogs.fields.linkedContract')}</InputLabel>
+                    <Select label={t('pages.acceptance.dialogs.fields.linkedContract')}>
+                      <MenuItem value="HD001">HD001 - {t('pages.acceptance.sample.contract1')}</MenuItem>
+                      <MenuItem value="HD002">HD002 - {t('pages.acceptance.sample.contract2')}</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
                 <Box sx={{ flex: '1 1 45%', minWidth: '250px' }}>
                   <FormControl fullWidth>
-                    <InputLabel>Phụ lục liên kết</InputLabel>
-                    <Select label="Phụ lục liên kết">
-                      <MenuItem value="PL001">PL001 - Module quản lý khách hàng</MenuItem>
-                      <MenuItem value="PL002">PL002 - Module báo cáo</MenuItem>
+                    <InputLabel>{t('pages.acceptance.dialogs.fields.linkedAppendix')}</InputLabel>
+                    <Select label={t('pages.acceptance.dialogs.fields.linkedAppendix')}>
+                      <MenuItem value="PL001">PL001 - {t('pages.acceptance.sample.appendix1')}</MenuItem>
+                      <MenuItem value="PL002">PL002 - {t('pages.acceptance.sample.appendix2')}</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
@@ -333,8 +336,8 @@ const AcceptanceManagement: React.FC = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setCreateDialogOpen(false)}>Hủy</Button>
-          <Button variant="contained" onClick={handleCreate}>Lưu</Button>
+          <Button onClick={() => setCreateDialogOpen(false)}>{t('common.cancel')}</Button>
+          <Button variant="contained" onClick={handleCreate}>{t('common.save')}</Button>
         </DialogActions>
       </Dialog>
 

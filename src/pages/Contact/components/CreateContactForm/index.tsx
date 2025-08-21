@@ -15,6 +15,7 @@ import {
 import {
   Close as CloseIcon
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface CreateContactFormProps {
   newContact: {
@@ -38,11 +39,12 @@ const CreateContactForm: React.FC<CreateContactFormProps> = ({
   onLeadStatusChange,
   onSubmit
 }) => {
+  const { t } = useTranslation();
   return (
     <>
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          Create New Contact
+          {t('pages.contacts.form.createTitle')}
           <IconButton onClick={onClose} size="small">
             <CloseIcon />
           </IconButton>
@@ -53,7 +55,7 @@ const CreateContactForm: React.FC<CreateContactFormProps> = ({
           <Box sx={{ flex: '1 1 calc(50% - 8px)' }}>
             <TextField
               name="firstName"
-              label="First Name"
+              label={t('pages.contacts.form.fields.firstName')}
               fullWidth
               required
               value={newContact.firstName}
@@ -64,7 +66,7 @@ const CreateContactForm: React.FC<CreateContactFormProps> = ({
           <Box sx={{ flex: '1 1 calc(50% - 8px)' }}>
             <TextField
               name="lastName"
-              label="Last Name"
+              label={t('pages.contacts.form.fields.lastName')}
               fullWidth
               value={newContact.lastName}
               onChange={onChange}
@@ -73,7 +75,7 @@ const CreateContactForm: React.FC<CreateContactFormProps> = ({
           <Box sx={{ width: '100%', mt: 2 }}>
             <TextField
               name="email"
-              label="Email"
+              label={t('pages.contacts.form.fields.email')}
               type="email"
               fullWidth
               required
@@ -84,7 +86,7 @@ const CreateContactForm: React.FC<CreateContactFormProps> = ({
           <Box sx={{ width: '100%', mt: 2 }}>
             <TextField
               name="phone"
-              label="Phone Number"
+              label={t('pages.contacts.form.fields.phone')}
               fullWidth
               value={newContact.phone}
               onChange={onChange}
@@ -93,7 +95,7 @@ const CreateContactForm: React.FC<CreateContactFormProps> = ({
           <Box sx={{ width: '100%', mt: 2 }}>
             <TextField
               name="jobTitle"
-              label="Job Title"
+              label={t('pages.contacts.form.fields.jobTitle')}
               fullWidth
               value={newContact.jobTitle}
               onChange={onChange}
@@ -101,25 +103,25 @@ const CreateContactForm: React.FC<CreateContactFormProps> = ({
           </Box>
           <Box sx={{ width: '100%', mt: 2 }}>
             <FormControl fullWidth>
-              <InputLabel>Lead Status</InputLabel>
+              <InputLabel>{t('pages.contacts.form.fields.leadStatus')}</InputLabel>
               <Select
                 value={newContact.leadStatus}
-                label="Lead Status"
+                label={t('pages.contacts.form.fields.leadStatus')}
                 onChange={onLeadStatusChange}
               >
-                <MenuItem value="New">New</MenuItem>
-                <MenuItem value="Contacted">Contacted</MenuItem>
-                <MenuItem value="Qualified">Qualified</MenuItem>
-                <MenuItem value="Lost">Lost</MenuItem>
+                <MenuItem value="New">{t('pages.contacts.form.options.leadStatus.new')}</MenuItem>
+                <MenuItem value="Contacted">{t('pages.contacts.form.options.leadStatus.contacted')}</MenuItem>
+                <MenuItem value="Qualified">{t('pages.contacts.form.options.leadStatus.qualified')}</MenuItem>
+                <MenuItem value="Lost">{t('pages.contacts.form.options.leadStatus.lost')}</MenuItem>
               </Select>
             </FormControl>
           </Box>
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>{t('pages.contacts.form.actions.cancel')}</Button>
         <Button onClick={onSubmit} variant="contained" color="primary">
-          Save
+          {t('pages.contacts.form.actions.save')}
         </Button>
       </DialogActions>
     </>

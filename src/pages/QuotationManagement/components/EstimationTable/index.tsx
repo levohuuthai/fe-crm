@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Paper,
@@ -26,6 +27,7 @@ const EstimationTable: React.FC<EstimationTableProps> = ({
   readOnly = false,
   disableFeatureFields = false,
 }) => {
+  const { t } = useTranslation();
   const [tableItems, setTableItems] = useState<QuotationItem[]>(items);
 
   useEffect(() => {
@@ -101,7 +103,7 @@ const EstimationTable: React.FC<EstimationTableProps> = ({
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2, alignItems: 'center' }}>
-        <Typography variant="h6">Chi tiết ước tính</Typography>
+        <Typography variant="h6">{t('pages.quotations.estimation.table.title')}</Typography>
         {!readOnly && (
           <Button
             variant="outlined"
@@ -109,7 +111,7 @@ const EstimationTable: React.FC<EstimationTableProps> = ({
             onClick={handleAddRow}
             size="small"
           >
-            Thêm dòng
+            {t('pages.quotations.estimation.fixed.addRow')}
           </Button>
         )}
       </Box>
@@ -127,18 +129,18 @@ const EstimationTable: React.FC<EstimationTableProps> = ({
           <Table size="small" sx={{ tableLayout: 'fixed' }}>
             <TableHead>
               <TableRow>
-                <TableCell width="50px" sx={{ position: 'sticky', left: 0, backgroundColor: '#fff', zIndex: 1 }}>STT</TableCell>
-                <TableCell width="150px" sx={{ position: 'sticky', left: '50px', backgroundColor: '#fff', zIndex: 1 }}>Feature</TableCell>
-                <TableCell width="200px" sx={{ position: 'sticky', left: '200px', backgroundColor: '#fff', zIndex: 1 }}>Chi tiết</TableCell>
-                <TableCell width="250px" sx={{ position: 'sticky', left: '400px', backgroundColor: '#fff', zIndex: 1 }}>Mô tả</TableCell>
-                <TableCell width="200px" sx={{ position: 'sticky', left: '650px', backgroundColor: '#fff', zIndex: 1 }}>Ghi chú</TableCell>
-                <TableCell align="right" width="80px">FE (MD)</TableCell>
-                <TableCell align="right" width="80px">BE (MD)</TableCell>
-                <TableCell align="right" width="80px">QC (MD)</TableCell>
-                <TableCell align="right" width="80px">PM (MD)</TableCell>
-                <TableCell align="right" width="80px">Tổng MD</TableCell>
-                <TableCell align="right" width="80px">Tổng MM</TableCell>
-                {!readOnly && <TableCell align="center" width="80px">Hành động</TableCell>}
+                <TableCell width="50px" sx={{ position: 'sticky', left: 0, backgroundColor: '#fff', zIndex: 1 }}>{t('pages.quotations.preview.table.no')}</TableCell>
+                <TableCell width="150px" sx={{ position: 'sticky', left: '50px', backgroundColor: '#fff', zIndex: 1 }}>{t('pages.quotations.estimation.table.feature')}</TableCell>
+                <TableCell width="200px" sx={{ position: 'sticky', left: '200px', backgroundColor: '#fff', zIndex: 1 }}>{t('pages.quotations.estimation.table.detail')}</TableCell>
+                <TableCell width="250px" sx={{ position: 'sticky', left: '400px', backgroundColor: '#fff', zIndex: 1 }}>{t('pages.quotations.estimation.table.description')}</TableCell>
+                <TableCell width="200px" sx={{ position: 'sticky', left: '650px', backgroundColor: '#fff', zIndex: 1 }}>{t('pages.quotations.estimation.table.note')}</TableCell>
+                <TableCell align="right" width="80px">{t('pages.quotations.estimation.table.columns.feMd')}</TableCell>
+                <TableCell align="right" width="80px">{t('pages.quotations.estimation.table.columns.beMd')}</TableCell>
+                <TableCell align="right" width="80px">{t('pages.quotations.estimation.table.columns.qcMd')}</TableCell>
+                <TableCell align="right" width="80px">{t('pages.quotations.estimation.table.columns.pmMd')}</TableCell>
+                <TableCell align="right" width="80px">{t('pages.quotations.estimation.table.columns.totalMd')}</TableCell>
+                <TableCell align="right" width="80px">{t('pages.quotations.estimation.table.columns.totalMm')}</TableCell>
+                {!readOnly && <TableCell align="center" width="80px">{t('pages.quotations.tables.actions')}</TableCell>}
               </TableRow>
             </TableHead>
           <TableBody>
@@ -349,7 +351,7 @@ const EstimationTable: React.FC<EstimationTableProps> = ({
               <TableCell sx={{ position: 'sticky', left: '200px', backgroundColor: '#f5f5f5', zIndex: 1 }}></TableCell>
               <TableCell sx={{ position: 'sticky', left: '400px', backgroundColor: '#f5f5f5', zIndex: 1 }}></TableCell>
               <TableCell sx={{ position: 'sticky', left: '650px', backgroundColor: '#f5f5f5', zIndex: 1 }} align="right">
-                <strong>Tổng</strong>
+                <strong>{t('pages.quotations.estimation.table.total')}</strong>
               </TableCell>
               <TableCell align="right"><strong>{totalFE.toFixed(1)}</strong></TableCell>
               <TableCell align="right"><strong>{totalBE.toFixed(1)}</strong></TableCell>
@@ -366,13 +368,13 @@ const EstimationTable: React.FC<EstimationTableProps> = ({
       
       <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
         <Typography variant="body2">
-          <strong>Tổng MD:</strong> {totalMD.toFixed(1)}
+          <strong>{t('pages.quotations.estimation.table.summary.totalMd')}:</strong> {totalMD.toFixed(1)}
         </Typography>
         <Typography variant="body2">
-          <strong>Tổng MM:</strong> {totalMM.toFixed(2)}
+          <strong>{t('pages.quotations.estimation.table.summary.totalMm')}:</strong> {totalMM.toFixed(2)}
         </Typography>
         <Typography variant="body2">
-          <strong>Tổng tiền:</strong> {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalMD * 500000)}
+          <strong>{t('pages.quotations.estimation.table.summary.totalAmount')}:</strong> {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalMD * 500000)}
         </Typography>
       </Box>
     </Box>

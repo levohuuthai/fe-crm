@@ -4,6 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import AIPromptInput from './AIPromptInput';
 import ContractPreview from './ContractPreview';
 import { mockGenerateContract } from './mockData';
+import { useTranslation } from 'react-i18next';
 import { Template } from '../TemplateList/types';
 
 interface AIContractGenerationProps {
@@ -23,6 +24,7 @@ const AIContractGeneration: React.FC<AIContractGenerationProps> = ({
   const [saveDialogOpen, setSaveDialogOpen] = useState<boolean>(false);
   const [templateName, setTemplateName] = useState<string>('');
   const [savingTemplate, setSavingTemplate] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const handleGenerateContract = async (prompt: string) => {
     // Add user message to chat history
@@ -43,7 +45,7 @@ const AIContractGeneration: React.FC<AIContractGenerationProps> = ({
         // Add assistant response to chat history
         setChatHistory(prev => [...prev, { 
           role: 'assistant', 
-          content: 'Tôi đã tạo hợp đồng dựa trên yêu cầu của bạn. Bạn có thể xem và chỉnh sửa ở bên phải.' 
+          content: t('pages.contracts.aiGeneration.messages.generated') 
         }]);
         
         // End loading state
@@ -56,7 +58,7 @@ const AIContractGeneration: React.FC<AIContractGenerationProps> = ({
       // Add error message to chat history
       setChatHistory(prev => [...prev, { 
         role: 'assistant', 
-        content: 'Đã xảy ra lỗi khi tạo hợp đồng. Vui lòng thử lại.' 
+        content: t('pages.contracts.aiGeneration.messages.error') 
       }]);
     }
   };
@@ -71,7 +73,7 @@ const AIContractGeneration: React.FC<AIContractGenerationProps> = ({
       setSaveDialogOpen(true);
       // Extract a default name from the first line of the contract
       const firstLine = content.split('\n')[0];
-      setTemplateName(firstLine || 'Hợp đồng mới');
+      setTemplateName(firstLine || t('pages.contracts.aiGeneration.saveDialog.defaultTemplateName'));
     }
   };
 
@@ -90,7 +92,7 @@ const AIContractGeneration: React.FC<AIContractGenerationProps> = ({
         type: 'AI',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        createdBy: 'Người dùng hiện tại',
+        createdBy: t('pages.contracts.aiGeneration.saveDialog.currentUser'),
         placeholderCount: placeholders.length,
         isDefault: false,
         status: 'active',
@@ -131,7 +133,7 @@ const AIContractGeneration: React.FC<AIContractGenerationProps> = ({
         borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
       }}>
         <Typography variant="h6" component="div">
-          Tạo hợp đồng bằng AI
+          {t('pages.contracts.aiGeneration.title')}
         </Typography>
         <IconButton
           edge="end"
@@ -175,16 +177,16 @@ const AIContractGeneration: React.FC<AIContractGenerationProps> = ({
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>Lưu thành Template</DialogTitle>
+        <DialogTitle>{t('pages.contracts.aiGeneration.saveDialog.title')}</DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 1 }}>
             <Typography variant="body2" gutterBottom>
-              Đặt tên cho template hợp đồng này để lưu vào hệ thống
+              {t('pages.contracts.aiGeneration.saveDialog.description')}
             </Typography>
             <TextField
               autoFocus
               margin="dense"
-              label="Tên template"
+              label={t('pages.contracts.aiGeneration.saveDialog.nameLabel')}
               fullWidth
               variant="outlined"
               value={templateName}
@@ -196,7 +198,7 @@ const AIContractGeneration: React.FC<AIContractGenerationProps> = ({
                 onClick={() => setSaveDialogOpen(false)}
                 disabled={savingTemplate}
               >
-                Hủy
+                {t('common.cancel')}
               </Button>
               <Button 
                 variant="contained" 
@@ -204,7 +206,7 @@ const AIContractGeneration: React.FC<AIContractGenerationProps> = ({
                 onClick={handleSaveTemplate}
                 disabled={!templateName.trim() || savingTemplate}
               >
-                {savingTemplate ? 'Đang lưu...' : 'Lưu template'}
+                {savingTemplate ? t('pages.contracts.aiGeneration.saveDialog.saving') : t('pages.contracts.aiGeneration.saveDialog.save')}
               </Button>
             </Box>
           </Box>

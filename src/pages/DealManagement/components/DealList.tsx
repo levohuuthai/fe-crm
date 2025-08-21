@@ -29,6 +29,7 @@ import { vi } from 'date-fns/locale';
 import { Deal } from './DealTypes';
 import DealStageChip from './DealStageChip';
 import DealReminderBadge from './DealReminderBadge';
+import { useTranslation } from 'react-i18next';
 
 interface DealListProps {
   deals: Deal[];
@@ -42,6 +43,7 @@ interface DealListProps {
  * Component hiển thị danh sách deal dạng bảng
  */
 const DealList: React.FC<DealListProps> = ({ deals, onEdit, onDelete, onView, onDuplicate }) => {
+  const { t } = useTranslation();
   // State cho phân trang
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -87,7 +89,7 @@ const DealList: React.FC<DealListProps> = ({ deals, onEdit, onDelete, onView, on
     try {
       return format(new Date(dateString), 'dd/MM/yyyy', { locale: vi });
     } catch (error) {
-      return 'Ngày không hợp lệ';
+      return t('common.unknown');
     }
   };
 
@@ -100,14 +102,14 @@ const DealList: React.FC<DealListProps> = ({ deals, onEdit, onDelete, onView, on
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell>Tên Deal</TableCell>
-              <TableCell>Khách hàng</TableCell>
-              <TableCell>Người phụ trách</TableCell>
-              <TableCell>Giá trị</TableCell>
-              <TableCell>Giai đoạn</TableCell>
-              <TableCell>Ngày tạo</TableCell>
-              <TableCell>Hạn chốt</TableCell>
-              <TableCell align="center">Thao tác</TableCell>
+              <TableCell>{t('pages.deals.columns.dealName')}</TableCell>
+              <TableCell>{t('pages.deals.columns.customer')}</TableCell>
+              <TableCell>{t('pages.deals.columns.owner')}</TableCell>
+              <TableCell>{t('pages.deals.columns.amount')}</TableCell>
+              <TableCell>{t('pages.deals.columns.stage')}</TableCell>
+              <TableCell>{t('pages.deals.columns.createdAt')}</TableCell>
+              <TableCell>{t('pages.deals.columns.deadline')}</TableCell>
+              <TableCell align="center">{t('pages.deals.columns.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -134,7 +136,7 @@ const DealList: React.FC<DealListProps> = ({ deals, onEdit, onDelete, onView, on
                     )}
                   </TableCell>
                   <TableCell>{deal.customer}</TableCell>
-                  <TableCell>{deal.owner || 'Chưa xác định'}</TableCell>
+                  <TableCell>{deal.owner || t('common.unknown')}</TableCell>
                   <TableCell>{formatCurrency(deal.value)}</TableCell>
                   <TableCell>
                     <DealStageChip stage={deal.stage} size="small" showTooltip />
@@ -145,12 +147,12 @@ const DealList: React.FC<DealListProps> = ({ deals, onEdit, onDelete, onView, on
                   </TableCell>
                   <TableCell align="center">
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                      <Tooltip title="Chỉnh sửa">
+                      <Tooltip title={t('common.edit')}>
                         <IconButton size="small" onClick={() => onEdit(deal)}>
                           <EditIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Xem chi tiết">
+                      <Tooltip title={t('common.viewDetails')}>
                         <IconButton size="small" onClick={() => onView(deal)}>
                           <VisibilityIcon fontSize="small" />
                         </IconButton>
@@ -166,7 +168,7 @@ const DealList: React.FC<DealListProps> = ({ deals, onEdit, onDelete, onView, on
               <TableRow>
                 <TableCell colSpan={7} align="center">
                   <Typography variant="body1" sx={{ py: 2 }}>
-                    Không có deal nào được tìm thấy
+                    {t('pages.deals.empty')}
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -182,8 +184,10 @@ const DealList: React.FC<DealListProps> = ({ deals, onEdit, onDelete, onView, on
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        labelRowsPerPage="Số hàng mỗi trang:"
-        labelDisplayedRows={({ from, to, count }) => `${from}-${to} của ${count}`}
+        labelRowsPerPage={t('pages.deals.pagination.rowsPerPage')}
+        labelDisplayedRows={({ from, to, count }) =>
+          t('pages.deals.pagination.displayedRows', { from, to, count })
+        }
       />
 
       {/* Menu thao tác */}
@@ -201,7 +205,7 @@ const DealList: React.FC<DealListProps> = ({ deals, onEdit, onDelete, onView, on
           <ListItemIcon>
             <ContentCopyIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Nhân bản</ListItemText>
+          <ListItemText>{t('pages.deals.ui.contextMenu.duplicate')}</ListItemText>
         </MenuItem>
         <MenuItem onClick={() => {
           if (selectedDeal) onDelete(selectedDeal.id);
@@ -210,7 +214,7 @@ const DealList: React.FC<DealListProps> = ({ deals, onEdit, onDelete, onView, on
           <ListItemIcon>
             <DeleteIcon fontSize="small" color="error" />
           </ListItemIcon>
-          <ListItemText sx={{ color: 'error.main' }}>Xóa</ListItemText>
+          <ListItemText sx={{ color: 'error.main' }}>{t('pages.deals.ui.contextMenu.delete')}</ListItemText>
         </MenuItem>
       </Menu>
     </Paper>

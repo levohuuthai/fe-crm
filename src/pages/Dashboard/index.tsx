@@ -30,6 +30,7 @@ import {
 } from '@mui/material';
 import CrmAssistantPanel from '../../components/CrmAssistantPanel';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   Search as SearchIcon, 
   SmartToy as AIIcon,
@@ -112,6 +113,7 @@ const Dashboard = () => {
   const theme = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [currentQuery, setCurrentQuery] = useState<string>('');
   const [isLoaded, setIsLoaded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -370,7 +372,7 @@ const Dashboard = () => {
                   mb: 2
                 }}
               >
-                Chào mừng trở lại, Admin
+                {t('pages.dashboard.welcomeBack')}
               </Typography>
               <Typography 
                 variant="h6" 
@@ -381,7 +383,7 @@ const Dashboard = () => {
                   mx: 'auto'
                 }}
               >
-                Dashboard thông minh
+                {t('pages.dashboard.smartDashboard')}
               </Typography>
               
               {/* AI Search Input - Crunchbase style */}
@@ -433,7 +435,7 @@ const Dashboard = () => {
                       <TextField
                         inputRef={inputRef}
                         fullWidth
-                        placeholder="Hỏi AI về dữ liệu kinh doanh, thị trường, khách hàng..."
+                        placeholder={t('pages.dashboard.searchPlaceholder')}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         onFocus={handleInputFocus}
@@ -535,7 +537,7 @@ const Dashboard = () => {
                                   fontSize: '0.65rem'
                                 }}
                               >
-                                Contacts
+                                {t('common.contacts')}
                               </Typography>
                               {mockContacts.slice(0, 3).map((contact) => (
                                 <ListItemButton
@@ -624,7 +626,7 @@ const Dashboard = () => {
                                 }}
                               >
                                 <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-                                  View all contacts...
+                                  {t('common.viewAllContacts')}
                                 </Typography>
                               </ListItemButton>
                             </Box>
@@ -646,7 +648,7 @@ const Dashboard = () => {
                                   fontSize: '0.65rem'
                                 }}
                               >
-                                Deals
+                                {t('common.deals')}
                               </Typography>
                               {mockDeals.slice(0, 3).map((deal) => (
                                 <ListItemButton
@@ -739,7 +741,7 @@ const Dashboard = () => {
                                 }}
                               >
                                 <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-                                  View all deals...
+                                  {t('common.viewAllDeals')}
                                 </Typography>
                               </ListItemButton>
                             </Box>
@@ -777,7 +779,7 @@ const Dashboard = () => {
                                           color: 'warning.dark'
                                         }}
                                       >
-                                        Hỏi CRM Assistant: "{searchQuery.length > 30 ? searchQuery.substring(0, 30) + '...' : searchQuery}"
+                                        {t('pages.dashboard.askAssistant', { query: (searchQuery.length > 30 ? searchQuery.substring(0, 30) + '...' : searchQuery) })}
                                       </Typography>
                                     </Box>
                                   </ListItemButton>
@@ -799,7 +801,7 @@ const Dashboard = () => {
                           display: { xs: 'none', sm: 'inline' }
                         }}
                       >
-                        AI Assistant - Hỏi bất cứ điều gì!
+                        {t('common.aiAssistantMinimized')}
                       </Typography>
                     )}
                   </Paper>
@@ -865,7 +867,7 @@ const Dashboard = () => {
                 >
                   <TextField
                     fullWidth
-                    placeholder="Hỏi AI về dữ liệu kinh doanh, thị trường, khách hàng..."
+                    placeholder={t('pages.dashboard.searchPlaceholder')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onKeyPress={(e) => {
@@ -971,11 +973,11 @@ const Dashboard = () => {
                         <ArrowBackIcon fontSize="small" />
                       </IconButton>
                       <Typography variant="body2" sx={{ fontWeight: 'bold', fontSize: '0.875rem' }}>
-                        Back
+                        {t('pages.dashboard.back')}
                       </Typography>
                     </Box>
                     <Typography variant="h6" sx={{ fontSize: '1.1rem', color: 'text.primary', fontWeight: 'medium' }}>
-                      Search for: "{searchQuery || 'AI search results'}"
+                      {t('pages.dashboard.searchFor', { query: searchQuery || t('pages.dashboard.aiSearchResults') })}
                     </Typography>
                   </Box>
                   
@@ -983,7 +985,7 @@ const Dashboard = () => {
                   <Box sx={{ display: 'flex', gap: 1 }}>
                     <Chip
                       icon={<PeopleIcon fontSize="small" />}
-                      label="Contacts"
+                      label={t('common.contacts')}
                       variant={activeTab === 'contacts' ? 'filled' : 'outlined'}
                       color={activeTab === 'contacts' ? 'primary' : 'default'}
                       onClick={() => navigate('/contacts')}
@@ -991,7 +993,7 @@ const Dashboard = () => {
                     />
                     <Chip
                       icon={<HandshakeIcon fontSize="small" />}
-                      label="Deals"
+                      label={t('common.deals')}
                       variant={activeTab === 'deals' ? 'filled' : 'outlined'}
                       color={activeTab === 'deals' ? 'primary' : 'default'}
                       onClick={() => navigate('/deals')}
@@ -1014,7 +1016,7 @@ const Dashboard = () => {
                         gap: 1
                       }}
                     >
-                      CONTACTS
+                      {t('pages.dashboard.sections.contacts')}
                       <Chip
                         label={expandedSections.contacts ? getExtendedContacts().length : mockContacts.length}
                         size="small"
@@ -1122,7 +1124,7 @@ const Dashboard = () => {
                           }}
                         >
                           <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-                            Show more contacts...
+                            {t('pages.dashboard.showMoreContacts')}
                           </Typography>
                         </ListItemButton>
                       )}
@@ -1141,7 +1143,7 @@ const Dashboard = () => {
                         gap: 1
                       }}
                     >
-                      DEALS
+                      {t('pages.dashboard.sections.deals')}
                       <Chip
                         label={expandedSections.deals ? getExtendedDeals().length : mockDeals.length}
                         size="small"
@@ -1253,7 +1255,7 @@ const Dashboard = () => {
                           }}
                         >
                           <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-                            Show more deals...
+                            {t('pages.dashboard.showMoreDeals')}
                           </Typography>
                         </ListItemButton>
                       )}
@@ -1292,7 +1294,7 @@ const Dashboard = () => {
             {/* Footer */}
             <Box sx={{ mt: 4, pt: 2, borderTop: `1px solid ${theme.palette.divider}`, textAlign: 'center' }}>
               <Typography variant="caption" color="text.secondary">
-                © 2025 CRM Dashboard - Powered by AI Orchestration • Real-time Data • Smart Predictions
+                {t('pages.dashboard.footer')}
               </Typography>
             </Box>
           </Box>

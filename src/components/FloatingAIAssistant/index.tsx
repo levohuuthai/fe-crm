@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Box,
   Paper,
@@ -25,6 +25,7 @@ import {
   Timeline as PredictionIcon
 } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { aiOrchestrator, AIRequest } from '../../services/aiOrchestration';
 
 interface FloatingAIAssistantProps {
@@ -44,41 +45,44 @@ const FloatingAIAssistant: React.FC<FloatingAIAssistantProps> = ({ isOnDashboard
   const location = useLocation();
   const assistantRef = useRef<HTMLDivElement>(null);
 
-  // Suggestions based on current page
-  const getPageSuggestions = () => {
-    const baseSuggestions = [
-      "Phân tích xu hướng thị trường hiện tại",
-      "Dự đoán deal nào có khả năng thành công cao nhất",
-      "Tìm kiếm khách hàng tiềm năng",
-      "Tạo báo cáo tổng quan kinh doanh"
+  const { t, i18n } = useTranslation();
+
+  // Suggestions based on current page (localized)
+  const getPageSuggestions = useMemo(() => {
+    const base = [
+      t('pages.assistant.pageSuggestions.base.marketTrends'),
+      t('pages.assistant.pageSuggestions.base.predictTopDeal'),
+      t('pages.assistant.pageSuggestions.base.findProspects'),
+      t('pages.assistant.pageSuggestions.base.createOverviewReport'),
     ];
 
-    switch (location.pathname) {
-      case '/dashboard':
-        return [
-          "Hiển thị KPI tháng này",
-          "Phân tích xu hướng doanh thu",
-          "Top 5 deal tiềm năng nhất",
-          ...baseSuggestions
-        ];
-      case '/deals':
-        return [
-          "Dự đoán tỷ lệ thành công của các deal",
-          "Phân tích pipeline hiện tại",
-          "Đề xuất hành động cho deal đang pending",
-          ...baseSuggestions
-        ];
-      case '/customers':
-        return [
-          "Phân tích hành vi khách hàng",
-          "Tìm cơ hội cross-sell/up-sell",
-          "Dự đoán customer churn",
-          ...baseSuggestions
-        ];
-      default:
-        return baseSuggestions;
+    const path = location.pathname;
+    if (path === '/dashboard') {
+      return [
+        t('pages.assistant.pageSuggestions.dashboard.kpiThisMonth'),
+        t('pages.assistant.pageSuggestions.dashboard.revenueTrends'),
+        t('pages.assistant.pageSuggestions.dashboard.top5Deals'),
+        ...base,
+      ];
     }
-  };
+    if (path === '/deals') {
+      return [
+        t('pages.assistant.pageSuggestions.deals.predictSuccessRate'),
+        t('pages.assistant.pageSuggestions.deals.analyzePipeline'),
+        t('pages.assistant.pageSuggestions.deals.suggestPendingActions'),
+        ...base,
+      ];
+    }
+    if (path === '/customers') {
+      return [
+        t('pages.assistant.pageSuggestions.customers.analyzeBehavior'),
+        t('pages.assistant.pageSuggestions.customers.findCrossSell'),
+        t('pages.assistant.pageSuggestions.customers.predictChurn'),
+        ...base,
+      ];
+    }
+    return base;
+  }, [location.pathname, t, i18n.language]);
 
   // Handle scroll to determine position
   useEffect(() => {
@@ -186,7 +190,7 @@ const FloatingAIAssistant: React.FC<FloatingAIAssistantProps> = ({ isOnDashboard
     return (
       <Zoom in={true}>
         <Box sx={getPositionStyles()}>
-          <Tooltip title="AI Assistant - Hỏi bất cứ điều gì!" placement="left">
+          <Tooltip title={t('common.aiAssistantMinimized')} placement="left">
             <Paper
               elevation={8}
               sx={{
@@ -257,10 +261,10 @@ const FloatingAIAssistant: React.FC<FloatingAIAssistantProps> = ({ isOnDashboard
               </Avatar>
               <Box>
                 <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: '1rem' }}>
-                  🤖 AI Assistant
+                  🤖 {t('pages.assistant.title')}
                 </Typography>
                 <Typography variant="caption" sx={{ opacity: 0.9 }}>
-                  Báo cáo thông minh • Luôn sẵn sàng hỗ trợ
+                  {t('pages.assistant.headerSubtitle')}
                 </Typography>
               </Box>
             </Box>
@@ -287,28 +291,28 @@ const FloatingAIAssistant: React.FC<FloatingAIAssistantProps> = ({ isOnDashboard
             {/* Quick Actions */}
             <Box sx={{ mb: 2 }}>
               <Typography variant="subtitle2" sx={{ mb: 1, color: 'text.secondary' }}>
-                Hành động nhanh
+                {t('pages.assistant.quickActions.title')}
               </Typography>
               <Box sx={{ display: 'flex', gap: 1 }}>
                 <Chip
                   icon={<TrendingIcon />}
-                  label="Trending"
+                  label={t('pages.assistant.quickActions.trendingLabel')}
                   size="small"
-                  onClick={() => handleSubmit("Hiển thị xu hướng thị trường hiện tại")}
+                  onClick={() => handleSubmit(t('pages.assistant.quickActions.queries.trending'))}
                   sx={{ backgroundColor: alpha(theme.palette.success.main, 0.1) }}
                 />
                 <Chip
                   icon={<InsightIcon />}
-                  label="Insights"
+                  label={t('pages.assistant.quickActions.insightsLabel')}
                   size="small"
-                  onClick={() => handleSubmit("Phân tích insights kinh doanh")}
+                  onClick={() => handleSubmit(t('pages.assistant.quickActions.queries.insights'))}
                   sx={{ backgroundColor: alpha(theme.palette.info.main, 0.1) }}
                 />
                 <Chip
                   icon={<PredictionIcon />}
-                  label="Predictions"
+                  label={t('pages.assistant.quickActions.predictionsLabel')}
                   size="small"
-                  onClick={() => handleSubmit("Dự đoán deal tiềm năng")}
+                  onClick={() => handleSubmit(t('pages.assistant.quickActions.queries.predictions'))}
                   sx={{ backgroundColor: alpha(theme.palette.warning.main, 0.1) }}
                 />
               </Box>
@@ -317,10 +321,10 @@ const FloatingAIAssistant: React.FC<FloatingAIAssistantProps> = ({ isOnDashboard
             {/* Suggestions */}
             <Box sx={{ mb: 2 }}>
               <Typography variant="subtitle2" sx={{ mb: 1, color: 'text.secondary' }}>
-                Gợi ý cho trang này
+                {t('pages.assistant.pageSuggestions.title')}
               </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                {getPageSuggestions().slice(0, 3).map((suggestion, index) => (
+                {getPageSuggestions.slice(0, 3).map((suggestion, index) => (
                   <Chip
                     key={index}
                     label={suggestion}
@@ -342,7 +346,7 @@ const FloatingAIAssistant: React.FC<FloatingAIAssistantProps> = ({ isOnDashboard
             {responses.length > 0 && (
               <Box sx={{ mb: 2 }}>
                 <Typography variant="subtitle2" sx={{ mb: 1, color: 'text.secondary' }}>
-                  Kết quả gần đây
+                  {t('pages.assistant.recentResults.title')}
                 </Typography>
                 <Box sx={{ maxHeight: 150, overflow: 'auto' }}>
                   {responses.slice(-2).map((item, index) => (
@@ -365,7 +369,7 @@ const FloatingAIAssistant: React.FC<FloatingAIAssistantProps> = ({ isOnDashboard
                         }
                       </Typography>
                       <Typography variant="caption" sx={{ color: 'text.secondary', mt: 0.5, display: 'block' }}>
-                        Độ tin cậy: {Math.round(item.confidence * 100)}%
+                        {t('pages.assistant.recentResults.confidence')}: {Math.round(item.confidence * 100)}%
                       </Typography>
                     </Paper>
                   ))}
@@ -380,7 +384,7 @@ const FloatingAIAssistant: React.FC<FloatingAIAssistantProps> = ({ isOnDashboard
               <TextField
                 fullWidth
                 size="small"
-                placeholder="Hỏi AI về bất cứ điều gì..."
+                placeholder={t('pages.assistant.floatingInputPlaceholder')}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={(e) => {

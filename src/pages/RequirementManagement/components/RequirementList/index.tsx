@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Table,
   TableBody,
@@ -41,16 +42,16 @@ const getStatusColor = (status: Status) => {
   }
 };
 
-const getStatusLabel = (status: Status) => {
+const getStatusLabel = (t: (key: string) => string, status: Status) => {
   switch (status) {
     case 'pending':
-      return 'Chờ xử lý';
+      return t('pages.requirements.status.pending');
     case 'in_discussion':
-      return 'Đang thảo luận';
+      return t('pages.requirements.status.in_discussion');
     case 'confirmed':
-      return 'Đã xác nhận';
+      return t('pages.requirements.status.confirmed');
     default:
-      return 'Unknown';
+      return t('common.unknown');
   }
 };
 
@@ -65,22 +66,23 @@ const RequirementList: React.FC<RequirementListProps> = ({
   onDelete,
   onViewDetail
 }) => {
+  const { t } = useTranslation();
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Tên Requirement</TableCell>
-              <TableCell>Loại Requirement</TableCell>
-              <TableCell>Khách hàng</TableCell>
-              <TableCell>Người phụ trách</TableCell>
-              <TableCell>Nguồn tạo</TableCell>
-              <TableCell>Ngày tạo</TableCell>
-              <TableCell>Deadline</TableCell>
-              <TableCell>Trạng thái</TableCell>
-              <TableCell>Thao tác</TableCell>
+              <TableCell>{t('pages.requirements.list.columns.id')}</TableCell>
+              <TableCell>{t('pages.requirements.list.columns.name')}</TableCell>
+              <TableCell>{t('pages.requirements.list.columns.type')}</TableCell>
+              <TableCell>{t('pages.requirements.list.columns.customer')}</TableCell>
+              <TableCell>{t('pages.requirements.list.columns.assignee')}</TableCell>
+              <TableCell>{t('pages.requirements.list.columns.source')}</TableCell>
+              <TableCell>{t('pages.requirements.list.columns.createdDate')}</TableCell>
+              <TableCell>{t('pages.requirements.list.columns.deadline')}</TableCell>
+              <TableCell>{t('pages.requirements.list.columns.status')}</TableCell>
+              <TableCell>{t('pages.requirements.list.columns.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -102,7 +104,7 @@ const RequirementList: React.FC<RequirementListProps> = ({
                   <TableCell>{req.expectedDeadline}</TableCell>
                   <TableCell>
                     <Chip 
-                      label={getStatusLabel(req.status)} 
+                      label={getStatusLabel(t, req.status)} 
                       color={getStatusColor(req.status) as any} 
                       size="small" 
                     />
@@ -120,7 +122,7 @@ const RequirementList: React.FC<RequirementListProps> = ({
             ) : (
               <TableRow>
                 <TableCell colSpan={10} align="center">
-                  <Typography variant="body1">Không có dữ liệu</Typography>
+                  <Typography variant="body1">{t('pages.requirements.list.empty')}</Typography>
                 </TableCell>
               </TableRow>
             )}
@@ -134,8 +136,10 @@ const RequirementList: React.FC<RequirementListProps> = ({
         page={page}
         onPageChange={onPageChange}
         onRowsPerPageChange={onRowsPerPageChange}
-        labelRowsPerPage="Số dòng mỗi trang:"
-        labelDisplayedRows={({ from, to, count }) => `${from}-${to} của ${count}`}
+        labelRowsPerPage={t('pages.requirements.pagination.rowsPerPage')}
+        labelDisplayedRows={({ from, to, count }) =>
+          t('pages.requirements.pagination.displayedRows', { from, to, count })
+        }
       />
     </Paper>
   );

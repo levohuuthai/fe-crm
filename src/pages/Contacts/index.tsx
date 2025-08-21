@@ -11,6 +11,7 @@ import {
 import SmartTable, { SmartTableColumn, SmartTableRow } from '../../components/SmartTable';
 import FilterBar, { FilterConfig, FilterOwner, FilterStatus, SavedView, FilterQuery } from '../../components/FilterBar';
 import ContactDetails from '../Contact/components/ContactDetails';
+import { useTranslation } from 'react-i18next';
 import {
   Person as PersonIcon,
   CalendarToday as CalendarIcon,
@@ -36,106 +37,8 @@ const leadStatusOptions = [
   { value: 'converted', label: 'Converted', color: '#8bc34a' }
 ];
 
-// Table columns configuration
-const contactsColumns: SmartTableColumn[] = [
-  {
-    id: 'name',
-    label: 'Tên',
-    type: 'text',
-    width: 200,
-    sortable: true,
-    editable: true,
-    required: true
-  },
-  {
-    id: 'email',
-    label: 'Email',
-    type: 'email',
-    width: 250,
-    sortable: true,
-    editable: true,
-    required: true,
-    validate: (value: string) => {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(value) ? null : 'Email không hợp lệ';
-    }
-  },
-  {
-    id: 'phone',
-    label: 'Số điện thoại',
-    type: 'phone',
-    width: 150,
-    sortable: true,
-    editable: true,
-    validate: (value: string) => {
-      const phoneRegex = /^[0-9]{10,11}$/;
-      return phoneRegex.test(value.replace(/\D/g, '')) ? null : 'Số điện thoại không hợp lệ';
-    }
-  },
-  {
-    id: 'company',
-    label: 'Công ty',
-    type: 'text',
-    width: 200,
-    sortable: true,
-    editable: true
-  },
-  {
-    id: 'position',
-    label: 'Chức vụ',
-    type: 'text',
-    width: 150,
-    sortable: true,
-    editable: true
-  },
-  {
-    id: 'owner',
-    label: 'Người phụ trách',
-    type: 'userSelect',
-    width: 180,
-    sortable: true,
-    editable: true
-  },
-  {
-    id: 'leadStatus',
-    label: 'Trạng thái Lead',
-    type: 'select',
-    width: 150,
-    sortable: true,
-    editable: true,
-    options: leadStatusOptions
-  },
-  {
-    id: 'lastContact',
-    label: 'Liên hệ cuối',
-    type: 'date',
-    width: 130,
-    sortable: true,
-    editable: true
-  },
-  {
-    id: 'value',
-    label: 'Giá trị tiềm năng',
-    type: 'currency',
-    width: 150,
-    sortable: true,
-    editable: true,
-    format: (value: number) => {
-      if (value >= 1000000000) return `${(value / 1000000000).toFixed(1)}B₫`;
-      if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M₫`;
-      if (value >= 1000) return `${(value / 1000).toFixed(1)}K₫`;
-      return `${value}₫`;
-    }
-  },
-  {
-    id: 'actions',
-    label: 'Thao tác',
-    type: 'actions',
-    width: 100,
-    sortable: false,
-    editable: false
-  }
-];
+// Table columns configuration (moved into component via translatedColumns)
+const contactsColumns: SmartTableColumn[] = [];
 
 // Mock contacts data
 const mockContactsData: SmartTableRow[] = [
@@ -443,6 +346,7 @@ const mockContactsData: SmartTableRow[] = [
 
 const ContactsPage: React.FC = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [contactsData, setContactsData] = useState<SmartTableRow[]>(mockContactsData);
   const [filteredData, setFilteredData] = useState<SmartTableRow[]>(mockContactsData);
   const [loading, setLoading] = useState(false);
@@ -455,7 +359,7 @@ const ContactsPage: React.FC = () => {
   const filterConfigs: FilterConfig[] = [
     {
       id: 'owner',
-      label: 'Contact owner',
+      label: t('pages.contacts.filters.owner'),
       type: 'owner',
       icon: <PersonIcon fontSize="small" />,
       enabled: true,
@@ -463,7 +367,7 @@ const ContactsPage: React.FC = () => {
     },
     {
       id: 'lastContact',
-      label: 'Liên hệ cuối',
+      label: t('pages.contacts.filters.lastContact'),
       type: 'date',
       icon: <ActivityIcon fontSize="small" />,
       enabled: true,
@@ -471,7 +375,7 @@ const ContactsPage: React.FC = () => {
     },
     {
       id: 'leadStatus',
-      label: 'Lead status',
+      label: t('pages.contacts.filters.leadStatus'),
       type: 'status',
       icon: <StatusIcon fontSize="small" />,
       enabled: true,
@@ -481,9 +385,9 @@ const ContactsPage: React.FC = () => {
 
   // Saved views for Contacts
   const savedViews: SavedView[] = [
-    { id: 'all', label: 'All', count: mockContactsData.length },
-    { id: 'my', label: 'My contacts', count: 8 },
-    { id: 'unassigned', label: 'Unassigned', count: 3 }
+    { id: 'all', label: t('pages.contacts.views.all'), count: mockContactsData.length },
+    { id: 'my', label: t('pages.contacts.views.my'), count: 8 },
+    { id: 'unassigned', label: t('pages.contacts.views.unassigned'), count: 3 }
   ];
 
   // Filter owners (using existing mockUsers)
@@ -500,6 +404,107 @@ const ContactsPage: React.FC = () => {
     label: status.label,
     color: status.color
   }));
+
+  // Translated columns for SmartTable
+  const translatedColumns: SmartTableColumn[] = React.useMemo(() => ([
+    {
+      id: 'name',
+      label: t('pages.contacts.columns.name'),
+      type: 'text',
+      width: 200,
+      sortable: true,
+      editable: true,
+      required: true
+    },
+    {
+      id: 'email',
+      label: t('pages.contacts.columns.email'),
+      type: 'email',
+      width: 250,
+      sortable: true,
+      editable: true,
+      required: true,
+      validate: (value: string) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(value) ? null : t('pages.contacts.validation.emailInvalid');
+      }
+    },
+    {
+      id: 'phone',
+      label: t('pages.contacts.columns.phone'),
+      type: 'phone',
+      width: 150,
+      sortable: true,
+      editable: true,
+      validate: (value: string) => {
+        const phoneRegex = /^[0-9]{10,11}$/;
+        return phoneRegex.test(value.replace(/\D/g, '')) ? null : t('pages.contacts.validation.phoneInvalid');
+      }
+    },
+    {
+      id: 'company',
+      label: t('pages.contacts.columns.company'),
+      type: 'text',
+      width: 200,
+      sortable: true,
+      editable: true
+    },
+    {
+      id: 'position',
+      label: t('pages.contacts.columns.position'),
+      type: 'text',
+      width: 150,
+      sortable: true,
+      editable: true
+    },
+    {
+      id: 'owner',
+      label: t('pages.contacts.columns.owner'),
+      type: 'userSelect',
+      width: 180,
+      sortable: true,
+      editable: true
+    },
+    {
+      id: 'leadStatus',
+      label: t('pages.contacts.columns.leadStatus'),
+      type: 'select',
+      width: 150,
+      sortable: true,
+      editable: true,
+      options: leadStatusOptions
+    },
+    {
+      id: 'lastContact',
+      label: t('pages.contacts.columns.lastContact'),
+      type: 'date',
+      width: 130,
+      sortable: true,
+      editable: true
+    },
+    {
+      id: 'value',
+      label: t('pages.contacts.columns.value'),
+      type: 'currency',
+      width: 150,
+      sortable: true,
+      editable: true,
+      format: (value: number) => {
+        if (value >= 1000000000) return `${(value / 1000000000).toFixed(1)}B₫`;
+        if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M₫`;
+        if (value >= 1000) return `${(value / 1000).toFixed(1)}K₫`;
+        return `${value}₫`;
+      }
+    },
+    {
+      id: 'actions',
+      label: t('pages.contacts.columns.actions'),
+      type: 'actions',
+      width: 100,
+      sortable: false,
+      editable: false
+    }
+  ]), [t]);
 
   // Handle filter query change
   const handleFilterQueryChange = (query: FilterQuery) => {
@@ -646,13 +651,13 @@ const ContactsPage: React.FC = () => {
               mb: 1
             }}
           >
-            Quản lý Liên hệ
+            {t('pages.contacts.title')}
           </Typography>
           <Typography 
             variant="body1" 
             color="text.secondary"
           >
-            Quản lý thông tin khách hàng tiềm năng và theo dõi quá trình chuyển đổi
+            {t('pages.contacts.subtitle')}
           </Typography>
         </Box>
 
@@ -676,7 +681,7 @@ const ContactsPage: React.FC = () => {
           flexDirection: 'column'
         }}>
           <SmartTable
-            columns={contactsColumns}
+            columns={translatedColumns}
             data={filteredData}
             loading={loading}
             searchable={true}
@@ -690,7 +695,7 @@ const ContactsPage: React.FC = () => {
             onBulkAction={handleBulkAction}
             onPreviewContact={handlePreviewContact}
             users={mockUsers}
-            emptyMessage="Chưa có liên hệ nào"
+            emptyMessage={t('pages.contacts.empty')}
             zebra={true}
           />
         </Box>
