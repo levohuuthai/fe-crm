@@ -20,6 +20,7 @@ import { Template } from '../TemplateList/types';
 import { ExtractedField } from '../UploadTemplate/types';
 import { toast } from 'react-toastify';
 import PaymentScheduleStep, { PaymentItem } from '../PaymentScheduleStep';
+import { useTranslation } from 'react-i18next';
 
 // Mở rộng interface Template để thêm trường extractedFields
 interface ExtendedTemplate extends Template {
@@ -37,6 +38,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
   onBack,
   onCreate 
 }) => {
+  const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   const [selectedTemplate, setSelectedTemplate] = useState<ExtendedTemplate | null>(null);
   // Sử dụng formData để lưu các giá trị nhập vào form
@@ -131,7 +133,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
   const renderTemplateSelection = () => (
     <Box>
       <Typography variant="h6" gutterBottom>
-        Chọn mẫu hợp đồng
+        {t('pages.contracts.createContract.templateSelection.title')}
       </Typography>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
         {templates.map((template) => (
@@ -163,7 +165,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
                 {template.name} - {template.type}
               </Typography>
               <Chip 
-                label={`${template.placeholderCount} trường`} 
+                label={t('pages.contracts.createContract.templateSelection.chipLabel', { count: template.placeholderCount })}
                 size="small" 
                 sx={{ mt: 1, alignSelf: 'flex-start' }} 
               />
@@ -186,7 +188,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
               });
             } else {
               // Nếu không có trường nào được trích xuất, hiển thị thông báo
-              alert('Không tìm thấy trường nào trong mẫu hợp đồng. Vui lòng chọn mẫu khác.');
+              toast.error(t('pages.contracts.createContract.alerts.noFieldsFound'));
               return;
             }
             
@@ -198,7 +200,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
             setActiveStep(1);
           }}
         >
-          Tiếp tục
+          {t('pages.contracts.createContract.buttons.continue')}
         </Button>
       </Box>
     </Box>
@@ -226,8 +228,8 @@ const CreateContract: React.FC<CreateContractProps> = ({
       if (checkFormCompletion()) {
         setActiveStep(2); // Chuyển sang bước hạng mục thanh toán
       } else {
-        // Hiển thị thông báo nếu chưa điền đủ thông tin
-        alert('Vui lòng điền đầy đủ thông tin trước khi tiếp tục.');
+        // Show localized toast if required fields are missing
+        toast.error(t('pages.contracts.createContract.form.requiredHelper'));
       }
     };
 
@@ -238,7 +240,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
             <ArrowBackIcon />
           </IconButton>
           <Typography variant="h6">
-            Tạo hợp đồng: {selectedTemplate?.name}
+            {t('pages.contracts.createContract.form.title')}: {selectedTemplate?.name}
           </Typography>
         </Box>
         
@@ -253,11 +255,11 @@ const CreateContract: React.FC<CreateContractProps> = ({
           }}
         >
           <Typography variant="h6" gutterBottom>
-            Thông tin hợp đồng
+            {t('pages.contracts.createContract.form.sectionTitle')}
           </Typography>
           
           <Typography variant="body2" color="text.secondary" paragraph>
-            Vui lòng điền đầy đủ các thông tin sau để tạo hợp đồng.
+            {t('pages.contracts.createContract.form.description')}
           </Typography>
           
           <Box sx={{ 
@@ -276,7 +278,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
                 onChange={(e) => handleFieldChange(fieldName, e.target.value)}
                 required
                 error={!formData[fieldName]}
-                helperText={!formData[fieldName] ? 'Trường này là bắt buộc' : ''}
+                helperText={!formData[fieldName] ? t('pages.contracts.createContract.form.requiredHelper') : ''}
                 sx={{ mb: 2 }}
               />
             ))}
@@ -289,7 +291,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
             onClick={() => setActiveStep(0)}
             startIcon={<ArrowBackIcon />}
           >
-            Quay lại
+            {t('pages.contracts.createContract.buttons.back')}
           </Button>
           <Button 
             variant="contained" 
@@ -297,7 +299,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
             onClick={handleContinue}
             disabled={!checkFormCompletion()}
           >
-            Tiếp tục
+            {t('pages.contracts.createContract.buttons.continue')}
           </Button>
         </Box>
       </Box>
@@ -310,15 +312,15 @@ const CreateContract: React.FC<CreateContractProps> = ({
     
     const newContract = {
       id: `C${Math.floor(1000 + Math.random() * 9000)}`,
-      name: `Hợp đồng ${selectedTemplate?.name} - ${new Date().toLocaleDateString()}`,
+      name: `${t('pages.contracts.createContract.generatedNamePrefix')} ${selectedTemplate?.name} - ${new Date().toLocaleDateString()}`,
       templateId: selectedTemplate?.id || '',
       templateName: selectedTemplate?.name || '',
       status: 'draft',
-      partyA: 'Công ty TNHH ABC',
-      partyB: 'Công ty TNHH XYZ',
+      partyA: t('pages.contracts.createContract.sample.partyA'),
+      partyB: t('pages.contracts.createContract.sample.partyB'),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      createdBy: 'Người dùng hiện tại',
+      createdBy: t('pages.contracts.createContract.sample.currentUser'),
       // Lưu formData và payments vào contract
       contractData: formData,
       payments: payments
@@ -326,7 +328,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
     
     // Gọi hàm tạo hợp đồng
     onCreate(newContract);
-    toast.success('Tạo hợp đồng thành công!');
+    toast.success(t('pages.contracts.notifications.createContractSuccess'));
   };
 
   // Bước 3: Xem trước và xác nhận
@@ -340,7 +342,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
             <ArrowBackIcon />
           </IconButton>
           <Typography variant="h6">
-            Xem trước & Xác nhận
+            {t('pages.contracts.createContract.preview.title')}
           </Typography>
         </Box>
         
@@ -349,7 +351,7 @@ const CreateContract: React.FC<CreateContractProps> = ({
             initialContent={contractContent}
             onSave={setContractContent}
             onExportPdf={() => {
-              toast.success('Xuất PDF thành công!');
+              toast.success(t('pages.contracts.createContract.notifications.exportPdfSuccess'));
             }}
           />
         </Box>
@@ -360,14 +362,14 @@ const CreateContract: React.FC<CreateContractProps> = ({
             onClick={() => setActiveStep(1)}
             startIcon={<ArrowBackIcon />}
           >
-            Quay lại
+            {t('pages.contracts.createContract.buttons.back')}
           </Button>
           <Button
             variant="contained"
             color="primary"
             onClick={handleCreateContract}
           >
-            Tạo hợp đồng
+            {t('pages.contracts.createContract.buttons.create')}
           </Button>
         </Box>
       </Box>
@@ -386,10 +388,10 @@ const CreateContract: React.FC<CreateContractProps> = ({
   };
 
   const steps = [
-    { label: 'Chọn mẫu hợp đồng', component: renderTemplateSelection },
-    { label: 'Điền thông tin', component: renderContractForm },
-    { label: 'Hạng mục thanh toán', component: renderPaymentSchedule },
-    { label: 'Xem trước & Xác nhận', component: renderPreview },
+    { label: t('pages.contracts.createContract.steps.selectTemplate'), component: renderTemplateSelection },
+    { label: t('pages.contracts.createContract.steps.fillInfo'), component: renderContractForm },
+    { label: t('pages.contracts.createContract.steps.paymentItems'), component: renderPaymentSchedule },
+    { label: t('pages.contracts.createContract.steps.previewConfirm'), component: renderPreview },
   ];
 
   return (

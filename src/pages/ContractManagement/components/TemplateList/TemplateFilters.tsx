@@ -4,6 +4,7 @@ import { TemplateFilterValues } from './types';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
+import { useTranslation } from 'react-i18next';
 
 interface TemplateFiltersProps {
   filters: TemplateFilterValues;
@@ -18,6 +19,7 @@ const TemplateFilters: React.FC<TemplateFiltersProps> = ({
   onUploadClick,
   onCreateWithAIClick = () => console.log('Create with AI clicked'),
 }) => {
+  const { t } = useTranslation();
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFilterChange({ ...filters, search: e.target.value });
   };
@@ -43,7 +45,7 @@ const TemplateFilters: React.FC<TemplateFiltersProps> = ({
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="Tìm kiếm template..."
+            placeholder={t('pages.contracts.templateList.filters.searchPlaceholder')}
             value={filters.search}
             onChange={handleSearchChange}
             InputProps={{
@@ -55,14 +57,14 @@ const TemplateFilters: React.FC<TemplateFiltersProps> = ({
           <TextField
             select
             fullWidth
-            label="Loại template"
+            label={t('pages.contracts.templateList.filters.typeLabel')}
             value={filters.type}
             onChange={handleTypeChange}
             variant="outlined"
           >
-            <MenuItem value="all">Tất cả</MenuItem>
-            <MenuItem value="internal">Nội bộ</MenuItem>
-            <MenuItem value="customer">Khách hàng</MenuItem>
+            <MenuItem value="all">{t('pages.contracts.templateList.filters.typeOptions.all')}</MenuItem>
+            <MenuItem value="internal">{t('pages.contracts.templateList.table.chips.type.internal')}</MenuItem>
+            <MenuItem value="customer">{t('pages.contracts.templateList.table.chips.type.customer')}</MenuItem>
             <MenuItem value="AI">AI</MenuItem>
           </TextField>
         </Box>
@@ -70,14 +72,14 @@ const TemplateFilters: React.FC<TemplateFiltersProps> = ({
           <TextField
             select
             fullWidth
-            label="Trạng thái"
+            label={t('pages.contracts.templateList.filters.statusLabel')}
             value={filters.status}
             onChange={handleStatusChange}
             variant="outlined"
           >
-            <MenuItem value="all">Tất cả</MenuItem>
-            <MenuItem value="active">Đang hoạt động</MenuItem>
-            <MenuItem value="inactive">Ngừng hoạt động</MenuItem>
+            <MenuItem value="all">{t('pages.contracts.templateList.filters.statusOptions.all')}</MenuItem>
+            <MenuItem value="active">{t('pages.contracts.templateList.table.chips.status.active')}</MenuItem>
+            <MenuItem value="inactive">{t('pages.contracts.templateList.table.chips.status.inactive')}</MenuItem>
           </TextField>
         </Box>
       </Box>
@@ -97,7 +99,7 @@ const TemplateFilters: React.FC<TemplateFiltersProps> = ({
             maxWidth: '250px'
           }}
         >
-          Tải lên Template
+          {t('pages.contracts.templateList.filters.buttons.uploadTemplate')}
         </Button>
         <Button
           variant="contained"
@@ -109,7 +111,7 @@ const TemplateFilters: React.FC<TemplateFiltersProps> = ({
             maxWidth: '250px'
           }}
         >
-          Tạo hợp đồng bằng AI
+          {t('pages.contracts.templateList.filters.buttons.createWithAI')}
         </Button>
       </Box>
     </Box>

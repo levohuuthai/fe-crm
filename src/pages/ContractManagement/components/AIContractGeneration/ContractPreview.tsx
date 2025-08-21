@@ -10,6 +10,7 @@ import {
 import SaveIcon from '@mui/icons-material/Save';
 import DownloadIcon from '@mui/icons-material/Download';
 import EditIcon from '@mui/icons-material/Edit';
+import { useTranslation } from 'react-i18next';
 
 interface ContractPreviewProps {
   content: string;
@@ -24,6 +25,7 @@ const ContractPreview: React.FC<ContractPreviewProps> = ({
   loading,
   onSaveTemplate
 }) => {
+  const { t } = useTranslation();
   // Function to handle content changes
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onUpdate(e.target.value);
@@ -52,7 +54,7 @@ const ContractPreview: React.FC<ContractPreviewProps> = ({
         alignItems: 'center'
       }}>
         <Typography variant="h6">
-          Xem trước hợp đồng
+          {t('pages.contracts.aiGeneration.preview.title')}
         </Typography>
         
         <Box sx={{ display: 'flex', gap: 1 }}>
@@ -62,7 +64,7 @@ const ContractPreview: React.FC<ContractPreviewProps> = ({
             startIcon={<EditIcon />}
             disabled={!content || loading}
           >
-            Chỉnh sửa
+            {t('pages.contracts.aiGeneration.preview.buttons.edit')}
           </Button>
           <Button
             variant="outlined"
@@ -70,7 +72,7 @@ const ContractPreview: React.FC<ContractPreviewProps> = ({
             startIcon={<DownloadIcon />}
             disabled={!content || loading}
           >
-            Tải xuống
+            {t('pages.contracts.aiGeneration.preview.buttons.download')}
           </Button>
           <Button
             variant="contained"
@@ -80,7 +82,7 @@ const ContractPreview: React.FC<ContractPreviewProps> = ({
             disabled={!content || loading}
             onClick={handleSaveTemplate}
           >
-            Lưu thành Template
+            {t('pages.contracts.aiGeneration.preview.buttons.saveAsTemplate')}
           </Button>
         </Box>
       </Box>
@@ -154,10 +156,10 @@ const ContractPreview: React.FC<ContractPreviewProps> = ({
           }}>
             <EditIcon sx={{ fontSize: 60, mb: 2, opacity: 0.7 }} />
             <Typography variant="h6" gutterBottom>
-              Chưa có nội dung hợp đồng
+              {t('pages.contracts.aiGeneration.preview.empty.title')}
             </Typography>
             <Typography variant="body1">
-              Nhập yêu cầu của bạn ở bên trái và nhấn "Sinh hợp đồng" để AI tạo nội dung hợp đồng.
+              {t('pages.contracts.aiGeneration.preview.empty.description')}
             </Typography>
           </Box>
         )}

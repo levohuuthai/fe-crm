@@ -21,7 +21,8 @@ import { Add as AddIcon, Delete as DeleteIcon, ArrowBack as ArrowBackIcon } from
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { vi } from 'date-fns/locale';
+import { enUS, ja, vi } from 'date-fns/locale';
+import { useTranslation } from 'react-i18next';
 
 // Định nghĩa kiểu dữ liệu cho đợt thanh toán
 export interface PaymentItem {
@@ -46,11 +47,13 @@ const PaymentScheduleStep: React.FC<PaymentScheduleStepProps> = ({
   onBack,
   onNext
 }) => {
-  // Định nghĩa các trạng thái thanh toán
+  const { t, i18n } = useTranslation();
+
+  // Payment statuses (localized)
   const paymentStatuses = [
-    { value: 'pending', label: 'Chưa thanh toán' },
-    { value: 'waiting', label: 'Chờ thanh toán' },
-    { value: 'paid', label: 'Đã thanh toán' }
+    { value: 'pending', label: t('pages.contracts.createContract.paymentSchedule.status.pending', 'Pending payment') },
+    { value: 'waiting', label: t('pages.contracts.createContract.paymentSchedule.status.waiting', 'Awaiting payment') },
+    { value: 'paid', label: t('pages.contracts.createContract.paymentSchedule.status.paid', 'Paid') }
   ];
 
   // Hàm thêm đợt thanh toán mới
@@ -90,6 +93,20 @@ const PaymentScheduleStep: React.FC<PaymentScheduleStepProps> = ({
     handlePaymentChange(id, 'amount', amount);
   };
 
+  const getDateFnsLocale = () => {
+    const lang = i18n.language || 'en';
+    if (lang.startsWith('ja')) return ja;
+    if (lang.startsWith('vi')) return vi;
+    return enUS;
+  };
+
+  const currencySuffix = () => {
+    const lang = i18n.language || 'en';
+    if (lang.startsWith('ja')) return 'JPY';
+    if (lang.startsWith('vi')) return 'VNĐ';
+    return 'USD';
+  };
+
   return (
     <Box>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -97,25 +114,25 @@ const PaymentScheduleStep: React.FC<PaymentScheduleStepProps> = ({
           <ArrowBackIcon />
         </IconButton>
         <Typography variant="h6">
-          Hạng mục thanh toán
+          {t('pages.contracts.createContract.paymentSchedule.title', 'Payment items')}
         </Typography>
       </Box>
       
       <Paper variant="outlined" sx={{ p: 2, mb: 3 }}>
         <Typography variant="body2" color="text.secondary" paragraph>
-          Thêm các đợt thanh toán cho hợp đồng. Mỗi đợt thanh toán bao gồm điều kiện, số tiền, ngày thanh toán, trạng thái và ghi chú.
+          {t('pages.contracts.createContract.paymentSchedule.description', 'Add payment milestones for the contract. Each includes condition, amount, payment date, status, and notes.')}
         </Typography>
         
         <TableContainer>
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>Điều kiện</TableCell>
-                <TableCell>Số tiền</TableCell>
-                <TableCell>Ngày thanh toán</TableCell>
-                <TableCell>Trạng thái</TableCell>
-                <TableCell>Ghi chú</TableCell>
-                <TableCell>Xóa</TableCell>
+                <TableCell>{t('pages.contracts.createContract.paymentSchedule.columns.condition', 'Condition')}</TableCell>
+                <TableCell>{t('pages.contracts.createContract.paymentSchedule.columns.amount', 'Amount')}</TableCell>
+                <TableCell>{t('pages.contracts.createContract.paymentSchedule.columns.paymentDate', 'Payment date')}</TableCell>
+                <TableCell>{t('pages.contracts.createContract.paymentSchedule.columns.status', 'Status')}</TableCell>
+                <TableCell>{t('pages.contracts.createContract.paymentSchedule.columns.note', 'Note')}</TableCell>
+                <TableCell>{t('pages.contracts.createContract.paymentSchedule.columns.delete', 'Delete')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -123,7 +140,7 @@ const PaymentScheduleStep: React.FC<PaymentScheduleStepProps> = ({
                 <TableRow>
                   <TableCell colSpan={6} align="center">
                     <Typography variant="body2" color="text.secondary">
-                      Chưa có đợt thanh toán nào. Nhấn "Thêm đợt thanh toán" để bắt đầu.
+                      {t('pages.contracts.createContract.paymentSchedule.empty', 'No payment items yet. Click "Add payment" to start.')}
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -136,7 +153,7 @@ const PaymentScheduleStep: React.FC<PaymentScheduleStepProps> = ({
                         size="small"
                         value={payment.condition}
                         onChange={(e) => handlePaymentChange(payment.id, 'condition', e.target.value)}
-                        placeholder="Ví dụ: Sau khi ký HĐ"
+                        placeholder={t('pages.contracts.createContract.paymentSchedule.placeholders.condition', 'e.g., After signing the contract')}
                       />
                     </TableCell>
                     <TableCell>
@@ -147,12 +164,12 @@ const PaymentScheduleStep: React.FC<PaymentScheduleStepProps> = ({
                         onChange={(e) => handleAmountChange(payment.id, e.target.value)}
                         placeholder="0"
                         InputProps={{
-                          endAdornment: <InputAdornment position="end">VNĐ</InputAdornment>,
+                          endAdornment: <InputAdornment position="end">{currencySuffix()}</InputAdornment>,
                         }}
                       />
                     </TableCell>
                     <TableCell>
-                      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={vi}>
+                      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={getDateFnsLocale()}>
                         <DatePicker
                           value={payment.paymentDate}
                           onChange={(date) => handlePaymentChange(payment.id, 'paymentDate', date)}
@@ -180,7 +197,7 @@ const PaymentScheduleStep: React.FC<PaymentScheduleStepProps> = ({
                         size="small"
                         value={payment.note}
                         onChange={(e) => handlePaymentChange(payment.id, 'note', e.target.value)}
-                        placeholder="Ghi chú"
+                        placeholder={t('pages.contracts.createContract.paymentSchedule.placeholders.note', 'Notes')}
                       />
                     </TableCell>
                     <TableCell>
@@ -205,7 +222,7 @@ const PaymentScheduleStep: React.FC<PaymentScheduleStepProps> = ({
             variant="outlined"
             onClick={handleAddPayment}
           >
-            Thêm đợt thanh toán
+            {t('pages.contracts.createContract.paymentSchedule.actions.add', 'Add payment')}
           </Button>
         </Box>
       </Paper>
@@ -215,14 +232,14 @@ const PaymentScheduleStep: React.FC<PaymentScheduleStepProps> = ({
           variant="outlined" 
           onClick={onBack}
         >
-          Quay lại
+          {t('common.back', 'Back')}
         </Button>
         <Button 
           variant="contained" 
           color="primary"
           onClick={onNext}
         >
-          Tiếp tục
+          {t('common.next', 'Next')}
         </Button>
       </Box>
     </Box>

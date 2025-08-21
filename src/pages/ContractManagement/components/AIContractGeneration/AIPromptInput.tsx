@@ -12,6 +12,7 @@ import {
 import SendIcon from '@mui/icons-material/Send';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import PersonIcon from '@mui/icons-material/Person';
+import { useTranslation } from 'react-i18next';
 
 interface AIPromptInputProps {
   onSubmit: (prompt: string) => void;
@@ -19,21 +20,16 @@ interface AIPromptInputProps {
   chatHistory: Array<{ role: 'user' | 'assistant', content: string }>;
 }
 
-// Sample prompt suggestions
-const PROMPT_SUGGESTIONS = [
-  'Dịch vụ phần mềm',
-  'Hợp đồng thương mại',
-  'Bảo trì phần mềm',
-  'Hợp đồng NDA',
-  'Hợp đồng đại lý'
-];
+// Prompt suggestions will be loaded from i18n
 
 const AIPromptInput: React.FC<AIPromptInputProps> = ({ 
   onSubmit, 
   loading, 
   chatHistory 
 }) => {
+  const { t } = useTranslation();
   const [prompt, setPrompt] = useState<string>('');
+  const PROMPT_SUGGESTIONS = t('pages.contracts.aiGeneration.prompt.suggestions.items', { returnObjects: true }) as string[];
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +40,7 @@ const AIPromptInput: React.FC<AIPromptInputProps> = ({
   };
 
   const handleSuggestionClick = (suggestion: string) => {
-    const newPrompt = `Tạo hợp đồng ${suggestion}`;
+    const newPrompt = t('pages.contracts.aiGeneration.prompt.suggestions.compose', { suggestion });
     setPrompt(newPrompt);
   };
 
@@ -77,13 +73,13 @@ const AIPromptInput: React.FC<AIPromptInputProps> = ({
           }}>
             <SmartToyIcon sx={{ fontSize: 60, mb: 2, opacity: 0.7 }} />
             <Typography variant="h6" gutterBottom>
-              Tạo hợp đồng bằng AI
+              {t('pages.contracts.aiGeneration.prompt.emptyState.title')}
             </Typography>
             <Typography variant="body1" sx={{ maxWidth: '80%', mx: 'auto' }}>
-              Nhập yêu cầu của bạn dưới dạng văn bản tự nhiên để AI tạo hợp đồng phù hợp với nhu cầu của bạn.
+              {t('pages.contracts.aiGeneration.prompt.emptyState.description')}
             </Typography>
             <Typography variant="body2" sx={{ mt: 2, fontStyle: 'italic' }}>
-              Ví dụ: "Tạo hợp đồng phát triển phần mềm giữa ITV và Công ty ABC, giá trị 500 triệu, thời gian 6 tháng, thanh toán từng giai đoạn..."
+              {t('pages.contracts.aiGeneration.prompt.emptyState.example')}
             </Typography>
           </Box>
         ) : (
@@ -125,7 +121,7 @@ const AIPromptInput: React.FC<AIPromptInputProps> = ({
       {chatHistory.length === 0 && (
         <Box sx={{ px: 2, py: 1 }}>
           <Typography variant="subtitle2" gutterBottom>
-            Gợi ý:
+            {t('pages.contracts.aiGeneration.prompt.suggestions.title')}
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {PROMPT_SUGGESTIONS.map((suggestion, index) => (
@@ -158,7 +154,7 @@ const AIPromptInput: React.FC<AIPromptInputProps> = ({
         <TextField
           multiline
           maxRows={4}
-          placeholder="Nhập yêu cầu tạo hợp đồng..."
+          placeholder={t('pages.contracts.aiGeneration.input.placeholder')}
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           fullWidth
@@ -182,7 +178,7 @@ const AIPromptInput: React.FC<AIPromptInputProps> = ({
             px: 3
           }}
         >
-          {loading ? 'Đang xử lý...' : 'Sinh hợp đồng'}
+          {loading ? t('pages.contracts.aiGeneration.input.generating') : t('pages.contracts.aiGeneration.input.generate')}
         </Button>
       </Box>
     </Box>

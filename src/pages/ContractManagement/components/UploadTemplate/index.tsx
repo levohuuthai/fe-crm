@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -27,27 +27,9 @@ import {
 } from '@mui/material';
 import { Close as CloseIcon, CloudUpload as UploadIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { UploadTemplateFormValues, UploadTemplateProps } from './types';
+import { useTranslation } from 'react-i18next';
 
-// Define validation schema
-const schema = yup.object({
-  name: yup.string().required('Tên template là bắt buộc'),
-  description: yup.string().optional(),
-  type: yup.string().oneOf(['internal', 'customer']).required('Loại template là bắt buộc'),
-  file: yup.mixed<File>().required('File template là bắt buộc')
-    .test('fileType', 'Chỉ chấp nhận file .docx', (value) => {
-      if (!value) return false;
-      const file = value as File;
-      return file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-    }),
-  extractedFields: yup.array().of(
-    yup.object({
-      originalText: yup.string().required(),
-      placeholder: yup.string().required(),
-      type: yup.string().required(),
-      description: yup.string().optional()
-    })
-  ).default([])
-}).required();
+// Validation schema will be created inside the component to access translations
 
 interface ExtractedField {
   originalText: string;
@@ -57,9 +39,41 @@ interface ExtractedField {
 }
 
 const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit }) => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [extractedFields, setExtractedFields] = useState<ExtractedField[]>([]);
+
+  // Localized validation schema
+  const schema = useMemo(() =>
+    yup.object({
+      name: yup.string().required(t('pages.contracts.uploadTemplate.validation.nameRequired')),
+      description: yup.string().optional(),
+      type: yup
+        .string()
+        .oneOf(['internal', 'customer'])
+        .required(t('pages.contracts.uploadTemplate.validation.typeRequired')),
+      file: yup
+        .mixed<File>()
+        .required(t('pages.contracts.uploadTemplate.validation.fileRequired'))
+        .test('fileType', t('pages.contracts.uploadTemplate.validation.fileType'), (value) => {
+          if (!value) return false;
+          const file = value as File;
+          return file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        }),
+      extractedFields: yup
+        .array()
+        .of(
+          yup.object({
+            originalText: yup.string().required(),
+            placeholder: yup.string().required(),
+            type: yup.string().required(),
+            description: yup.string().optional(),
+          })
+        )
+        .default([]),
+    })
+  , [t]);
 
   type FormData = yup.InferType<typeof schema>;
 
@@ -89,45 +103,45 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
       setValue('file', file);
       setAnalyzing(true);
       
-      // Giả lập phân tích AI
+      // Simulate AI analysis
       setTimeout(() => {
-        // Mock dữ liệu được phân tích từ file
+        // Mock extracted data from file
         const mockExtractedFields: ExtractedField[] = [
           {
             originalText: 'CÔNG TY TNHH GIẤY CAO PHÁT',
             placeholder: 'TEN_CONG_TY_A',
             type: 'text',
-            description: 'Tên công ty bên A'
+            description: t('pages.contracts.uploadTemplate.sample.descriptions.partyAName')
           },
           {
             originalText: 'Thửa đất số 352, Tờ bản đồ số 14, Khu Phố Mỹ Hiệp, Phường Thái Hoà, Thành phố Tân Uyên, Tỉnh Bình Dương',
             placeholder: 'DIA_CHI_A',
             type: 'text',
-            description: 'Địa chỉ bên A'
+            description: t('pages.contracts.uploadTemplate.sample.descriptions.partyAAddress')
           },
           {
             originalText: '0274 3775 179',
             placeholder: 'DIEN_THOAI_A',
             type: 'phone',
-            description: 'Số điện thoại bên A'
+            description: t('pages.contracts.uploadTemplate.sample.descriptions.partyAPhone')
           },
           {
             originalText: '3701711279',
             placeholder: 'MA_SO_THUE_A',
             type: 'taxcode',
-            description: 'Mã số thuế bên A'
+            description: t('pages.contracts.uploadTemplate.sample.descriptions.partyATax')
           },
           {
             originalText: 'LÊ THỊ KIM CHI',
             placeholder: 'NGUOI_DAI_DIEN_A',
             type: 'text',
-            description: 'Người đại diện bên A'
+            description: t('pages.contracts.uploadTemplate.sample.descriptions.partyARepresentative')
           },
           {
             originalText: 'Giám đốc',
             placeholder: 'CHUC_VU_A',
             type: 'text',
-            description: 'Chức vụ người đại diện bên A'
+            description: t('pages.contracts.uploadTemplate.sample.descriptions.partyATitle')
           }
         ];
         
@@ -167,7 +181,7 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="h6">Tải lên Template mới</Typography>
+          <Typography variant="h6">{t('pages.contracts.uploadTemplate.title')}</Typography>
           <IconButton onClick={handleClose} size="small">
             <CloseIcon />
           </IconButton>
@@ -179,7 +193,7 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
             <Box>
               <TextField
                 {...register('name')}
-                label="Tên template"
+                label={t('pages.contracts.uploadTemplate.fields.name')}
                 fullWidth
                 margin="normal"
                 error={!!errors.name}
@@ -189,7 +203,7 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
               
               <TextField
                 {...register('description')}
-                label="Mô tả"
+                label={t('pages.contracts.uploadTemplate.fields.description')}
                 fullWidth
                 multiline
                 rows={3}
@@ -198,15 +212,15 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
               />
               
               <FormControl fullWidth margin="normal" error={!!errors.type}>
-                <InputLabel>Loại template</InputLabel>
+                <InputLabel>{t('pages.contracts.uploadTemplate.fields.type')}</InputLabel>
                 <Select
-                  label="Loại template"
+                  label={t('pages.contracts.uploadTemplate.fields.type')}
                   defaultValue="customer"
                   disabled={loading}
                   {...register('type')}
                 >
-                  <MenuItem value="customer">Cho khách hàng</MenuItem>
-                  <MenuItem value="internal">Nội bộ</MenuItem>
+                  <MenuItem value="customer">{t('pages.contracts.uploadTemplate.fields.typeOptions.customer')}</MenuItem>
+                  <MenuItem value="internal">{t('pages.contracts.uploadTemplate.fields.typeOptions.internal')}</MenuItem>
                 </Select>
               </FormControl>
               
@@ -226,12 +240,12 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
                     startIcon={<UploadIcon />}
                     disabled={loading || analyzing}
                   >
-                    Chọn file template (.docx)
+                    {t('pages.contracts.uploadTemplate.fields.fileButton')}
                   </Button>
                 </label>
                 {selectedFile && (
                   <Typography variant="body2" sx={{ mt: 1 }}>
-                    Đã chọn: {selectedFile.name}
+                    {t('pages.contracts.uploadTemplate.fields.selectedFilePrefix')} {selectedFile.name}
                   </Typography>
                 )}
                 {errors.file && (
@@ -245,14 +259,14 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
             <Box>
               <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
                 <Typography variant="subtitle1" gutterBottom>
-                  Các trường được phân tích từ hợp đồng:
+                  {t('pages.contracts.uploadTemplate.analysis.title')}
                 </Typography>
                 
                 {analyzing ? (
                   <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" py={4}>
                     <CircularProgress size={40} />
                     <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
-                      Đang phân tích nội dung hợp đồng...
+                      {t('pages.contracts.uploadTemplate.analysis.analyzingText')}
                     </Typography>
                   </Box>
                 ) : extractedFields.length > 0 ? (
@@ -260,11 +274,11 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
                     <Table size="small">
                       <TableHead>
                         <TableRow>
-                          <TableCell>Trường gốc trong file</TableCell>
-                          <TableCell>Placeholder gợi ý</TableCell>
-                          <TableCell>Kiểu dữ liệu</TableCell>
-                          <TableCell>Mô tả</TableCell>
-                          <TableCell align="center">Thao tác</TableCell>
+                          <TableCell>{t('pages.contracts.uploadTemplate.analysis.headers.originalText')}</TableCell>
+                          <TableCell>{t('pages.contracts.uploadTemplate.analysis.headers.placeholder')}</TableCell>
+                          <TableCell>{t('pages.contracts.uploadTemplate.analysis.headers.type')}</TableCell>
+                          <TableCell>{t('pages.contracts.uploadTemplate.analysis.headers.description')}</TableCell>
+                          <TableCell align="center">{t('pages.contracts.uploadTemplate.analysis.headers.actions')}</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -287,12 +301,12 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
                                   onChange={(e) => handleUpdatePlaceholder(index, 'type', e.target.value)}
                                   disabled={loading}
                                 >
-                                  <MenuItem value="text">Văn bản</MenuItem>
-                                  <MenuItem value="number">Số</MenuItem>
-                                  <MenuItem value="date">Ngày tháng</MenuItem>
-                                  <MenuItem value="phone">Điện thoại</MenuItem>
-                                  <MenuItem value="email">Email</MenuItem>
-                                  <MenuItem value="taxcode">Mã số thuế</MenuItem>
+                                  <MenuItem value="text">{t('pages.contracts.uploadTemplate.analysis.typeOptions.text')}</MenuItem>
+                                  <MenuItem value="number">{t('pages.contracts.uploadTemplate.analysis.typeOptions.number')}</MenuItem>
+                                  <MenuItem value="date">{t('pages.contracts.uploadTemplate.analysis.typeOptions.date')}</MenuItem>
+                                  <MenuItem value="phone">{t('pages.contracts.uploadTemplate.analysis.typeOptions.phone')}</MenuItem>
+                                  <MenuItem value="email">{t('pages.contracts.uploadTemplate.analysis.typeOptions.email')}</MenuItem>
+                                  <MenuItem value="taxcode">{t('pages.contracts.uploadTemplate.analysis.typeOptions.taxcode')}</MenuItem>
                                 </Select>
                               </FormControl>
                             </TableCell>
@@ -322,24 +336,24 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
                   </TableContainer>
                 ) : selectedFile ? (
                   <Typography variant="body2" color="textSecondary">
-                    Không tìm thấy trường nào có thể trích xuất từ file. Vui lòng kiểm tra lại nội dung file.
+                    {t('pages.contracts.uploadTemplate.analysis.noFieldsFound')}
                   </Typography>
                 ) : (
                   <Typography variant="body2" color="textSecondary">
-                    Vui lòng tải lên file hợp đồng để AI phân tích và đề xuất các trường dữ liệu.
+                    {t('pages.contracts.uploadTemplate.analysis.uploadPrompt')}
                   </Typography>
                 )}
                 
                 <Box mt={3}>
                   <Typography variant="subtitle2" gutterBottom>
-                    Hướng dẫn sử dụng:
+                    {t('pages.contracts.uploadTemplate.guidance.title')}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    - AI sẽ tự động phân tích nội dung hợp đồng và đề xuất các trường cần điền
+                    - {t('pages.contracts.uploadTemplate.guidance.items.0')}
                     <br />
-                    - Bạn có thể chỉnh sửa tên placeholder và mô tả cho phù hợp
+                    - {t('pages.contracts.uploadTemplate.guidance.items.1')}
                     <br />
-                    - Khi tạo hợp đồng, hệ thống sẽ tự động điền các thông tin vào các vị trí tương ứng
+                    - {t('pages.contracts.uploadTemplate.guidance.items.2')}
                   </Typography>
                 </Box>
               </Paper>
@@ -349,7 +363,7 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
         
         <DialogActions sx={{ p: 2, borderTop: 1, borderColor: 'divider' }}>
           <Button onClick={handleClose} disabled={loading}>
-            Hủy
+            {t('pages.contracts.uploadTemplate.buttons.cancel')}
           </Button>
           <Button
             type="submit"
@@ -358,7 +372,7 @@ const UploadTemplate: React.FC<UploadTemplateProps> = ({ open, onClose, onSubmit
             disabled={loading || analyzing || extractedFields.length === 0}
             startIcon={loading ? <CircularProgress size={20} /> : null}
           >
-            {loading ? 'Đang tải lên...' : 'Lưu Template'}
+            {loading ? t('pages.contracts.uploadTemplate.buttons.saving') : t('pages.contracts.uploadTemplate.buttons.save')}
           </Button>
         </DialogActions>
       </form>

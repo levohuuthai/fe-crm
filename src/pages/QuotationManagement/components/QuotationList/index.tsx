@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   TableContainer,
   Table,
@@ -29,13 +30,14 @@ const QuotationList: React.FC<QuotationListProps> = ({
   onDownloadPdf,
   onSendEmail,
 }) => {
+  const { t, i18n } = useTranslation();
   // Helper functions
   const getStatusChip = (status: QuotationStatus) => {
     const statusMap: Record<QuotationStatus, { label: string; color: 'default' | 'info' | 'success' | 'error' }> = {
-      draft: { label: 'Draft', color: 'default' },
-      sent: { label: 'Đã gửi', color: 'info' },
-      approved: { label: 'Đã duyệt', color: 'success' },
-      rejected: { label: 'Từ chối', color: 'error' },
+      draft: { label: t('pages.quotations.status.draft'), color: 'default' },
+      sent: { label: t('pages.quotations.status.sent'), color: 'info' },
+      approved: { label: t('pages.quotations.status.approved'), color: 'success' },
+      rejected: { label: t('pages.quotations.status.rejected'), color: 'error' },
     };
 
     const statusInfo = statusMap[status];
@@ -49,7 +51,26 @@ const QuotationList: React.FC<QuotationListProps> = ({
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    const lang = i18n.language || 'en';
+    const { locale, currency } =
+      lang.startsWith('ja')
+        ? { locale: 'ja-JP', currency: 'JPY' }
+        : lang.startsWith('vi')
+        ? { locale: 'vi-VN', currency: 'VND' }
+        : { locale: 'en-US', currency: 'USD' };
+    return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount);
+  };
+
+  const formatDate = (dateString: string) => {
+    const lang = i18n.language || 'en';
+    const locale = lang.startsWith('ja') ? 'ja-JP' : lang.startsWith('vi') ? 'vi-VN' : 'en-US';
+    const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return dateString;
+    return new Intl.DateTimeFormat(locale, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(date);
   };
 
   return (
@@ -58,14 +79,14 @@ const QuotationList: React.FC<QuotationListProps> = ({
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Tên báo giá</TableCell>
-              <TableCell>Khách hàng</TableCell>
-              <TableCell>Deal</TableCell>
-              <TableCell>Trạng thái</TableCell>
-              <TableCell>Ngày tạo</TableCell>
-              <TableCell align="right">Tổng Effort (MD)</TableCell>
-              <TableCell align="right">Tổng tiền</TableCell>
-              <TableCell align="center">Hành động</TableCell>
+              <TableCell>{t('pages.quotations.columns.name')}</TableCell>
+              <TableCell>{t('pages.quotations.columns.customer')}</TableCell>
+              <TableCell>{t('pages.quotations.columns.deal')}</TableCell>
+              <TableCell>{t('pages.quotations.columns.status')}</TableCell>
+              <TableCell>{t('pages.quotations.columns.createdAt')}</TableCell>
+              <TableCell align="right">{t('pages.quotations.columns.effort')}</TableCell>
+              <TableCell align="right">{t('pages.quotations.columns.amount')}</TableCell>
+              <TableCell align="center">{t('pages.quotations.columns.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -75,7 +96,7 @@ const QuotationList: React.FC<QuotationListProps> = ({
                 <TableCell>{quotation.customer}</TableCell>
                 <TableCell>{quotation.dealName}</TableCell>
                 <TableCell>{getStatusChip(quotation.status)}</TableCell>
-                <TableCell>{quotation.createdDate}</TableCell>
+                <TableCell>{formatDate(quotation.createdDate)}</TableCell>
                 <TableCell align="right">{quotation.totalEffort}</TableCell>
                 <TableCell align="right">{formatCurrency(quotation.totalAmount)}</TableCell>
                 <TableCell align="center">
@@ -83,7 +104,7 @@ const QuotationList: React.FC<QuotationListProps> = ({
                     size="small" 
                     color="primary" 
                     onClick={() => onViewDetail(quotation.id)}
-                    title="Xem chi tiết"
+                    title={t('common.view')}
                   >
                     <ViewIcon fontSize="small" />
                   </IconButton>
@@ -91,7 +112,7 @@ const QuotationList: React.FC<QuotationListProps> = ({
                     size="small" 
                     color="secondary" 
                     onClick={() => onDownloadPdf(quotation.id)}
-                    title="Tải PDF"
+                    title={t('common.download')}
                   >
                     <PdfIcon fontSize="small" />
                   </IconButton>
@@ -99,7 +120,7 @@ const QuotationList: React.FC<QuotationListProps> = ({
                     size="small" 
                     color="info" 
                     onClick={() => onSendEmail(quotation.id)}
-                    title="Gửi Email"
+                    title={t('common.sendEmail')}
                   >
                     <EmailIcon fontSize="small" />
                   </IconButton>
@@ -109,7 +130,7 @@ const QuotationList: React.FC<QuotationListProps> = ({
             {quotations.length === 0 && (
               <TableRow>
                 <TableCell colSpan={8} align="center">
-                  Không có báo giá nào
+                  {t('common.noData')}
                 </TableCell>
               </TableRow>
             )}
@@ -123,7 +144,7 @@ const QuotationList: React.FC<QuotationListProps> = ({
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={(e: React.ChangeEvent<HTMLInputElement>) => onRowsPerPageChange(e)}
           rowsPerPageOptions={[5, 10, 25]}
-          labelRowsPerPage="Số hàng mỗi trang:"
+          labelRowsPerPage={t('pages.quotations.pagination.rowsPerPage')}
         />
       </TableContainer>
     </>

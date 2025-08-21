@@ -185,7 +185,7 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
   // Thêm cột Subtotal (days) với thứ tự cao
   const subtotalColumn = {
     id: 'subtotal-column',
-    name: 'Subtotal (days)',
+    name: t('pages.quotations.estimation.fixed.subtotalDays'),
     key: 'subtotal',
     order: 950, // Thứ tự cao để đảm bảo nằm sau các cột effort nhưng trước cột hành động
     isFixed: true,
@@ -281,7 +281,27 @@ const FixedPriceTable: React.FC<FixedPriceTableProps> = ({
                     ) : (
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Typography variant="subtitle2">
-                          {column.name}
+                          {(() => {
+                            // Map fixed column keys to i18n labels; fallback to column.name for dynamic columns
+                            switch (column.key) {
+                              case 'feature':
+                                return t('pages.quotations.estimation.table.feature');
+                              case 'detail':
+                                return t('pages.quotations.estimation.table.detail');
+                              case 'description':
+                                return t('pages.quotations.estimation.table.description');
+                              case 'notes':
+                                return t('pages.quotations.estimation.table.note');
+                              case 'it-req':
+                                return t('pages.quotations.estimation.fixed.columns.itReq');
+                              case 'ux/ui':
+                                return t('pages.quotations.estimation.fixed.columns.uxUi');
+                              case 'subtotal':
+                                return t('pages.quotations.estimation.fixed.subtotalDays');
+                              default:
+                                return column.name;
+                            }
+                          })()}
                         </Typography>
                         {!column.isFixed && (
                           <Box sx={{ ml: 1 }}>
