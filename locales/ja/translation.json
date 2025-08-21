@@ -1,0 +1,1600 @@
+{
+  "app": {
+    "title": "CRMアプリ",
+    "welcome": "ようこそ"
+  },
+  "common": {
+    "add": "追加",
+    "aiAssistantMinimized": "AIアシスタント - なんでも質問してください！",
+    "back": "戻る",
+    "cancel": "キャンセル",
+    "contacts": "連絡先",
+    "deals": "商談",
+    "delete": "削除",
+    "download": "ダウンロード",
+    "downloadPdf": "PDFをダウンロード",
+    "edit": "編集",
+    "close": "閉じる",
+    "next": "次へ",
+    "noData": "データがありません",
+    "save": "保存",
+    "sendEmail": "メール送信",
+    "unknown": "不明",
+    "view": "表示",
+    "viewAllContacts": "すべての連絡先を表示...",
+    "viewAllDeals": "すべての商談を表示...",
+    "viewDetails": "詳細を見る"
+  },
+  "header": {
+    "logout": "ログアウト",
+    "profile": "プロフィール",
+    "settings": "設定"
+  },
+  "menu": {
+    "acceptance": "検収",
+    "acceptanceFull": "検収書",
+    "appendices": "付属書",
+    "appendicesFull": "契約付属書",
+    "contacts": "連絡先",
+    "contactsFull": "連絡先管理",
+    "contracts": "契約",
+    "contractsFull": "契約",
+    "dashboard": "ダッシュボード",
+    "dashboardFull": "ダッシュボード",
+    "deals": "商談",
+    "dealsFull": "営業機会",
+    "invoices": "請求書",
+    "invoicesFull": "請求書",
+    "quotations": "見積",
+    "quotationsFull": "見積 / 試算",
+    "requirements": "要件",
+    "requirementsFull": "要件"
+  },
+  "pages": {
+    "acceptance": {
+      "actions": {
+        "createReport": "新規検収書の作成",
+        "createTemplate": "新規テンプレートの作成",
+        "sign": "署名"
+      },
+      "dialogs": {
+        "createReportTitle": "新規検収書の作成",
+        "createTemplateTitle": "新規検収テンプレートの作成",
+        "fields": {
+          "code": "コード",
+          "description": "説明",
+          "linkedAppendix": "関連する付属書",
+          "linkedContract": "関連する契約",
+          "reportName": "検収名",
+          "templateName": "テンプレート名",
+          "type": "タイプ"
+        }
+      },
+      "filters": {
+        "all": "すべて",
+        "status": "ステータス"
+      },
+      "none": "なし",
+      "notifications": {
+        "createReportSuccess": "✅ 検収書を作成しました！",
+        "createTemplateSuccess": "✅ テンプレートを作成しました！"
+      },
+      "overview": {
+        "pending": "保留中",
+        "signedReports": "署名済み",
+        "totalTemplates": "テンプレート総数",
+        "totalValue": "合計金額"
+      },
+      "reports": {
+        "columns": {
+          "acceptanceDate": "検収日",
+          "actions": "操作",
+          "appendix": "付属書",
+          "code": "検収ID",
+          "contract": "契約",
+          "name": "検収名",
+          "status": "ステータス",
+          "value": "金額"
+        }
+      },
+      "sample": {
+        "contract1": "契約1",
+        "contract2": "契約2",
+        "appendix1": "付属書1",
+        "appendix2": "付属書2"
+      },
+      "searchPlaceholder": "検索...",
+      "status": {
+        "active": "有効",
+        "draft": "下書き",
+        "inactive": "無効",
+        "pending": "保留中",
+        "rejected": "却下",
+        "signed": "署名済み"
+      },
+      "tabs": {
+        "reports": "検収書",
+        "templates": "検収テンプレート"
+      },
+      "templates": {
+        "columns": {
+          "actions": "操作",
+          "code": "コード",
+          "description": "説明",
+          "name": "テンプレート名",
+          "status": "ステータス",
+          "type": "タイプ",
+          "usage": "使用状況"
+        }
+      },
+      "title": "検収管理",
+      "types": {
+        "full": "フル",
+        "phase": "フェーズ",
+        "simple": "簡易"
+      }
+    },
+    "aiGeneration": {
+      "input": {
+        "generate": "[要翻訳] Generate",
+        "generating": "[要翻訳] Generating...",
+        "placeholder": "[要翻訳] Describe the contract you want to generate..."
+      },
+      "messages": {
+        "error": "[要翻訳] Could not generate contract. Please try again.",
+        "generated": "[要翻訳] Contract content generated successfully."
+      },
+      "preview": {
+        "buttons": {
+          "download": "[要翻訳] Download",
+          "edit": "[要翻訳] Edit",
+          "saveAsTemplate": "[要翻訳] Save as template"
+        },
+        "empty": {
+          "description": "[要翻訳] Use the prompt on the left to generate contract content.",
+          "title": "[要翻訳] No content yet"
+        },
+        "title": "[要翻訳] Contract Preview"
+      },
+      "prompt": {
+        "emptyState": {
+          "description": "[要翻訳] Give a short description or pick a suggestion below. The AI will draft a contract for you.",
+          "example": "[要翻訳] Example: \"Create a software development contract for CRM system between Company A and Company B. Project duration 6 months, fixed price 50,000 USD.\"",
+          "title": "[要翻訳] Start by describing the contract you need"
+        },
+        "suggestions": {
+          "compose": "{{suggestion}}",
+          "items": [
+            "CRM開発の業務委託契約を作成して",
+            "A社とB社の秘密保持契約（NDA）を書いて",
+            "12か月間の保守契約の下書きを作成して",
+            "契約解除合意書を作成して",
+            "ソフトウェア使用許諾契約を作成して"
+          ],
+          "title": "次の候補を試す:"
+        }
+      },
+      "saveDialog": {
+        "currentUser": "[要翻訳] Current user",
+        "defaultTemplateName": "[要翻訳] New contract template",
+        "description": "[要翻訳] Save the generated content as a reusable contract template.",
+        "nameLabel": "[要翻訳] Template name",
+        "save": "[要翻訳] Save template",
+        "saving": "[要翻訳] Saving...",
+        "title": "[要翻訳] Save as Contract Template"
+      },
+      "title": "[要翻訳] AI Contract Generation"
+    },
+    "appendices": {
+      "actions": {
+        "createAppendix": "付属書を新規作成",
+        "createTemplate": "テンプレートを新規作成"
+      },
+      "appendices": {
+        "columns": {
+          "actions": "操作",
+          "code": "付属書ID",
+          "contractId": "契約ID",
+          "contractName": "契約名",
+          "createdAt": "作成日",
+          "name": "付属書名",
+          "status": "ステータス"
+        },
+        "title": "契約付属書一覧"
+      },
+      "defaults": {
+        "extensionAppendixName": "期間延長の付属書",
+        "valueAppendixName": "金額変更の付属書"
+      },
+      "dialogs": {
+        "actions": {
+          "saveDraft": "下書き保存",
+          "saveTemplate": "テンプレートを保存",
+          "signAppendix": "付属書に署名",
+          "submit": "承認申請",
+          "uploadAttachment": "添付ファイルをアップロード",
+          "uploadTemplateFile": "テンプレートファイルをアップロード (PDF, DOCX)"
+        },
+        "chooseMethodTitle": "付属書の作成方法を選択してください:",
+        "createAppendixTitle": "契約付属書の新規作成",
+        "createTemplateTitle": "付属書テンプレートの新規作成",
+        "defaults": {
+          "contentFromTemplate": "付属書テンプレートからの内容..."
+        },
+        "fields": {
+          "appendixContent": "付属書の内容",
+          "appendixName": "付属書名",
+          "createdAt": "作成日",
+          "description": "説明",
+          "internalNotes": "内部メモ（任意）",
+          "linkedContract": "関連する契約",
+          "selectTemplate": "テンプレートを選択",
+          "templateName": "テンプレート名",
+          "type": "タイプ"
+        },
+        "methods": {
+          "manual": "手動で作成",
+          "useTemplate": "テンプレートを使用"
+        },
+        "noTemplatesWarning": "付属書テンプレートがまだありません。先にテンプレートを作成してください。",
+        "placeholders": {
+          "appendixContent": "付属書の内容を入力..."
+        },
+        "selectedFile": "選択したファイル",
+        "steps": {
+          "chooseMethod": "作成方法の選択",
+          "fillInformation": "情報の入力"
+        }
+      },
+      "loading": {
+        "appendices": "契約付属書を読み込み中...",
+        "templates": "付属書テンプレートを読み込み中..."
+      },
+      "notifications": {
+        "createTemplateSuccess": "✅ 付属書テンプレートを作成しました！",
+        "loadError": "データの読み込み中にエラーが発生しました。もう一度お試しください。",
+        "saveDraftSuccess": "✅ 付属書を下書き保存しました！",
+        "signSuccess": "✅ 付属書に署名しました！",
+        "submitSuccess": "✅ 付属書を承認申請しました！"
+      },
+      "sample": {
+        "contract1": "CRM開発契約",
+        "contract2": "コンサルティング契約",
+        "contract3": "保守契約"
+      },
+      "status": {
+        "active": "有効",
+        "cancelled": "キャンセル",
+        "draft": "下書き",
+        "inactive": "無効",
+        "pending": "保留中",
+        "signed": "署名済み"
+      },
+      "tabs": {
+        "appendices": "契約付属書",
+        "templates": "付属書テンプレート"
+      },
+      "templates": {
+        "columns": {
+          "actions": "操作",
+          "code": "コード",
+          "createdAt": "作成日",
+          "description": "説明",
+          "name": "テンプレート名",
+          "status": "ステータス",
+          "type": "タイプ"
+        },
+        "title": "付属書テンプレート一覧"
+      },
+      "title": "契約付属書の管理",
+      "types": {
+        "extension": "期間延長",
+        "other": "その他",
+        "value": "金額変更"
+      }
+    },
+    "assistant": {
+      "actions": {
+        "createContact": "連絡先を作成",
+        "createDeal": "商談を作成",
+        "sendDraftEmail": "下書きメールを送信"
+      },
+      "assistant": "AIアシスタント",
+      "buttons": {
+        "open": "開く",
+        "task": "タスク"
+      },
+      "floatingInputPlaceholder": "AIに何でも質問...",
+      "greeting": "こんにちは！CRMのバーチャルアシスタントです。どのようにお手伝いできますか？",
+      "headerSubtitle": "スマートレポート • いつでもサポート",
+      "inputPlaceholder": "メッセージを入力...",
+      "mock": {
+        "disclaimer": "AI生成のデモコンテンツです。データはプレビュー用のモックです。"
+      },
+      "nextSuggestions": "次のおすすめ",
+      "noUnderstand": "すみません、うまく理解できませんでした。もう一度お試しください。",
+      "openDeals": "進行中の商談",
+      "pageSuggestions": {
+        "base": {
+          "createOverviewReport": "ビジネス概要レポートを作成",
+          "findProspects": "見込み客を探す",
+          "marketTrends": "現在の市場トレンドを分析",
+          "predictTopDeal": "最も受注見込みの高い商談を予測"
+        },
+        "customers": {
+          "analyzeBehavior": "顧客行動を分析",
+          "findCrossSell": "クロスセル/アップセルの機会を探す",
+          "predictChurn": "解約予測を行う"
+        },
+        "dashboard": {
+          "kpiThisMonth": "今月のKPIを表示",
+          "revenueTrends": "売上トレンドを分析",
+          "top5Deals": "有望な商談トップ5"
+        },
+        "deals": {
+          "analyzePipeline": "現在のパイプラインを分析",
+          "predictSuccessRate": "商談の成功確度を予測",
+          "suggestPendingActions": "保留中の商談のアクションを提案"
+        },
+        "title": "このページのおすすめ"
+      },
+      "quickActions": {
+        "insightsLabel": "インサイト",
+        "predictionsLabel": "予測",
+        "queries": {
+          "insights": "ビジネスインサイトを分析",
+          "predictions": "有望な商談を予測",
+          "trending": "現在の市場トレンドを表示"
+        },
+        "title": "クイックアクション",
+        "trendingLabel": "トレンド"
+      },
+      "recentResults": {
+        "confidence": "信頼度",
+        "title": "最近の結果"
+      },
+      "responses": {
+        "createReminderCompanyB": "会社Bの商談向けに明日のリマインダーを作成しました。メモを追加しますか？",
+        "dealsNotClosedThisMonth": "7月に未クローズの商談一覧です:\n```\n| 商談名   | 顧客       | 金額  |\n|----------|------------|-------|\n| Deal 1   | 会社A      | 100M  |\n| Deal 2   | 会社B      | 80M   |\n```",
+        "totalClosedValue": "今月の受注合計金額は 377,043,143 ₫ です",
+        "writeThankYouEmail": "お客様各位\n\nこの度は弊社サービスをご利用いただき、誠にありがとうございます。今後ともよろしくお願いいたします..."
+      },
+      "resultsFor": "\"{{query}}\" の結果",
+      "suggestions": {
+        "createReminderCompanyB": "会社Bのリマインダーを作成",
+        "dealsNotClosedThisMonth": "今月未クローズの商談",
+        "totalClosedValue": "今月の受注合計金額",
+        "writeThankYouEmail": "お礼メールを作成"
+      },
+      "title": "CRMスマートアシスタント",
+      "topContacts": "注目の連絡先",
+      "you": "あなた",
+      "youCanAsk": "次のように質問できます:"
+    },
+    "contacts": {
+      "columns": {
+        "actions": "操作",
+        "company": "会社",
+        "email": "メール",
+        "lastContact": "最終連絡",
+        "leadStatus": "リードの状態",
+        "name": "氏名",
+        "owner": "担当者",
+        "phone": "電話",
+        "position": "役職",
+        "value": "見込み価値"
+      },
+      "emailWindow": {
+        "actions": {
+          "send": "送信",
+          "sendLater": "後で送信",
+          "sendNow": "今すぐ送信"
+        },
+        "associated": "{{count}} 件のレコードに関連付け",
+        "fields": {
+          "bcc": "Bcc",
+          "cc": "Cc",
+          "from": "差出人",
+          "subject": "件名",
+          "to": "宛先"
+        },
+        "messages": {
+          "missingRecipient": "宛先メールアドレスを入力してください",
+          "openedClient": "既定のメールクライアントで開きました！"
+        },
+        "placeholders": {
+          "body": "メッセージを入力してください...",
+          "subject": "メールの件名",
+          "to": "recipient@example.com"
+        },
+        "prompts": {
+          "enterUrl": "URLを入力:"
+        },
+        "sendLater": {
+          "actions": {
+            "cancel": "キャンセル",
+            "schedule": "スケジュール"
+          },
+          "options": {
+            "custom": "カスタム",
+            "in1hour": "1時間後",
+            "in2hours": "2時間後",
+            "tomorrowAfternoon": "明日の午後 (13時)",
+            "tomorrowMorning": "明日の朝 (8時)"
+          },
+          "title": "後で送信"
+        },
+        "tabs": {
+          "documents": "ドキュメント",
+          "meetings": "ミーティング",
+          "quotes": "見積",
+          "sequences": "シーケンス",
+          "templates": "テンプレート"
+        },
+        "title": "新規メール",
+        "toolbar": {
+          "insert": "挿入",
+          "more": "その他"
+        }
+      },
+      "empty": "連絡先がまだありません",
+      "filters": {
+        "lastContact": "最終連絡",
+        "leadStatus": "リードの状態",
+        "owner": "担当者"
+      },
+      "form": {
+        "actions": {
+          "cancel": "キャンセル",
+          "save": "保存"
+        },
+        "createTitle": "新規連絡先の作成",
+        "fields": {
+          "email": "メール",
+          "firstName": "名",
+          "jobTitle": "役職",
+          "lastName": "姓",
+          "leadStatus": "リードの状態",
+          "phone": "電話番号"
+        },
+        "options": {
+          "leadStatus": {
+            "contacted": "連絡済み",
+            "lost": "失注",
+            "new": "新規",
+            "qualified": "有望"
+          }
+        }
+      },
+      "note": {
+        "actions": {
+          "attachFile": "ファイルを添付",
+          "cancel": "キャンセル",
+          "save": "保存"
+        },
+        "fields": {
+          "note": "メモ"
+        },
+        "title": "メモを追加"
+      },
+      "notifications": {
+        "createSuccess": "✅ 連絡先を作成しました！"
+      },
+      "subtitle": "見込み客情報を管理し、コンバージョンの進捗を追跡",
+      "title": "連絡先管理",
+      "validation": {
+        "emailInvalid": "メールアドレスが正しくありません",
+        "phoneInvalid": "電話番号が正しくありません"
+      },
+      "views": {
+        "all": "すべて",
+        "my": "自分の連絡先",
+        "unassigned": "未割り当て"
+      }
+    },
+    "contracts": {
+      "actions": {
+        "createContract": "新規契約の作成"
+      },
+      "aiGeneration": {
+        "input": {
+          "generate": "生成",
+          "generating": "生成中...",
+          "placeholder": "生成したい契約の内容を説明してください..."
+        },
+        "messages": {
+          "error": "契約を生成できませんでした。もう一度お試しください。",
+          "generated": "契約の内容を生成しました。"
+        },
+        "preview": {
+          "buttons": {
+            "download": "ダウンロード",
+            "edit": "編集",
+            "saveAsTemplate": "テンプレートとして保存"
+          },
+          "empty": {
+            "description": "左のプロンプトを使って契約の内容を生成してください。",
+            "title": "まだ内容がありません"
+          },
+          "title": "契約プレビュー"
+        },
+        "prompt": {
+          "emptyState": {
+            "description": "短い説明を書くか、下の候補から選択すると、AIが契約書の下書きを作成します。",
+            "example": "例: \"CRMシステムのソフトウェア開発契約。A社とB社。期間6ヶ月、固定価格50,000 USD。\"",
+            "title": "必要な契約の内容を説明してください"
+          },
+          "suggestions": {
+            "compose": "{{suggestion}}",
+            "items": [
+              "CRM開発の業務委託契約を作成して",
+              "A社とB社の秘密保持契約（NDA）を書いて",
+              "12か月間の保守契約の下書きを作成して",
+              "契約解除合意書を作成して",
+              "ソフトウェア使用許諾契約を作成して"
+            ],
+            "title": "次の候補を試す:"
+          }
+        },
+        "saveDialog": {
+          "currentUser": "現在のユーザー",
+          "defaultTemplateName": "新しい契約テンプレート",
+          "description": "生成した内容を再利用可能な契約テンプレートとして保存します。",
+          "nameLabel": "テンプレート名",
+          "save": "テンプレートを保存",
+          "saving": "保存中...",
+          "title": "契約テンプレートとして保存"
+        },
+        "title": "AI契約生成"
+      },
+      "columns": {
+        "actions": "操作",
+        "code": "契約ID",
+        "createdAt": "作成日",
+        "name": "契約名",
+        "partyA": "甲",
+        "partyB": "乙",
+        "status": "ステータス",
+        "type": "テンプレート"
+      },
+      "createContract": {
+        "alerts": {
+          "noFieldsFound": "このテンプレートには項目が見つかりません。別のテンプレートを選択してください。"
+        },
+        "buttons": {
+          "back": "戻る",
+          "continue": "続行",
+          "create": "契約を作成"
+        },
+        "form": {
+          "description": "契約を作成するために必要な情報をすべて入力してください。",
+          "requiredHelper": "必須項目です",
+          "sectionTitle": "契約情報",
+          "title": "契約の作成"
+        },
+        "generatedNamePrefix": "契約",
+        "notifications": {
+          "exportPdfSuccess": "PDFを出力しました！"
+        },
+        "paymentSchedule": {
+          "actions": {
+            "add": "支払いを追加"
+          },
+          "columns": {
+            "amount": "金額",
+            "condition": "条件",
+            "delete": "削除",
+            "note": "備考",
+            "paymentDate": "支払日",
+            "status": "ステータス"
+          },
+          "description": "契約の支払いスケジュールを追加します。各項目には条件、金額、支払日、ステータス、備考が含まれます。",
+          "empty": "まだ支払い項目がありません。『支払いを追加』をクリックして開始してください。",
+          "placeholders": {
+            "condition": "例：契約書締結後",
+            "note": "備考"
+          },
+          "status": {
+            "paid": "支払い済み",
+            "pending": "未払い",
+            "waiting": "支払い待ち"
+          },
+          "title": "支払い項目"
+        },
+        "preview": {
+          "title": "プレビューと確認"
+        },
+        "sample": {
+          "currentUser": "現在のユーザー",
+          "partyA": "ABC株式会社",
+          "partyB": "XYZ株式会社"
+        },
+        "steps": {
+          "fillInfo": "情報の入力",
+          "paymentItems": "支払い項目",
+          "previewConfirm": "プレビューと確認",
+          "selectTemplate": "テンプレートの選択"
+        },
+        "templateSelection": {
+          "chipLabel": "{{count}} 項目",
+          "title": "契約テンプレートを選択"
+        }
+      },
+      "customers": {
+        "addCustomer": "顧客を追加",
+        "columns": {
+          "actions": "操作",
+          "company": "会社",
+          "createdAt": "作成日",
+          "email": "メール",
+          "name": "氏名",
+          "owner": "担当者",
+          "phone": "電話",
+          "status": "ステータス"
+        },
+        "dialogs": {
+          "createTitle": "新規顧客の追加",
+          "deleteText": "顧客 {{name}} を削除してもよろしいですか？この操作は元に戻せません。",
+          "deleteTitle": "削除の確認",
+          "editTitle": "顧客の編集"
+        },
+        "filters": {
+          "status": {
+            "all": "すべて",
+            "nurturing": "育成中",
+            "potential": "見込み",
+            "signed": "契約済み"
+          }
+        },
+        "form": {
+          "company": "会社",
+          "email": "メール",
+          "name": "顧客名",
+          "notes": "メモ",
+          "owner": "担当者",
+          "phone": "電話番号",
+          "save": "保存",
+          "status": "ステータス",
+          "update": "更新"
+        },
+        "pagination": {
+          "displayedRows": "{{from}}-{{to}} / {{count}}",
+          "rowsPerPage": "1ページあたりの行数:"
+        },
+        "searchPlaceholder": "名前・電話・メールで検索...",
+        "status": {
+          "nurturing": "育成中",
+          "potential": "見込み",
+          "signed": "契約済み"
+        },
+        "title": "顧客管理"
+      },
+      "detail": {
+        "actions": {
+          "print": "印刷",
+          "share": "共有"
+        },
+        "contractContent": "契約内容",
+        "deleteDialog": {
+          "confirm": "削除",
+          "text": "この契約を削除してもよろしいですか？この操作は元に戻せません。",
+          "title": "契約の削除を確認"
+        },
+        "fields": {
+          "contractId": "契約ID",
+          "createdAt": "作成日",
+          "createdBy": "作成者",
+          "expiresAt": "有効期限",
+          "signedAt": "署名日",
+          "templateName": "テンプレート名",
+          "updatedAt": "最終更新日"
+        },
+        "generalInfo": "基本情報",
+        "partiesInfo": "当事者情報",
+        "party": {
+          "address": "住所",
+          "companyName": "会社名",
+          "phone": "電話",
+          "position": "役職",
+          "representative": "代表者",
+          "taxId": "税番号"
+        },
+        "partyA": {
+          "title": "甲（契約当事者）"
+        },
+        "partyB": {
+          "title": "乙（相手方）"
+        },
+        "sample": {
+          "code": "番号",
+          "heading": "業務委託契約書",
+          "partyA": "甲",
+          "partyB": "乙"
+        },
+        "title": "契約の詳細"
+      },
+      "dialogs": {
+        "createTitle": "新規契約の作成",
+        "deleteConfirmText": "この契約を削除してもよろしいですか？この操作は元に戻せません。",
+        "deleteConfirmTitle": "削除の確認",
+        "detailTitle": "契約の詳細"
+      },
+      "filters": {
+        "buttons": {
+          "createWithAI": "AIで作成",
+          "uploadTemplate": "テンプレートをアップロード"
+        },
+        "searchPlaceholder": "テンプレートを検索...",
+        "statusLabel": "ステータス",
+        "statusOptions": {
+          "all": "すべて"
+        },
+        "typeLabel": "テンプレート種別",
+        "typeOptions": {
+          "all": "すべて"
+        }
+      },
+      "list": {
+        "buttonCreate": "新規契約の作成",
+        "loading": "契約を読み込み中...",
+        "title": "契約一覧"
+      },
+      "loading": {
+        "contracts": "契約を読み込み中..."
+      },
+      "notifications": {
+        "createContractSuccess": "✅ 新しい契約を作成しました！",
+        "deleteContractSuccess": "✅ 契約を削除しました！",
+        "editInfo": "契約の編集機能は開発中です",
+        "loadError": "データの読み込み中にエラーが発生しました。もう一度お試しください。",
+        "uploadTemplateError": "テンプレートのアップロード中にエラーが発生しました。もう一度お試しください。",
+        "uploadTemplateSuccess": "✅ テンプレートをアップロードしました！"
+      },
+      "status": {
+        "cancelled": "キャンセル",
+        "draft": "下書き",
+        "expired": "期限切れ",
+        "pending": "保留中",
+        "signed": "署名済み"
+      },
+      "table": {
+        "chips": {
+          "status": {
+            "active": "有効",
+            "inactive": "無効"
+          },
+          "type": {
+            "customer": "顧客",
+            "internal": "社内"
+          }
+        },
+        "columns": {
+          "actions": "操作",
+          "createdAt": "作成日",
+          "createdBy": "作成者",
+          "fields": "項目",
+          "name": "テンプレート名",
+          "status": "ステータス",
+          "type": "タイプ"
+        },
+        "empty": "データがありません",
+        "pagination": {
+          "displayedRows": "{{from}}-{{to}} / {{count}}",
+          "rowsPerPage": "1ページあたりの行数:"
+        },
+        "tooltips": {
+          "default": "デフォルト",
+          "delete": "削除",
+          "edit": "編集",
+          "setDefault": "デフォルトに設定",
+          "view": "詳細を見る"
+        }
+      },
+      "tabs": {
+        "contracts": "契約",
+        "templates": "契約テンプレート"
+      },
+      "templateList": {
+        "alerts": {
+          "saveAiError": "テンプレートの保存中にエラーが発生しました！",
+          "saveAiSuccess": "✅ テンプレートを保存しました！"
+        },
+        "confirmDelete": "このテンプレートを削除してもよろしいですか？",
+        "filters": {
+          "buttons": {
+            "createWithAI": "AIで作成",
+            "uploadTemplate": "テンプレートをアップロード"
+          },
+          "searchPlaceholder": "テンプレートを検索...",
+          "statusLabel": "ステータス",
+          "statusOptions": {
+            "all": "すべて"
+          },
+          "typeLabel": "テンプレート種別",
+          "typeOptions": {
+            "all": "すべて"
+          }
+        },
+        "loading": "データを読み込み中...",
+        "subtitle": "契約テンプレートの管理と作成",
+        "table": {
+          "chips": {
+            "status": {
+              "active": "有効",
+              "inactive": "無効"
+            },
+            "type": {
+              "customer": "顧客",
+              "internal": "社内"
+            }
+          },
+          "columns": {
+            "actions": "操作",
+            "createdAt": "作成日",
+            "createdBy": "作成者",
+            "fields": "項目",
+            "name": "テンプレート名",
+            "status": "ステータス",
+            "type": "タイプ"
+          },
+          "empty": "データがありません",
+          "pagination": {
+            "displayedRows": "{{from}}-{{to}} / {{count}}",
+            "rowsPerPage": "1ページあたりの行数:"
+          },
+          "tooltips": {
+            "default": "デフォルト",
+            "delete": "削除",
+            "edit": "編集",
+            "setDefault": "デフォルトに設定",
+            "view": "詳細を見る"
+          }
+        },
+        "title": "契約テンプレート一覧"
+      },
+      "title": "契約管理",
+      "tooltips": {
+        "delete": "削除",
+        "download": "ダウンロード",
+        "view": "詳細を見る"
+      },
+      "uploadTemplate": {
+        "analysis": {
+          "analyzingText": "契約内容を解析中...",
+          "headers": {
+            "actions": "操作",
+            "description": "説明",
+            "originalText": "ファイル内の原文",
+            "placeholder": "推奨プレースホルダー",
+            "type": "データ型"
+          },
+          "noFieldsFound": "抽出可能な項目が見つかりませんでした。ファイル内容をご確認ください。",
+          "title": "契約から抽出された項目:",
+          "typeOptions": {
+            "date": "日付",
+            "email": "メール",
+            "number": "数値",
+            "phone": "電話",
+            "taxcode": "税番号",
+            "text": "テキスト"
+          },
+          "uploadPrompt": "AIが解析して項目を提案できるよう、契約ファイルをアップロードしてください。"
+        },
+        "buttons": {
+          "cancel": "キャンセル",
+          "save": "テンプレートを保存",
+          "saving": "アップロード中..."
+        },
+        "fields": {
+          "description": "説明",
+          "fileButton": "テンプレートファイルを選択（.docx）",
+          "name": "テンプレート名",
+          "selectedFilePrefix": "選択中:",
+          "type": "テンプレート種別",
+          "typeOptions": {
+            "customer": "顧客向け",
+            "internal": "社内"
+          }
+        },
+        "guidance": {
+          "items": [
+            "AIが契約内容を自動解析し、入力項目を提案します",
+            "必要に応じてプレースホルダー名や説明を編集できます",
+            "契約作成時に、対応する位置へ自動入力されます"
+          ],
+          "title": "ご利用ガイド:"
+        },
+        "sample": {
+          "descriptions": {
+            "partyAAddress": "甲の住所",
+            "partyAName": "甲の会社名",
+            "partyAPhone": "甲の電話番号",
+            "partyARepresentative": "甲の代表者",
+            "partyATax": "甲の税番号",
+            "partyATitle": "代表者の役職"
+          }
+        },
+        "title": "新しいテンプレートをアップロード",
+        "validation": {
+          "fileRequired": "テンプレートファイルは必須です",
+          "fileType": ".docx ファイルのみ受け付けます",
+          "nameRequired": "テンプレート名は必須です",
+          "typeRequired": "テンプレート種別は必須です"
+        }
+      }
+    },
+    "createContract": {
+      "alerts": {
+        "noFieldsFound": "[要翻訳] No fields found in this template. Please choose another template."
+      },
+      "buttons": {
+        "back": "[要翻訳] Back",
+        "continue": "[要翻訳] Continue",
+        "create": "[要翻訳] Create contract"
+      },
+      "form": {
+        "description": "[要翻訳] Please fill in all the required information to create the contract.",
+        "requiredHelper": "[要翻訳] This field is required",
+        "sectionTitle": "[要翻訳] Contract information",
+        "title": "[要翻訳] Create contract"
+      },
+      "generatedNamePrefix": "[要翻訳] Contract",
+      "notifications": {
+        "exportPdfSuccess": "[要翻訳] Exported PDF successfully!"
+      },
+      "preview": {
+        "title": "[要翻訳] Preview & Confirm"
+      },
+      "sample": {
+        "currentUser": "[要翻訳] Current user",
+        "partyA": "[要翻訳] Company ABC Co., Ltd.",
+        "partyB": "[要翻訳] Company XYZ Co., Ltd."
+      },
+      "steps": {
+        "fillInfo": "[要翻訳] Fill information",
+        "paymentItems": "[要翻訳] Payment items",
+        "previewConfirm": "[要翻訳] Preview & Confirm",
+        "selectTemplate": "[要翻訳] Select template"
+      },
+      "templateSelection": {
+        "chipLabel": "[要翻訳] {{count}} fields",
+        "title": "[要翻訳] Select a contract template"
+      }
+    },
+    "customers": {
+      "addCustomer": "[要翻訳] Add customer",
+      "columns": {
+        "actions": "[要翻訳] Actions",
+        "company": "[要翻訳] Company",
+        "createdAt": "[要翻訳] Created at",
+        "email": "[要翻訳] Email",
+        "name": "[要翻訳] Name",
+        "owner": "[要翻訳] Owner",
+        "phone": "[要翻訳] Phone",
+        "status": "[要翻訳] Status"
+      },
+      "dialogs": {
+        "createTitle": "[要翻訳] Add new customer",
+        "deleteText": "[要翻訳] Are you sure you want to delete customer {{name}}? This action cannot be undone.",
+        "deleteTitle": "[要翻訳] Delete confirmation",
+        "editTitle": "[要翻訳] Edit customer"
+      },
+      "filters": {
+        "status": {
+          "all": "[要翻訳] All",
+          "nurturing": "[要翻訳] Nurturing",
+          "potential": "[要翻訳] Potential",
+          "signed": "[要翻訳] Signed"
+        }
+      },
+      "form": {
+        "company": "[要翻訳] Company",
+        "email": "[要翻訳] Email",
+        "name": "[要翻訳] Customer name",
+        "notes": "[要翻訳] Notes",
+        "owner": "[要翻訳] Owner",
+        "phone": "[要翻訳] Phone number",
+        "save": "[要翻訳] Save",
+        "status": "[要翻訳] Status",
+        "update": "[要翻訳] Update"
+      },
+      "pagination": {
+        "displayedRows": "[要翻訳] {{from}}-{{to}} of {{count}}",
+        "rowsPerPage": "[要翻訳] Rows per page:"
+      },
+      "searchPlaceholder": "[要翻訳] Search by name, phone, email...",
+      "status": {
+        "nurturing": "[要翻訳] Nurturing",
+        "potential": "[要翻訳] Potential",
+        "signed": "[要翻訳] Signed"
+      },
+      "title": "[要翻訳] Customer Management"
+    },
+    "dashboard": {
+      "aiSearchResults": "AI検索結果",
+      "askAssistant": "CRMアシスタントに質問: \"{{query}}\"",
+      "back": "戻る",
+      "footer": " 2025 CRM ダッシュボード - AIオーケストレーション リアルタイムデータ スマート予測",
+      "searchFor": "検索: \"{{query}}\"",
+      "searchPlaceholder": "AIにビジネスデータ、市場、顧客について質問...",
+      "sections": {
+        "contacts": "連絡先",
+        "deals": "商談"
+      },
+      "showMoreContacts": "連絡先をもっと表示...",
+      "showMoreDeals": "商談をもっと表示...",
+      "smartDashboard": "スマートダッシュボード",
+      "welcomeBack": "お帰りなさい、管理者"
+    },
+    "deals": {
+      "columns": {
+        "actions": "操作",
+        "amount": "金額",
+        "createdAt": "作成日",
+        "customer": "顧客",
+        "deadline": "期限",
+        "dealName": "商談名",
+        "expectedCloseDate": "予定締結日",
+        "lastActivity": "最終アクティビティ",
+        "owner": "担当者",
+        "priority": "優先度",
+        "probability": "確度 (%)",
+        "stage": "ステージ"
+      },
+      "empty": "商談がまだありません",
+      "filters": {
+        "amount": "金額",
+        "expectedCloseDate": "予定締結日",
+        "lastActivity": "最終アクティビティ",
+        "owner": "商談担当者",
+        "stage": "ステージ"
+      },
+      "pagination": {
+        "displayedRows": "{{from}}-{{to}} / {{count}}",
+        "rowsPerPage": "1ページあたりの行数:"
+      },
+      "stats": {
+        "active": "進行中",
+        "activeDeals": "{{count}} 件",
+        "totalValue": "合計金額",
+        "winRate": "受注率",
+        "won": "受注"
+      },
+      "subtitle": "見込みからクロージングまで営業機会を追跡・管理",
+      "title": "商談管理",
+      "ui": {
+        "addDeal": "商談を追加",
+        "clearFilter": "フィルターをクリア",
+        "contextMenu": {
+          "delete": "削除",
+          "duplicate": "複製"
+        },
+        "dialogs": {
+          "deleteConfirmText": "この商談を削除してもよろしいですか？",
+          "deleteConfirmTitle": "削除の確認"
+        },
+        "filtering": "フィルタリング:",
+        "filters": "フィルター",
+        "form": {
+          "createTitle": "新規商談を作成",
+          "editTitle": "商談を編集"
+        },
+        "foundMatching": "一致する商談が {{count}} 件見つかりました",
+        "resetFilters": "フィルターをリセット",
+        "smartFilter": "スマートフィルター",
+        "tabs": {
+          "allDeals": "すべての商談 ({{count}})",
+          "reminders": "リマインダー"
+        }
+      },
+      "validation": {
+        "probabilityRange": "確度は0〜100%の範囲で指定してください"
+      },
+      "views": {
+        "all": "すべて",
+        "my": "自分の商談",
+        "unassigned": "未割り当て"
+      }
+    },
+    "invoices": {
+      "columns": {
+        "invoices": {
+          "actions": "操作",
+          "appendix": "付属書",
+          "customer": "顧客",
+          "invoiceCode": "請求書ID",
+          "invoiceName": "請求書名",
+          "issueDate": "発行日",
+          "none": "なし",
+          "paymentProgress": "支払い進捗",
+          "status": "ステータス",
+          "value": "金額"
+        },
+        "templates": {
+          "actions": "操作",
+          "code": "コード",
+          "description": "説明",
+          "name": "テンプレート名",
+          "status": "ステータス",
+          "taxRate": "税率",
+          "type": "タイプ",
+          "usage": "使用状況"
+        }
+      },
+      "dialogs": {
+        "actions": {
+          "cancel": "キャンセル",
+          "record": "記録",
+          "save": "保存",
+          "saveDraft": "下書き保存"
+        },
+        "create": {
+          "acceptanceLabel": "検収書",
+          "selectTemplateLabel": "請求書テンプレート",
+          "selectTemplatePlaceholder": "請求書テンプレートを選択",
+          "title": "新規請求書の作成"
+        },
+        "payment": {
+          "method": "支払い方法",
+          "methods": {
+            "bank": "振込",
+            "card": "クレジットカード",
+            "cash": "現金"
+          },
+          "title": "入金の記録"
+        }
+      },
+      "filters": {
+        "all": "すべて",
+        "invoices": {
+          "draft": "下書き",
+          "overdue": "延滞",
+          "paid": "支払い済み",
+          "partial": "一部入金",
+          "sent": "送付済み"
+        },
+        "status": "ステータス",
+        "templates": {
+          "active": "有効",
+          "inactive": "無効"
+        }
+      },
+      "stats": {
+        "overdue": "延滞",
+        "paid": "支払い済み",
+        "totalInvoices": "請求書総数",
+        "totalValue": "合計金額"
+      },
+      "tabs": {
+        "invoices": "請求書",
+        "templates": "請求書テンプレート"
+      },
+      "title": "請求書管理",
+      "ui": {
+        "currencyUnit": "VND"
+      }
+    },
+    "quotations": {
+      "actions": {
+        "createQuotation": "新規見積の作成",
+        "exportExcel": "Excelエクスポート"
+      },
+      "columns": {
+        "actions": "操作",
+        "amount": "金額",
+        "createdAt": "作成日",
+        "customer": "顧客",
+        "deal": "商談",
+        "effort": "工数",
+        "name": "見積名",
+        "requirement": "要件",
+        "status": "ステータス"
+      },
+      "dialogs": {
+        "createTitle": "新規見積の作成"
+      },
+      "detail": {
+        "actions": {
+          "sendEmail": "メール送信"
+        },
+        "basicInfo": "基本情報",
+        "estimateTitle": "試算の詳細",
+        "executiveSummary": "エグゼクティブサマリー",
+        "fields": {
+          "createdDate": "作成日",
+          "customer": "顧客",
+          "deal": "商談",
+          "name": "見積名",
+          "requirement": "要件",
+          "totalAmount": "合計金額",
+          "totalEffort": "総工数"
+        },
+        "noEstimateData": "試算データがありません。",
+        "note": "備考",
+        "title": "見積詳細"
+      },
+      "estimation": {
+        "chooseMethod": "試算方法の選択",
+        "fixed": {
+          "addColumn": "列を追加",
+          "addRow": "行を追加",
+          "columns": {
+            "itReq": "IT 要件",
+            "uxUi": "UX/UI"
+          },
+          "deleteRow": "行を削除",
+          "newColumnPlaceholder": "新しい列名",
+          "subtotalDays": "小計 (人日)",
+          "total": "合計:",
+          "totalByPhase": "合計 - フェーズ別 (人日):"
+        },
+        "table": {
+          "columns": {
+            "beMd": "BE 人日",
+            "feMd": "FE 人日",
+            "pmMd": "PM 人日",
+            "qcMd": "QC 人日",
+            "totalMd": "合計 人日",
+            "totalMm": "合計 人月"
+          },
+          "description": "説明",
+          "detail": "詳細",
+          "feature": "機能",
+          "note": "備考",
+          "summary": {
+            "totalAmount": "合計金額",
+            "totalMd": "総人日",
+            "totalMm": "総人月"
+          },
+          "title": "見積表",
+          "total": "合計"
+        }
+      },
+      "fields": {
+        "customer": "顧客",
+        "deal": "商談",
+        "name": "見積名",
+        "note": "備考",
+        "requirement": "要件",
+        "status": "ステータス",
+        "template": "見積テンプレート"
+      },
+      "filters": {
+        "all": "すべて",
+        "customer": "顧客",
+        "status": "ステータス"
+      },
+      "formActions": {
+        "back": "戻る",
+        "cancel": "キャンセル",
+        "next": "次へ",
+        "save": "保存"
+      },
+      "notifications": {
+        "emailSent": "✅ メールを送信しました！",
+        "exportPdfSuccess": "✅ 見積PDFを出力しました！",
+        "saveDraftSuccess": "✅ 見積を下書き保存しました！"
+      },
+      "pagination": {
+        "displayedRows": "{{from}}-{{to}} / {{count}}",
+        "rowsPerPage": "1ページあたりの行数:"
+      },
+      "placeholders": {
+        "name": "見積名を入力",
+        "note": "備考を入力（任意）...",
+        "selectTemplate": "見積テンプレートを選択"
+      },
+      "preview": {
+        "buttons": {
+          "close": "閉じる",
+          "saveDraft": "下書き保存"
+        },
+        "customerInfo": "顧客情報",
+        "dialogTitle": "見積のプレビュー・編集",
+        "loading": "見積データを読み込み中...",
+        "noNotes": "備考なし",
+        "notes": "備考",
+        "page": {
+          "buyerRep": "買い手代表",
+          "columns": {
+            "amountVnd": "金額 (VND)",
+            "days": "人日",
+            "description": "作業内容",
+            "stt": "No.",
+            "unitPriceVnd": "単価 (VND)"
+          },
+          "createdDate": "作成日",
+          "customer": "顧客",
+          "customerDefault": "お客様各位",
+          "heading": "サービス見積書",
+          "itemsTitle": "サービス明細",
+          "paymentTerms": "支払条件",
+          "paymentTermsDefault": "契約締結時に100%お支払い。",
+          "project": "案件",
+          "projectDefault": "ソフトウェア開発案件",
+          "quotationId": "見積番号",
+          "sellerRep": "売り手代表",
+          "signNote": "（署名・氏名）",
+          "total": "合計:"
+        },
+        "quotationDetails": "見積詳細",
+        "table": {
+          "amount": "金額",
+          "days": "日数",
+          "description": "説明",
+          "item": "項目",
+          "no": "No.",
+          "total": "合計:",
+          "unitPrice": "単価"
+        }
+      },
+      "searchPlaceholder": "検索...",
+      "status": {
+        "approved": "承認済み",
+        "draft": "下書き",
+        "rejected": "却下",
+        "sent": "送付済み"
+      },
+      "steps": {
+        "basicInfo": "基本情報",
+        "estimationMethod": "試算方法の選択",
+        "preview": "見積プレビュー"
+      },
+      "tables": {
+        "actions": "操作"
+      },
+      "tabs": {
+        "quotes": "見積",
+        "templates": "見積テンプレート"
+      },
+      "templateUpload": {
+        "actions": {
+          "chooseFile": "ファイルを選択",
+          "saveTemplate": "テンプレートを保存",
+          "uploading": "アップロード中..."
+        },
+        "analyzing": "テンプレート内容を解析中...",
+        "extracted": {
+          "columns": {
+            "actions": "操作",
+            "description": "説明",
+            "original": "原文",
+            "placeholder": "推奨プレースホルダー",
+            "type": "データ型"
+          },
+          "empty": "抽出可能な項目が見つかりません。ファイル内容をご確認ください。",
+          "needFile": "AIが分析できるよう、テンプレートファイルをアップロードしてください。",
+          "title": "テンプレートから抽出された項目:"
+        },
+        "fieldTypes": {
+          "date": "日付",
+          "email": "メール",
+          "number": "数値",
+          "phone": "電話",
+          "taxcode": "税コード",
+          "text": "テキスト"
+        },
+        "fields": {
+          "description": "説明",
+          "name": "テンプレート名",
+          "type": "テンプレート種別"
+        },
+        "file": {
+          "accept": ".docx,.doc,.pdf",
+          "choose": "テンプレートファイルを選択（.docx, .doc, .pdf）",
+          "selected": "選択済み:"
+        },
+        "guide": {
+          "line1": "AIがテンプレートを解析し、入力項目を提案します。",
+          "line2": "必要に応じてプレースホルダー名や説明を編集できます。",
+          "line3": "見積作成時に対応する位置へ自動で情報が挿入されます。",
+          "title": "ご利用方法:"
+        },
+        "options": {
+          "type": {
+            "customer": "顧客向け",
+            "internal": "社内用"
+          }
+        },
+        "title": "見積テンプレートのアップロード",
+        "validations": {
+          "invalidFormat": ".doc、.docx または .pdf のみアップロード可能です",
+          "missingFile": "テンプレートファイルを選択してください",
+          "missingName": "テンプレート名を入力してください",
+          "oversize": "ファイルサイズは5MB以下にしてください"
+        }
+      },
+      "templates": {
+        "buttons": {
+          "uploadTemplate": "テンプレートをアップロード"
+        },
+        "loading": "読み込み中...",
+        "table": {
+          "chips": {
+            "default": "デフォルト",
+            "status": {
+              "active": "有効",
+              "inactive": "無効"
+            },
+            "type": {
+              "customer": "顧客",
+              "internal": "社内"
+            }
+          },
+          "columns": {
+            "createdAt": "作成日",
+            "createdBy": "作成者",
+            "description": "説明",
+            "fields": "項目",
+            "name": "テンプレート名",
+            "status": "ステータス",
+            "type": "タイプ"
+          },
+          "empty": "見積テンプレートがありません。まずはテンプレートをアップロードしてください！",
+          "tooltips": {
+            "delete": "削除",
+            "download": "ダウンロード",
+            "view": "詳細を見る"
+          }
+        },
+        "title": "見積テンプレート"
+      },
+      "title": "見積管理",
+      "tnm": {
+        "addCustomRole": "カスタム役割を追加",
+        "columns": {
+          "amount": "金額",
+          "hoursOrMd": "時間 / 人日",
+          "role": "役割",
+          "unit": "単位",
+          "unitPrice": "単価"
+        },
+        "hourHint": "時間単位で計算",
+        "mdHint": "1人日 = 8時間",
+        "messages": {
+          "roleExists": "この役割はすでに存在します"
+        },
+        "perHour": "時間",
+        "perMd": "人日",
+        "roleName": "役割名",
+        "selectRole": "役割を選択",
+        "total": "合計",
+        "totalHours": "合計時間: {{hours}}時間",
+        "units": {
+          "day": "人日",
+          "hour": "時間"
+        }
+      },
+      "validation": {
+        "selectTemplate": "見積テンプレートを選択してください"
+      }
+    },
+    "requirements": {
+      "actions": {
+        "createRequirement": "要件を作成",
+        "exportExcel": "Excelエクスポート"
+      },
+      "dialogs": {
+        "deleteConfirmText": "この要件を削除してもよろしいですか？",
+        "deleteConfirmTitle": "削除の確認"
+      },
+      "emailDialog": {
+        "attachment": "添付ファイル",
+        "ccOptional": "Cc（任意）",
+        "content": "メール本文",
+        "dearCustomer": "お客様各位",
+        "defaultContent": "{{customerName}} 様,\n\n添付のとおり、{{serviceName}} の見積書をお送りいたします。\n\nご不明点がございましたらお気軽にご連絡ください。\n\nよろしくお願いいたします。\n{{responsiblePerson}}",
+        "defaultSubject": "サービス見積書：{{serviceName}}",
+        "subject": "件名",
+        "teamSignature": "Innotech Vietnam チーム",
+        "theService": "当サービス",
+        "title": "顧客に見積書を送信",
+        "to": "宛先（メール）"
+      },
+      "filters": {
+        "all": "すべて",
+        "assignee": "担当者",
+        "customer": "顧客",
+        "status": "ステータス"
+      },
+      "form": {
+        "actions": {
+          "addRow": "行を追加",
+          "back": "戻る",
+          "generate": "自動生成 (AI)",
+          "generating": "処理中...",
+          "next": "次へ",
+          "regenerate": "再生成"
+        },
+        "ai": {
+          "resultTitle": "AI解析結果:"
+        },
+        "fields": {
+          "assignee": "担当者",
+          "customer": "顧客",
+          "deadline": "期限",
+          "description": "説明",
+          "name": "要件名",
+          "type": "要件タイプ"
+        },
+        "links": {
+          "viewOnFigma": "Figmaでデザインを見る"
+        },
+        "method": {
+          "group": "作成方法",
+          "manual": "説明を手動で入力",
+          "upload": "仕様ファイルをアップロード (.pdf, .docx)",
+          "uploadButton": "ファイルを選択 (.pdf, .docx)",
+          "uploadHelp": ".pdf, .docx に対応"
+        },
+        "placeholders": {
+          "manualDescription": "例: 入出庫、最小在庫アラートを備えた在庫管理システムが必要です...",
+          "name": "要件名を入力"
+        },
+        "steps": {
+          "indicator": "ステップ {{current}}/2",
+          "step1": "基本情報の入力",
+          "step2": "要件作成方法の選択"
+        },
+        "tableHeaders": {
+          "condition": "条件",
+          "description": "説明",
+          "detail": "詳細",
+          "entity": "エンティティ",
+          "expectedResult": "期待結果",
+          "feature": "機能",
+          "fields": "項目",
+          "method": "方法",
+          "modelDescription": "説明",
+          "notes": "メモ",
+          "purpose": "目的",
+          "requirementType": "要件タイプ",
+          "system": "システム",
+          "testCase": "テストケース",
+          "value": "詳細"
+        },
+        "tabs": {
+          "dataModel": "データモデル",
+          "functional": "機能要件",
+          "integration": "連携要件",
+          "nonFunctional": "非機能要件",
+          "tests": "テスト要件",
+          "uiMockups": "UIモック / 説明"
+        },
+        "title": "新規要件の作成 (AI)"
+      },
+      "list": {
+        "columns": {
+          "actions": "操作",
+          "assignee": "担当者",
+          "createdDate": "作成日",
+          "customer": "顧客",
+          "deadline": "期限",
+          "id": "ID",
+          "name": "要件名",
+          "source": "ソース",
+          "status": "ステータス",
+          "type": "タイプ"
+        },
+        "empty": "要件が見つかりません"
+      },
+      "pagination": {
+        "displayedRows": "{{from}}-{{to}} / {{count}}",
+        "rowsPerPage": "1ページあたりの行数:"
+      },
+      "searchPlaceholder": "要件名で検索...",
+      "status": {
+        "confirmed": "確定",
+        "in_discussion": "検討中",
+        "pending": "保留"
+      },
+      "title": "要件管理"
+    }
+  },
+  "tooltips": {
+    "account": "アカウント",
+    "aiAssistant": "AIアシスタント",
+    "language": "言語",
+    "notifications": "通知"
+  }
+}
