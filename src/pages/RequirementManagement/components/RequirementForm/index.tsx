@@ -363,17 +363,17 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                       placeholder={t('pages.requirements.form.placeholders.name')}
                     />
                     <FormControl fullWidth margin="normal" size="small" required>
-                      <InputLabel>{t('pages.requirements.form.fields.type')}</InputLabel>
+                      <InputLabel>{t('pages.requirements.form.fields.type', { defaultValue: 'Type' })}</InputLabel>
                       <Select
                         value={newRequirement.type || ''}
-                        label={t('pages.requirements.form.fields.type')}
+                        label={t('pages.requirements.form.fields.type', { defaultValue: 'Type' })}
                         onChange={(e) => setNewRequirement({...newRequirement, type: e.target.value})}
                       >
-                        <MenuItem value="RFI">RFI</MenuItem>
-                        <MenuItem value="Bank">Bank</MenuItem>
-                        <MenuItem value="Industry">Industry</MenuItem>
-                        <MenuItem value="Client">Client</MenuItem>
-                        <MenuItem value="Internal">Internal</MenuItem>
+                        <MenuItem value="RFI">{t('pages.requirements.form.types.rfi', { defaultValue: 'RFI' })}</MenuItem>
+                        <MenuItem value="Bank">{t('pages.requirements.form.types.bank', { defaultValue: 'Bank' })}</MenuItem>
+                        <MenuItem value="Industry">{t('pages.requirements.form.types.industry', { defaultValue: 'Industry' })}</MenuItem>
+                        <MenuItem value="Client">{t('pages.requirements.form.types.client', { defaultValue: 'Client' })}</MenuItem>
+                        <MenuItem value="Internal">{t('pages.requirements.form.types.internal', { defaultValue: 'Internal' })}</MenuItem>
                       </Select>
                     </FormControl>
                     <Box sx={{ display: 'flex', gap: 2, mt: 2, flexWrap: 'wrap' }}>
@@ -454,14 +454,13 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                     
                     {creationMethod === 'manual' ? (
                       <TextField
+                        label={t('pages.requirements.form.fields.description')}
+                        placeholder={t('pages.requirements.form.placeholders.description')}
                         multiline
-                        rows={4}
+                        rows={6}
                         fullWidth
-                        placeholder={t('pages.requirements.form.placeholders.manualDescription')}
-                        variant="outlined"
-                        sx={{ mb: 2 }}
                         value={newRequirement.description || ''}
-                        onChange={(e) => setNewRequirement({...newRequirement, description: e.target.value})}
+                        onChange={(e) => setNewRequirement({ ...newRequirement, description: e.target.value })}
                       />
                     ) : (
                       <Box sx={{ border: '1px dashed #ccc', p: 3, borderRadius: 1, textAlign: 'center', mb: 2 }}>
@@ -471,23 +470,18 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                           id="file-upload"
                           type="file"
                           onChange={(e) => {
-                            // Xử lý file upload ở đây
                             if (e.target.files && e.target.files[0]) {
-                              // Giả lập việc xử lý file và tạo mô tả
                               setTimeout(() => {
                                 setNewRequirement({
                                   ...newRequirement,
-                                  description: `Mô tả được tạo từ file ${e.target.files?.[0].name}`
+                                  description: t('pages.requirements.form.upload.generatedDescription', { fileName: e.target.files?.[0].name })
                                 });
                               }, 1000);
                             }
                           }}
                         />
                         <label htmlFor="file-upload">
-                          <Button 
-                            variant="outlined" 
-                            component="span"
-                          >
+                          <Button variant="outlined" component="span">
                             {t('pages.requirements.form.method.uploadButton')}
                           </Button>
                         </label>
@@ -513,186 +507,182 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
               </StepContent>
             </Step>
           </Stepper>
-          
-          
-          {showAiResult && activeStep === 1 && (
-            <Box ref={aiResultRef} sx={{ mt: 2, mb: 3, border: '1px solid #e0e0e0', borderRadius: 1, p: 2 }}>
-              <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span>{t('pages.requirements.form.ai.resultTitle')}</span>
-                <Button 
-                  variant="outlined" 
-                  size="small"
-                  startIcon={<RefreshIcon />}
-                  onClick={handleRegenerate}
-                >
-                  {t('pages.requirements.form.actions.regenerate')}
-                </Button>
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {aiDescription}
-              </Typography>
-              
-              <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 2 }}>
-                <Tabs 
-                  value={currentTab} 
-                  onChange={(e, newValue) => setCurrentTab(newValue)}
-                  variant="scrollable"
-                  scrollButtons="auto"
-                >
-                  <Tab label={t('pages.requirements.form.tabs.functional')} />
-                  <Tab label={t('pages.requirements.form.tabs.nonFunctional')} />
-                  <Tab label={t('pages.requirements.form.tabs.tests')} />
-                  <Tab label={t('pages.requirements.form.tabs.uiMockups')} />
-                  <Tab label={t('pages.requirements.form.tabs.dataModel')} />
-                  <Tab label={t('pages.requirements.form.tabs.integration')} />
-                </Tabs>
-              </Box>
-              
-              {/* Tab 0: Yêu cầu chức năng */}
-              {currentTab === 0 && (
-                <TableContainer component={Paper} sx={{ mt: 2 }}>
-                  <Table size="small">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>{t('pages.requirements.form.tableHeaders.feature')}</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>{t('pages.requirements.form.tableHeaders.detail')}</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '40%' }}>{t('pages.requirements.form.tableHeaders.description')}</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '15%' }}>{t('pages.requirements.form.tableHeaders.notes')}</TableCell>
-                        <TableCell sx={{ width: '5%' }}></TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {aiFeatures.map((feature) => (
-                        <TableRow key={feature.id} hover>
-                          <TableCell 
-                            onClick={() => {
-                              setEditingFeature(feature);
-                              setEditingField('feature');
-                              setEditingValue(feature.feature);
-                            }}
-                            sx={{ cursor: 'pointer' }}
-                          >
-                            {editingFeature?.id === feature.id && editingField === 'feature' ? (
-                              <TextField
-                                size="small"
-                                fullWidth
-                                variant="standard"
-                                value={editingValue}
-                                onChange={(e) => setEditingValue(e.target.value)}
-                                onBlur={() => {
+
+        {showAiResult && activeStep === 1 && (
+          <Box ref={aiResultRef} sx={{ mt: 2, mb: 3, border: '1px solid #e0e0e0', borderRadius: 1, p: 2 }}>
+            <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span>{t('pages.requirements.form.ai.resultTitle')}</span>
+              <Button 
+                variant="outlined" 
+                size="small"
+                startIcon={<RefreshIcon />}
+                onClick={handleRegenerate}
+              >
+                {t('pages.requirements.form.actions.regenerate')}
+              </Button>
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              {aiDescription}
+            </Typography>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 2 }}>
+              <Tabs 
+                value={currentTab} 
+                onChange={(e, newValue) => setCurrentTab(newValue)}
+                variant="scrollable"
+                scrollButtons="auto"
+              >
+                <Tab label={t('pages.requirements.form.tabs.functional')} />
+                <Tab label={t('pages.requirements.form.tabs.nonFunctional')} />
+                <Tab label={t('pages.requirements.form.tabs.test')} />
+                <Tab label={t('pages.requirements.form.tabs.uiMockup')} />
+              </Tabs>
+            </Box>
+
+            {/* Tab 0: Functional requirements */}
+            {currentTab === 0 && (
+              <TableContainer component={Paper} sx={{ mt: 2 }}>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>{t('pages.requirements.form.tableHeaders.feature')}</TableCell>
+                      <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>{t('pages.requirements.form.tableHeaders.detail')}</TableCell>
+                      <TableCell sx={{ fontWeight: 'bold', width: '40%' }}>{t('pages.requirements.form.tableHeaders.description')}</TableCell>
+                      <TableCell sx={{ fontWeight: 'bold', width: '15%' }}>{t('pages.requirements.form.tableHeaders.notes')}</TableCell>
+                      <TableCell sx={{ width: '5%' }}></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {aiFeatures.map((feature) => (
+                      <TableRow key={feature.id} hover>
+                        <TableCell
+                          onClick={() => {
+                            setEditingFeature(feature);
+                            setEditingField('feature');
+                            setEditingValue(feature.feature);
+                          }}
+                          sx={{ cursor: 'pointer' }}
+                        >
+                          {editingFeature?.id === feature.id && editingField === 'feature' ? (
+                            <TextField
+                              size="small"
+                              fullWidth
+                              variant="standard"
+                              value={editingValue}
+                              onChange={(e) => setEditingValue(e.target.value)}
+                              onBlur={() => {
+                                handleEditCell(feature, 'feature', editingValue);
+                                setEditingFeature(null);
+                                setEditingField(null);
+                              }}
+                              onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
                                   handleEditCell(feature, 'feature', editingValue);
                                   setEditingFeature(null);
                                   setEditingField(null);
-                                }}
-                                onKeyPress={(e) => {
-                                  if (e.key === 'Enter') {
-                                    handleEditCell(feature, 'feature', editingValue);
-                                    setEditingFeature(null);
-                                    setEditingField(null);
-                                  }
-                                }}
-                                autoFocus
-                              />
-                            ) : (
-                              feature.feature
-                            )}
-                          </TableCell>
-                          <TableCell
-                            onClick={() => {
-                              setEditingFeature(feature);
-                              setEditingField('detail');
-                              setEditingValue(feature.detail);
-                            }}
-                            sx={{ cursor: 'pointer' }}
-                          >
-                            {editingFeature?.id === feature.id && editingField === 'detail' ? (
-                              <TextField
-                                size="small"
-                                fullWidth
-                                variant="standard"
-                                value={editingValue}
-                                onChange={(e) => setEditingValue(e.target.value)}
-                                onBlur={() => {
+                                }
+                              }}
+                              autoFocus
+                            />
+                          ) : (
+                            feature.feature
+                          )}
+                        </TableCell>
+                        <TableCell
+                          onClick={() => {
+                            setEditingFeature(feature);
+                            setEditingField('detail');
+                            setEditingValue(feature.detail);
+                          }}
+                          sx={{ cursor: 'pointer' }}
+                        >
+                          {editingFeature?.id === feature.id && editingField === 'detail' ? (
+                            <TextField
+                              size="small"
+                              fullWidth
+                              variant="standard"
+                              value={editingValue}
+                              onChange={(e) => setEditingValue(e.target.value)}
+                              onBlur={() => {
+                                handleEditCell(feature, 'detail', editingValue);
+                                setEditingFeature(null);
+                                setEditingField(null);
+                              }}
+                              onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
                                   handleEditCell(feature, 'detail', editingValue);
                                   setEditingFeature(null);
                                   setEditingField(null);
-                                }}
-                                onKeyPress={(e) => {
-                                  if (e.key === 'Enter') {
-                                    handleEditCell(feature, 'detail', editingValue);
-                                    setEditingFeature(null);
-                                    setEditingField(null);
-                                  }
-                                }}
-                                autoFocus
-                              />
-                            ) : (
-                              feature.detail
-                            )}
-                          </TableCell>
-                          <TableCell
-                            onClick={() => {
-                              setEditingFeature(feature);
-                              setEditingField('description');
-                              setEditingValue(feature.description);
-                            }}
-                            sx={{ cursor: 'pointer' }}
-                          >
-                            {editingFeature?.id === feature.id && editingField === 'description' ? (
-                              <TextField
-                                size="small"
-                                fullWidth
-                                variant="standard"
-                                value={editingValue}
-                                onChange={(e) => setEditingValue(e.target.value)}
-                                onBlur={() => {
+                                }
+                              }}
+                              autoFocus
+                            />
+                          ) : (
+                            feature.detail
+                          )}
+                        </TableCell>
+                        <TableCell
+                          onClick={() => {
+                            setEditingFeature(feature);
+                            setEditingField('description');
+                            setEditingValue(feature.description);
+                          }}
+                          sx={{ cursor: 'pointer' }}
+                        >
+                          {editingFeature?.id === feature.id && editingField === 'description' ? (
+                            <TextField
+                              size="small"
+                              fullWidth
+                              variant="standard"
+                              value={editingValue}
+                              onChange={(e) => setEditingValue(e.target.value)}
+                              onBlur={() => {
+                                handleEditCell(feature, 'description', editingValue);
+                                setEditingFeature(null);
+                                setEditingField(null);
+                              }}
+                              onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
                                   handleEditCell(feature, 'description', editingValue);
                                   setEditingFeature(null);
                                   setEditingField(null);
-                                }}
-                                onKeyPress={(e) => {
-                                  if (e.key === 'Enter') {
-                                    handleEditCell(feature, 'description', editingValue);
-                                    setEditingFeature(null);
-                                    setEditingField(null);
-                                  }
-                                }}
-                                autoFocus
-                              />
-                            ) : (
-                              feature.description
-                            )}
-                          </TableCell>
-                          <TableCell>{feature.notes}</TableCell>
-                          <TableCell>
-                            <IconButton 
-                              size="small" 
-                              color="error"
-                              onClick={() => handleDeleteRow(feature.id)}
-                            >
-                              <DeleteIcon fontSize="small" />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                    <TableFooter>
-                      <TableRow>
-                        <TableCell colSpan={5} align="center">
-                          <Button 
-                            startIcon={<AddIcon />} 
-                            onClick={handleAddNewRow}
+                                }
+                              }}
+                              autoFocus
+                            />
+                          ) : (
+                            feature.description
+                          )}
+                        </TableCell>
+                        <TableCell>{feature.notes}</TableCell>
+                        <TableCell>
+                          <IconButton
                             size="small"
-                            sx={{ mr: 1 }}
+                            color="error"
+                            onClick={() => handleDeleteRow(feature.id)}
                           >
-                            {t('pages.requirements.form.actions.addRow')}
-                          </Button>
+                            <DeleteIcon fontSize="small" />
+                          </IconButton>
                         </TableCell>
                       </TableRow>
-                    </TableFooter>
-                  </Table>
-                </TableContainer>
-              )}
+                    ))}
+                  </TableBody>
+                  <TableFooter>
+                    <TableRow>
+                      <TableCell colSpan={5} align="center">
+                        <Button
+                          startIcon={<AddIcon />}
+                          onClick={handleAddNewRow}
+                          size="small"
+                          sx={{ mr: 1 }}
+                        >
+                          {t('pages.requirements.form.actions.addRow')}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  </TableFooter>
+                </Table>
+              </TableContainer>
+            )}
               
               {/* Tab 1: Yêu cầu phi chức năng */}
               {currentTab === 1 && (

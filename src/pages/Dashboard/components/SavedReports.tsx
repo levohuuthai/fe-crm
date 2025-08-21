@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { 
   Box, 
   Paper, 
@@ -26,8 +28,8 @@ import {
   FavoriteBorder as FavoriteBorderIcon
 } from '@mui/icons-material';
 
-// Dữ liệu mẫu cho các báo cáo đã lưu
-const SAVED_REPORTS = [
+// Dữ liệu mẫu cho các báo cáo đã lưu (mặc định, dùng khi bản địa hóa chưa có)
+const DEFAULT_SAVED_REPORTS = [
   {
     id: 1,
     title: 'Báo cáo doanh thu theo nhân viên Q2/2025',
@@ -71,6 +73,18 @@ const SAVED_REPORTS = [
 ];
 
 const SavedReports: React.FC = () => {
+  const { t } = useTranslation();
+  // Lấy items bản địa hóa từ file dịch; nếu không có thì để trống và sẽ fallback
+  const localizedItems = t('pages.dashboard.savedReports.items', { returnObjects: true }) as Record<string, { title: string; tags: string[] }> | undefined;
+  // Trộn dữ liệu mặc định với tiêu đề & tag bản địa hóa theo id
+  const SAVED_REPORTS = DEFAULT_SAVED_REPORTS.map((item) => {
+    const loc = localizedItems?.[String(item.id)];
+    return {
+      ...item,
+      title: loc?.title ?? item.title,
+      tags: Array.isArray(loc?.tags) ? loc!.tags : item.tags,
+    };
+  });
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedReportId, setSelectedReportId] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -122,13 +136,13 @@ const SavedReports: React.FC = () => {
     <Paper elevation={2} sx={{ borderRadius: 2 }}>
       <Box sx={{ p: 2, borderBottom: '1px solid #e2e8f0' }}>
         <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
-          📑 Báo cáo đã lưu
+          {t('pages.dashboard.savedReports.title')}
         </Typography>
         
         <TextField
           fullWidth
           size="small"
-          placeholder="Tìm kiếm báo cáo..."
+          placeholder={t('pages.dashboard.savedReports.searchPlaceholder')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           InputProps={{
@@ -146,8 +160,8 @@ const SavedReports: React.FC = () => {
         {filteredReports.length === 0 ? (
           <ListItem>
             <ListItemText 
-              primary="Không tìm thấy báo cáo nào" 
-              secondary="Hãy thử tìm kiếm với từ khóa khác" 
+              primary={t('pages.dashboard.savedReports.emptyTitle')} 
+              secondary={t('pages.dashboard.savedReports.emptySubtitle')} 
             />
           </ListItem>
         ) : (
@@ -185,7 +199,7 @@ const SavedReports: React.FC = () => {
                   secondary={
                     <Box sx={{ mt: 0.5 }}>
                       <Typography variant="caption" color="text.secondary" display="block">
-                        Tạo ngày: {report.createdAt}
+                        {t('pages.dashboard.savedReports.createdAt')}: {report.createdAt}
                       </Typography>
                       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 0.5 }}>
                         {report.tags.map((tag, idx) => (
@@ -227,20 +241,20 @@ const SavedReports: React.FC = () => {
       >
         <MenuItem onClick={handleMenuClose}>
           <DownloadIcon fontSize="small" sx={{ mr: 1 }} />
-          Tải xuống
+          {t('pages.dashboard.savedReports.menu.download')}
         </MenuItem>
         <MenuItem onClick={handleMenuClose}>
           <EditIcon fontSize="small" sx={{ mr: 1 }} />
-          Chỉnh sửa
+          {t('pages.dashboard.savedReports.menu.edit')}
         </MenuItem>
         <MenuItem onClick={handleMenuClose}>
           <ShareIcon fontSize="small" sx={{ mr: 1 }} />
-          Chia sẻ
+          {t('pages.dashboard.savedReports.menu.share')}
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleMenuClose} sx={{ color: 'error.main' }}>
           <DeleteIcon fontSize="small" sx={{ mr: 1 }} />
-          Xóa
+          {t('pages.dashboard.savedReports.menu.delete')}
         </MenuItem>
       </Menu>
     </Paper>

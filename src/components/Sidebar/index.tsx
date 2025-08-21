@@ -534,7 +534,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                     },
                                     transition: "all 0.2s ease-in-out",
                                 }}
-                                aria-label="toggle-language"
+                                aria-label={t('components.sidebar.aria.toggleLanguage')}
                             >
                                 <Box
                                     component="img"
@@ -545,11 +545,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                             ? "jp"
                                             : "us"
                                     }.svg`}
-                                    alt={
-                                        i18n.language.startsWith("ja")
-                                            ? "Japanese"
-                                            : "English"
-                                    }
+                                    alt={i18n.language.startsWith('ja') ? t('components.sidebar.alt.japanese') : t('components.sidebar.alt.english')}
                                     sx={{
                                         width: 24,
                                         height: 16,
@@ -573,7 +569,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 height: "100vh",
                 position: "relative",
             }}
-            aria-label="main navigation"
+            aria-label={t('components.sidebar.aria.mainNavigation')}
         >
             {/* Mobile drawer */}
             <Drawer

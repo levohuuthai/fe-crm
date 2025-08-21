@@ -16,7 +16,7 @@ i18n
     nonExplicitSupportedLngs: true,
 
     // Namespace setup (common default is 'translation')
-    ns: ['translation'],
+    ns: ['translation', 'positions'],
     defaultNS: 'translation',
 
     // Where to load translation files from

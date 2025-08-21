@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Box, 
   Paper, 
@@ -46,10 +47,11 @@ const KPI_DATA = {
 };
 
 const KPIStats: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <Box sx={{ mb: 4 }}>
       <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
-        📊 Thống kê KPI tổng quan
+        {t('pages.dashboard.kpiStats.title', { defaultValue: '📊 KPI Overview' })}
       </Typography>
       
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: 'repeat(3, 1fr)', lg: 'repeat(5, 1fr)' }, gap: 2 }}>
@@ -71,7 +73,7 @@ const KPIStats: React.FC = () => {
                 <PersonIcon />
               </Avatar>
               <Typography variant="subtitle2" color="textSecondary">
-                Khách hàng mới
+                {t('pages.dashboard.kpiStats.newCustomers', { defaultValue: 'New customers' })}
               </Typography>
             </Box>
             
@@ -87,7 +89,7 @@ const KPIStats: React.FC = () => {
                 sx={{ fontSize: '0.75rem' }}
               />
               <Typography variant="caption" sx={{ ml: 1, color: 'text.secondary' }}>
-                so với hôm qua
+                {t('pages.dashboard.kpiStats.comparedToYesterday', { defaultValue: 'compared to yesterday' })}
               </Typography>
             </Box>
           </Paper>
@@ -111,7 +113,7 @@ const KPIStats: React.FC = () => {
                 <DescriptionIcon />
               </Avatar>
               <Typography variant="subtitle2" color="textSecondary">
-                Tổng deal
+                {t('pages.dashboard.kpiStats.totalDeals', { defaultValue: 'Total deals' })}
               </Typography>
             </Box>
             
@@ -127,7 +129,7 @@ const KPIStats: React.FC = () => {
                 sx={{ fontSize: '0.75rem' }}
               />
               <Typography variant="caption" sx={{ ml: 1, color: 'text.secondary' }}>
-                so với tuần trước
+                {t('pages.dashboard.kpiStats.comparedToLastWeek', { defaultValue: 'compared to last week' })}
               </Typography>
             </Box>
           </Paper>
@@ -151,20 +153,20 @@ const KPIStats: React.FC = () => {
                 <TrendingUpIcon />
               </Avatar>
               <Typography variant="subtitle2" color="textSecondary">
-                Deal theo giai đoạn
+                {t('pages.dashboard.kpiStats.dealByStage', { defaultValue: 'Deals by stage' })}
               </Typography>
             </Box>
             
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
-              <Chip label={`Lead: ${KPI_DATA.dealStages.lead}`} size="small" sx={{ bgcolor: '#fee2e2' }} />
-              <Chip label={`Báo giá: ${KPI_DATA.dealStages.quote}`} size="small" sx={{ bgcolor: '#fef3c7' }} />
-              <Chip label={`Đàm phán: ${KPI_DATA.dealStages.negotiation}`} size="small" sx={{ bgcolor: '#e0f2fe' }} />
-              <Chip label={`Win: ${KPI_DATA.dealStages.win}`} size="small" sx={{ bgcolor: '#dcfce7' }} />
-              <Chip label={`Lose: ${KPI_DATA.dealStages.lose}`} size="small" sx={{ bgcolor: '#f3f4f6' }} />
+              <Chip label={`${t('pages.dashboard.kpiStats.stages.lead', { defaultValue: 'Lead' })}: ${KPI_DATA.dealStages.lead}`} size="small" sx={{ bgcolor: '#fee2e2' }} />
+              <Chip label={`${t('pages.dashboard.kpiStats.stages.quote', { defaultValue: 'Quote' })}: ${KPI_DATA.dealStages.quote}`} size="small" sx={{ bgcolor: '#fef3c7' }} />
+              <Chip label={`${t('pages.dashboard.kpiStats.stages.negotiation', { defaultValue: 'Negotiation' })}: ${KPI_DATA.dealStages.negotiation}`} size="small" sx={{ bgcolor: '#e0f2fe' }} />
+              <Chip label={`${t('pages.dashboard.kpiStats.stages.win', { defaultValue: 'Win' })}: ${KPI_DATA.dealStages.win}`} size="small" sx={{ bgcolor: '#dcfce7' }} />
+              <Chip label={`${t('pages.dashboard.kpiStats.stages.lose', { defaultValue: 'Lose' })}: ${KPI_DATA.dealStages.lose}`} size="small" sx={{ bgcolor: '#f3f4f6' }} />
             </Box>
             
             <Typography variant="caption" sx={{ mt: 'auto', color: 'text.secondary' }}>
-              Tổng: {Object.values(KPI_DATA.dealStages).reduce((a, b) => a + b, 0)} deal
+              {t('pages.dashboard.kpiStats.totalDealsCount', { count: Object.values(KPI_DATA.dealStages).reduce((a, b) => a + b, 0), defaultValue: 'Total: {{count}} deals' })}
             </Typography>
           </Paper>
         </Box>
@@ -187,7 +189,7 @@ const KPIStats: React.FC = () => {
                 <AttachMoneyIcon />
               </Avatar>
               <Typography variant="subtitle2" color="textSecondary">
-                Doanh thu thực tế
+                {t('pages.dashboard.kpiStats.revenueActual', { defaultValue: 'Actual revenue' })}
               </Typography>
             </Box>
             
@@ -203,7 +205,7 @@ const KPIStats: React.FC = () => {
                 sx={{ fontSize: '0.75rem' }}
               />
               <Typography variant="caption" sx={{ ml: 1, color: 'text.secondary' }}>
-                so với tháng trước
+                {t('pages.dashboard.kpiStats.comparedToLastMonth', { defaultValue: 'compared to last month' })}
               </Typography>
             </Box>
           </Paper>
@@ -227,7 +229,7 @@ const KPIStats: React.FC = () => {
                 <EmojiEventsIcon />
               </Avatar>
               <Typography variant="subtitle2" color="textSecondary">
-                Nhân viên top deal
+                {t('pages.dashboard.kpiStats.topEmployee', { defaultValue: 'Top deal employee' })}
               </Typography>
             </Box>
             
@@ -242,7 +244,7 @@ const KPIStats: React.FC = () => {
             
             <Box sx={{ mt: 'auto' }}>
               <Typography variant="body2">
-                <strong>{KPI_DATA.topEmployee.deals} deals</strong> đã chốt trong tháng
+                <strong>{KPI_DATA.topEmployee.deals} {t('pages.dashboard.kpiStats.deals', { defaultValue: 'deals' })}</strong> {t('pages.dashboard.kpiStats.closedThisMonth', { defaultValue: 'closed this month' })}
               </Typography>
             </Box>
           </Paper>

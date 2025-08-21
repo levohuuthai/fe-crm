@@ -37,6 +37,7 @@ import {
   alpha
 } from '@mui/material';
 import EditCellModal from '../EditCellModal';
+import { useTranslation } from 'react-i18next';
 import {
   Search as SearchIcon,
   FilterList as FilterIcon,
@@ -109,7 +110,7 @@ const SmartTable: React.FC<SmartTableProps> = ({
   pagination = true,
   rowsPerPageOptions = [10, 20, 50],
   defaultRowsPerPage = 10,
-  emptyMessage = "Chưa có dữ liệu",
+  emptyMessage,
   onRowDoubleClick,
   onCellEdit,
   onRowSelect,
@@ -119,6 +120,7 @@ const SmartTable: React.FC<SmartTableProps> = ({
   zebra = true
 }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' | null }>({ key: '', direction: null });
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
@@ -309,7 +311,7 @@ const SmartTable: React.FC<SmartTableProps> = ({
             {value}
           </Typography>
           {isHovered && (
-            <Tooltip title="Preview Contact">
+            <Tooltip title={t('components.smartTable.tooltips.previewContact')}>
               <IconButton
                 size="small"
                 onClick={(e) => {
@@ -514,7 +516,7 @@ const SmartTable: React.FC<SmartTableProps> = ({
       }}>
         {searchable && (
           <TextField
-            placeholder="Search..."
+            placeholder={t('components.smartTable.placeholders.search')}
             size="small"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -535,7 +537,7 @@ const SmartTable: React.FC<SmartTableProps> = ({
             startIcon={<FilterIcon />}
             size="small"
           >
-            Filters
+            {t('components.smartTable.buttons.filters')}
           </Button>
         )}
 
@@ -547,7 +549,7 @@ const SmartTable: React.FC<SmartTableProps> = ({
           flexShrink: 0
         }}>
           <Typography variant="body2" color="text.secondary">
-            {filteredAndSortedData.length} rows
+            {t('components.smartTable.labels.rows', { count: filteredAndSortedData.length })}
           </Typography>
         </Box>
       </Box>
@@ -564,13 +566,13 @@ const SmartTable: React.FC<SmartTableProps> = ({
           borderRadius: 1
         }}>
           <Typography variant="body2">
-            {selectedRows.length} selected
+            {t('components.smartTable.labels.selected', { count: selectedRows.length })}
           </Typography>
           <Button size="small" onClick={() => onBulkAction?.('delete', selectedRows)}>
-            Delete
+            {t('components.smartTable.actions.delete')}
           </Button>
           <Button size="small" onClick={() => onBulkAction?.('assign', selectedRows)}>
-            Assign Owner
+            {t('components.smartTable.actions.assignOwner')}
           </Button>
         </Box>
       )}
@@ -684,7 +686,7 @@ const SmartTable: React.FC<SmartTableProps> = ({
                   sx={{ textAlign: 'center', py: 8 }}
                 >
                   <Typography variant="body1" color="text.secondary">
-                    {emptyMessage}
+                    {emptyMessage || t('components.smartTable.empty')}
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -775,16 +777,16 @@ const SmartTable: React.FC<SmartTableProps> = ({
       >
         <MenuItem onClick={() => handleColumnMenuAction('sort-asc', columnMenuAnchor!.columnId)}>
           <ArrowUpwardIcon fontSize="small" sx={{ mr: 1 }} />
-          Sort Ascending
+          {t('components.smartTable.columnMenu.sortAsc')}
         </MenuItem>
         <MenuItem onClick={() => handleColumnMenuAction('sort-desc', columnMenuAnchor!.columnId)}>
           <ArrowDownwardIcon fontSize="small" sx={{ mr: 1 }} />
-          Sort Descending
+          {t('components.smartTable.columnMenu.sortDesc')}
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => handleColumnMenuAction('hide', columnMenuAnchor!.columnId)}>
           <VisibilityOffIcon fontSize="small" sx={{ mr: 1 }} />
-          Hide Column
+          {t('components.smartTable.columnMenu.hideColumn')}
         </MenuItem>
       </Menu>
 
@@ -810,7 +812,7 @@ const SmartTable: React.FC<SmartTableProps> = ({
             <TextField
               fullWidth
               size="small"
-              placeholder="Search users..."
+              placeholder={t('components.smartTable.placeholders.searchUsers')}
               value={userSearchQuery}
               onChange={(e) => setUserSearchQuery(e.target.value)}
               InputProps={{
