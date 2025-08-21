@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogTitle,
@@ -36,18 +37,17 @@ const EmailQuotationDialog: React.FC<EmailQuotationDialogProps> = ({
   responsiblePerson,
   pdfFileName,
 }) => {
+  const { t } = useTranslation();
   const [emailData, setEmailData] = useState({
     to: '',
     cc: '',
-    subject: `Báo giá dịch vụ ${serviceName}`,
-    content: `Kính gửi Anh/Chị ${customerName || 'Quý khách'},
-
-Innotech Vietnam xin gửi Anh/Chị báo giá cho dịch vụ ${serviceName || 'dịch vụ'} như đính kèm.
-
-Nếu cần thêm thông tin, xin vui lòng liên hệ chúng tôi.
-
-Trân trọng,  
-${responsiblePerson || 'Đội ngũ Innotech Vietnam'}`,
+    subject: t('pages.quotations.emailDialog.defaultSubject', { serviceName }),
+    content: t('pages.quotations.emailDialog.defaultContent', {
+      customerName: customerName || t('pages.quotations.emailDialog.dearCustomer'),
+      serviceName: serviceName || t('pages.quotations.emailDialog.theService'),
+      responsiblePerson: responsiblePerson || t('pages.quotations.emailDialog.teamSignature'),
+      interpolation: { escapeValue: false },
+    }),
   });
 
   const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -66,7 +66,7 @@ ${responsiblePerson || 'Đội ngũ Innotech Vietnam'}`,
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="h6">Gửi báo giá cho khách hàng</Typography>
+          <Typography variant="h6">{t('pages.quotations.emailDialog.title')}</Typography>
           <IconButton onClick={onClose} size="small">
             <CloseIcon />
           </IconButton>
@@ -76,7 +76,7 @@ ${responsiblePerson || 'Đội ngũ Innotech Vietnam'}`,
         <Box mb={3}>
           <TextField
             fullWidth
-            label="Đến (Email)"
+            label={t('pages.quotations.emailDialog.to')}
             value={emailData.to}
             onChange={handleChange('to')}
             margin="normal"
@@ -85,7 +85,7 @@ ${responsiblePerson || 'Đội ngũ Innotech Vietnam'}`,
           
           <TextField
             fullWidth
-            label="CC (Tùy chọn)"
+            label={t('pages.quotations.emailDialog.ccOptional')}
             value={emailData.cc}
             onChange={handleChange('cc')}
             margin="normal"
@@ -94,7 +94,7 @@ ${responsiblePerson || 'Đội ngũ Innotech Vietnam'}`,
           
           <TextField
             fullWidth
-            label="Tiêu đề"
+            label={t('pages.quotations.emailDialog.subject')}
             value={emailData.subject}
             onChange={handleChange('subject')}
             margin="normal"
@@ -103,7 +103,7 @@ ${responsiblePerson || 'Đội ngũ Innotech Vietnam'}`,
           
           <Box mt={2} mb={2} display="flex" alignItems="center">
             <Typography variant="body1" sx={{ mr: 2 }}>
-              File đính kèm: {pdfFileName}
+              {t('pages.quotations.emailDialog.attachment')}: {pdfFileName}
             </Typography>
             <IconButton size="small" onClick={() => window.open(`/preview/${pdfFileName}`, '_blank')}>
               <PreviewIcon />
@@ -112,7 +112,7 @@ ${responsiblePerson || 'Đội ngũ Innotech Vietnam'}`,
           
           <TextField
             fullWidth
-            label="Nội dung email"
+            label={t('pages.quotations.emailDialog.content')}
             value={emailData.content}
             onChange={handleChange('content')}
             margin="normal"
@@ -123,7 +123,7 @@ ${responsiblePerson || 'Đội ngũ Innotech Vietnam'}`,
         </Box>
       </DialogContent>
       <DialogActions sx={{ p: 2 }}>
-        <Button onClick={onClose}>Hủy</Button>
+        <Button onClick={onClose}>{t('common.cancel')}</Button>
         <Button
           variant="contained"
           color="primary"
@@ -131,7 +131,7 @@ ${responsiblePerson || 'Đội ngũ Innotech Vietnam'}`,
           onClick={handleSend}
           disabled={!emailData.to}
         >
-          Gửi email
+          {t('common.sendEmail')}
         </Button>
       </DialogActions>
     </Dialog>

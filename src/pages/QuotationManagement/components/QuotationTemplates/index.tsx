@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Typography,
@@ -39,17 +40,30 @@ const QuotationTemplates: React.FC<QuotationTemplatesProps> = ({
   onDeleteTemplate,
   onDownloadTemplate,
 }) => {
+  const { t, i18n } = useTranslation();
+
+  const formatDate = (dateString: string) => {
+    const lang = i18n.language || 'en';
+    const locale = lang.startsWith('ja') ? 'ja-JP' : lang.startsWith('vi') ? 'vi-VN' : 'en-US';
+    const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return dateString;
+    return new Intl.DateTimeFormat(locale, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(date);
+  };
   return (
     <Paper sx={{ p: 3 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h6">Mẫu báo giá</Typography>
+        <Typography variant="h6">{t('pages.quotations.templates.title')}</Typography>
         <Button
           variant="contained"
           color="primary"
           startIcon={<AddIcon />}
           onClick={onUploadClick}
         >
-          Tải lên mẫu báo giá
+          {t('pages.quotations.templates.buttons.uploadTemplate')}
         </Button>
       </Box>
 
@@ -57,27 +71,27 @@ const QuotationTemplates: React.FC<QuotationTemplatesProps> = ({
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Tên mẫu</TableCell>
-              <TableCell>Mô tả</TableCell>
-              <TableCell>Loại</TableCell>
-              <TableCell>Trạng thái</TableCell>
-              <TableCell>Ngày tạo</TableCell>
-              <TableCell>Người tạo</TableCell>
-              <TableCell>Số trường</TableCell>
-              <TableCell align="center">Thao tác</TableCell>
+              <TableCell>{t('pages.quotations.templates.table.columns.name')}</TableCell>
+              <TableCell>{t('pages.quotations.templates.table.columns.description')}</TableCell>
+              <TableCell>{t('pages.quotations.templates.table.columns.type')}</TableCell>
+              <TableCell>{t('pages.quotations.templates.table.columns.status')}</TableCell>
+              <TableCell>{t('pages.quotations.templates.table.columns.createdAt')}</TableCell>
+              <TableCell>{t('pages.quotations.templates.table.columns.createdBy')}</TableCell>
+              <TableCell>{t('pages.quotations.templates.table.columns.fields')}</TableCell>
+              <TableCell align="center">{t('pages.quotations.tables.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {loading ? (
               <TableRow>
                 <TableCell colSpan={8} align="center">
-                  Đang tải...
+                  {t('pages.quotations.templates.loading')}
                 </TableCell>
               </TableRow>
             ) : templates.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={8} align="center">
-                  Chưa có mẫu báo giá nào. Hãy tải lên mẫu báo giá đầu tiên của bạn!
+                  {t('pages.quotations.templates.table.empty')}
                 </TableCell>
               </TableRow>
             ) : (
@@ -86,17 +100,21 @@ const QuotationTemplates: React.FC<QuotationTemplatesProps> = ({
                   <TableCell>{template.name}</TableCell>
                   <TableCell>{template.description || '-'}</TableCell>
                   <TableCell>
-                    {template.type === 'customer' ? 'Khách hàng' : 'Nội bộ'}
+                    {template.type === 'customer'
+                      ? t('pages.quotations.templates.table.chips.type.customer')
+                      : t('pages.quotations.templates.table.chips.type.internal')}
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={template.status === 'active' ? 'Đang sử dụng' : 'Không sử dụng'}
+                      label={template.status === 'active'
+                        ? t('pages.quotations.templates.table.chips.status.active')
+                        : t('pages.quotations.templates.table.chips.status.inactive')}
                       color={template.status === 'active' ? 'success' : 'default'}
                       size="small"
                     />
                     {template.isDefault && (
                       <Chip
-                        label="Mặc định"
+                        label={t('pages.quotations.templates.table.chips.default')}
                         color="primary"
                         size="small"
                         sx={{ ml: 1 }}
@@ -104,14 +122,14 @@ const QuotationTemplates: React.FC<QuotationTemplatesProps> = ({
                     )}
                   </TableCell>
                   <TableCell>
-                    {new Date(template.createdAt).toLocaleDateString('vi-VN')}
+                    {formatDate(template.createdAt)}
                   </TableCell>
                   <TableCell>{template.createdBy}</TableCell>
                   <TableCell>{template.placeholderCount}</TableCell>
                   <TableCell align="center">
                     <Box>
                       {onViewTemplate && (
-                        <Tooltip title="Xem chi tiết">
+                        <Tooltip title={t('pages.quotations.templates.table.tooltips.view')}>
                           <IconButton
                             size="small"
                             onClick={() => onViewTemplate(template.id)}
@@ -121,7 +139,7 @@ const QuotationTemplates: React.FC<QuotationTemplatesProps> = ({
                         </Tooltip>
                       )}
                       {onDownloadTemplate && (
-                        <Tooltip title="Tải xuống">
+                        <Tooltip title={t('pages.quotations.templates.table.tooltips.download')}>
                           <IconButton
                             size="small"
                             onClick={() => onDownloadTemplate(template.id)}
@@ -131,7 +149,7 @@ const QuotationTemplates: React.FC<QuotationTemplatesProps> = ({
                         </Tooltip>
                       )}
                       {onDeleteTemplate && (
-                        <Tooltip title="Xóa">
+                        <Tooltip title={t('pages.quotations.templates.table.tooltips.delete')}>
                           <IconButton
                             size="small"
                             color="error"

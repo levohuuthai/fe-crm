@@ -27,6 +27,7 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface Contact {
   id: number;
@@ -57,13 +58,13 @@ interface ContactListProps {
 }
 
 const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'email', label: 'Email', minWidth: 170 },
-  { id: 'phone', label: 'Phone Number', minWidth: 120 },
-  { id: 'owner', label: 'Contact Owner', minWidth: 120 },
-  { id: 'createDate', label: 'Create Date', minWidth: 100 },
-  { id: 'leadStatus', label: 'Lead Status', minWidth: 100 },
-  { id: 'actions', label: 'Actions', minWidth: 80 },
+  { id: 'name', label: 'pages.contacts.columns.name', minWidth: 170 },
+  { id: 'email', label: 'pages.contacts.columns.email', minWidth: 170 },
+  { id: 'phone', label: 'pages.contacts.columns.phone', minWidth: 120 },
+  { id: 'owner', label: 'pages.contacts.columns.owner', minWidth: 120 },
+  { id: 'createDate', label: 'pages.contacts.columns.createDate', minWidth: 100 },
+  { id: 'leadStatus', label: 'pages.contacts.columns.leadStatus', minWidth: 100 },
+  { id: 'actions', label: 'pages.contacts.columns.actions', minWidth: 80 },
 ];
 
 const ContactList: React.FC<ContactListProps> = ({
@@ -82,6 +83,7 @@ const ContactList: React.FC<ContactListProps> = ({
   getInitials,
   isSelected
 }) => {
+  const { t } = useTranslation();
   // Filter contacts based on search term
   const filteredContacts = contacts.filter(contact => 
     contact.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -90,11 +92,15 @@ const ContactList: React.FC<ContactListProps> = ({
     contact.phone.includes(searchTerm)
   );
 
+  const translatedColumns = React.useMemo(() => {
+    return columns.map(col => ({ ...col, label: t(col.label as any) }));
+  }, [t]);
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <Box p={2} display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h6" component="div">
-          Contacts
+          {t('common.contacts')}
           <Typography component="span" color="text.secondary" sx={{ ml: 1 }}>
             ({filteredContacts.length})
           </Typography>
@@ -105,14 +111,14 @@ const ContactList: React.FC<ContactListProps> = ({
             startIcon={<AddIcon />}
             onClick={onOpenCreateDialog}
           >
-            Create Contact
+            {t('pages.contacts.actions.createContact')}
           </Button>
         </Box>
       </Box>
       
       <Box px={2} pb={2} display="flex" justifyContent="space-between" alignItems="center">
         <TextField
-          placeholder="Search contacts..."
+          placeholder={t('pages.contacts.searchPlaceholder')}
           size="small"
           value={searchTerm}
           onChange={onSearchChange}
@@ -141,7 +147,7 @@ const ContactList: React.FC<ContactListProps> = ({
                   onChange={onSelectAllClick}
                 />
               </TableCell>
-              {columns.map((column) => (
+              {translatedColumns.map((column) => (
                 <TableCell
                   key={column.id}
                   style={{ minWidth: column.minWidth }}
@@ -199,17 +205,17 @@ const ContactList: React.FC<ContactListProps> = ({
                     </TableCell>
                     <TableCell>
                       <Box display="flex">
-                        <Tooltip title="Edit">
+                        <Tooltip title={t('common.edit')}>
                           <IconButton size="small">
                             <EditIcon fontSize="small" />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip title="Delete">
+                        <Tooltip title={t('common.delete')}>
                           <IconButton size="small">
                             <DeleteIcon fontSize="small" />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip title="More">
+                        <Tooltip title={t('common.more')}>
                           <IconButton size="small">
                             <MoreVertIcon fontSize="small" />
                           </IconButton>

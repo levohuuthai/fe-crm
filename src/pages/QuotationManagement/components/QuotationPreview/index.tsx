@@ -10,6 +10,7 @@ import {
   Box 
 } from '@mui/material';
 import { Save as SaveIcon } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import { QuotationPreviewProps } from '../../types';
 
 const QuotationPreview: React.FC<QuotationPreviewProps> = ({
@@ -19,7 +20,10 @@ const QuotationPreview: React.FC<QuotationPreviewProps> = ({
   onSaveDraft,
   onExportPdf,
 }) => {
+  const { t, i18n } = useTranslation();
   const [pages, setPages] = useState<string[]>(['']);
+
+  const locale = i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'vi' ? 'vi-VN' : 'en-US';
 
   useEffect(() => {
     if (quotation) {
@@ -30,29 +34,29 @@ const QuotationPreview: React.FC<QuotationPreviewProps> = ({
         setPages([
           `
           <div style="padding: 20mm;">
-            <h1 style="text-align: center; margin-bottom: 30px;">BÁO GIÁ DỊCH VỤ</h1>
+            <h1 style="text-align: center; margin-bottom: 30px;">${t('pages.quotations.preview.page.heading')}</h1>
             <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
               <div>
-                <p><strong>Khách hàng:</strong> ${quotation.customer || 'Quý khách hàng'}</p>
-                <p><strong>Dự án:</strong> ${quotation.name || 'Dự án phần mềm'}</p>
+                <p><strong>${t('pages.quotations.preview.page.customer')}:</strong> ${quotation.customer || t('pages.quotations.preview.page.customerDefault')}</p>
+                <p><strong>${t('pages.quotations.preview.page.project')}:</strong> ${quotation.name || t('pages.quotations.preview.page.projectDefault')}</p>
               </div>
               <div style="text-align: right;">
-                <p><strong>Mã báo giá:</strong> ${quotation.id || 'N/A'}</p>
-                <p><strong>Ngày tạo:</strong> ${new Date(quotation.createdDate || new Date()).toLocaleDateString('vi-VN')}</p>
+                <p><strong>${t('pages.quotations.preview.page.quotationId')}:</strong> ${quotation.id || 'N/A'}</p>
+                <p><strong>${t('pages.quotations.preview.page.createdDate')}:</strong> ${new Date(quotation.createdDate || new Date()).toLocaleDateString(locale)}</p>
               </div>
             </div>
             
             <!-- Quotation items table -->
             <div style="margin: 20px 0;">
-              <h3>CHI TIẾT DỊCH VỤ</h3>
+              <h3>${t('pages.quotations.preview.page.itemsTitle')}</h3>
               <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
                 <thead>
                   <tr style="background-color: #f5f5f5;">
-                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">STT</th>
-                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Mô tả công việc</th>
-                    <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">Số ngày công</th>
-                    <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">Đơn giá (VND)</th>
-                    <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">Thành tiền (VND)</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">${t('pages.quotations.preview.page.columns.stt')}</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">${t('pages.quotations.preview.page.columns.description')}</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">${t('pages.quotations.preview.page.columns.days')}</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">${t('pages.quotations.preview.page.columns.unitPriceVnd')}</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">${t('pages.quotations.preview.page.columns.amountVnd')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -60,25 +64,26 @@ const QuotationPreview: React.FC<QuotationPreviewProps> = ({
                     const qcEffort = (item as any).qcEffort || 0;
                     const rate = (item as any).rate || 0;
                     const total = qcEffort * rate;
+                    const nf = new Intl.NumberFormat(locale);
                     
                     return `
                       <tr>
                         <td style="border: 1px solid #ddd; padding: 8px;">${index + 1}</td>
                         <td style="border: 1px solid #ddd; padding: 8px;">${item.description || ''}</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">${qcEffort}</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">${rate.toLocaleString('vi-VN')}</td>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">${total.toLocaleString('vi-VN')}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">${nf.format(rate)}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">${nf.format(total)}</td>
                       </tr>
                     `;
                   }).join('')}
                   <tr>
-                    <td colspan="4" style="border: 1px solid #ddd; padding: 8px; text-align: right;"><strong>Tổng cộng:</strong></td>
+                    <td colspan="4" style="border: 1px solid #ddd; padding: 8px; text-align: right;"><strong>${t('pages.quotations.preview.page.total')}</strong></td>
                     <td style="border: 1px solid #ddd; padding: 8px; text-align: right; font-weight: bold;">
-                      ${(quotation.items || []).reduce((sum, item) => {
+                      ${new Intl.NumberFormat(locale).format((quotation.items || []).reduce((sum, item) => {
                         const qcEffort = (item as any).qcEffort || 0;
                         const rate = (item as any).rate || 0;
                         return sum + (qcEffort * rate);
-                      }, 0).toLocaleString('vi-VN')} VND
+                      }, 0))} VND
                     </td>
                   </tr>
                 </tbody>
@@ -87,17 +92,17 @@ const QuotationPreview: React.FC<QuotationPreviewProps> = ({
             
             <div style="margin-top: 30px;">
               <div style="margin-bottom: 20px;">
-                <h3>ĐIỀU KHOẢN THANH TOÁN</h3>
-                <div>${(quotation as any).paymentTerms || 'Thanh toán 100% khi ký hợp đồng.'}</div>
+                <h3>${t('pages.quotations.preview.page.paymentTerms')}</h3>
+                <div>${(quotation as any).paymentTerms || t('pages.quotations.preview.page.paymentTermsDefault')}</div>
               </div>
               <div style="margin-top: 60px; display: flex; justify-content: space-between;">
                 <div style="text-align: center; width: 50%;">
-                  <p><strong>ĐẠI DIỆN BÊN BÁN</strong></p>
-                  <p style="font-style: italic; margin-top: 50px;">(Ký, ghi rõ họ tên)</p>
+                  <p><strong>${t('pages.quotations.preview.page.sellerRep')}</strong></p>
+                  <p style="font-style: italic; margin-top: 50px;">${t('pages.quotations.preview.page.signNote')}</p>
                 </div>
                 <div style="text-align: center; width: 50%;">
-                  <p><strong>ĐẠI DIỆN BÊN MUA</strong></p>
-                  <p style="font-style: italic; margin-top: 50px;">(Ký, ghi rõ họ tên)</p>
+                  <p><strong>${t('pages.quotations.preview.page.buyerRep')}</strong></p>
+                  <p style="font-style: italic; margin-top: 50px;">${t('pages.quotations.preview.page.signNote')}</p>
                 </div>
               </div>
             </div>
@@ -133,7 +138,7 @@ const QuotationPreview: React.FC<QuotationPreviewProps> = ({
       sx={{ '& .MuiDialog-paper': { maxWidth: '95%', height: '95vh' } }}
     >
       <DialogTitle>
-        <Typography variant="h6">Xem trước và chỉnh sửa báo giá</Typography>
+        <Typography variant="h6">{t('pages.quotations.preview.dialogTitle')}</Typography>
       </DialogTitle>
       <DialogContent sx={{ p: 0, display: 'flex', flexDirection: 'column', height: '100%' }}>
         {quotation ? (
@@ -144,13 +149,13 @@ const QuotationPreview: React.FC<QuotationPreviewProps> = ({
           />
         ) : (
           <Box sx={{ p: 3, textAlign: 'center' }}>
-            <Typography>Đang tải dữ liệu báo giá...</Typography>
+            <Typography>{t('pages.quotations.preview.loading')}</Typography>
           </Box>
         )}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="inherit">
-          Đóng
+          {t('pages.quotations.preview.buttons.close')}
         </Button>
         <Button 
           onClick={handleSaveDraft} 
@@ -159,7 +164,7 @@ const QuotationPreview: React.FC<QuotationPreviewProps> = ({
           startIcon={<SaveIcon />}
           disabled={!quotation}
         >
-          Lưu nháp
+          {t('pages.quotations.preview.buttons.saveDraft')}
         </Button>
       </DialogActions>
     </Dialog>

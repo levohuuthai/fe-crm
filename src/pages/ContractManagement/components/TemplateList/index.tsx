@@ -4,6 +4,7 @@ import TemplateFilters from './TemplateFilters';
 import TemplateTable from './TemplateTable';
 import AIContractGeneration from '../AIContractGeneration';
 import { Template, TemplateFilterValues } from './types';
+import { useTranslation } from 'react-i18next';
 
 // Mock data for demonstration
 const mockTemplates: Template[] = [
@@ -53,6 +54,7 @@ const TemplateList: React.FC<TemplateListProps> = ({
   templates: propTemplates = [], 
   loading: propLoading = false 
 }) => {
+  const { t } = useTranslation();
   const [filters, setFilters] = useState<TemplateFilterValues>({
     search: '',
     type: 'all',
@@ -150,7 +152,7 @@ const TemplateList: React.FC<TemplateListProps> = ({
 
   const handleDeleteTemplate = (id: string) => {
     // TODO: Implement delete template
-    if (window.confirm('Bạn có chắc chắn muốn xóa template này?')) {
+    if (window.confirm(t('pages.contracts.templateList.confirmDelete'))) {
       console.log('Delete template:', id);
       
       // Trong trường hợp thực tế, đây sẽ là API call
@@ -180,12 +182,12 @@ const TemplateList: React.FC<TemplateListProps> = ({
       setLastAddedTemplateId(newId);
       
       // Show success message
-      alert('Template đã được lưu thành công!');
+      alert(t('pages.contracts.templateList.alerts.saveAiSuccess'));
       
       return true;
     } catch (error) {
       console.error('Error saving AI template:', error);
-      alert('Có lỗi xảy ra khi lưu template!');
+      alert(t('pages.contracts.templateList.alerts.saveAiError'));
       return false;
     }
   };
@@ -194,10 +196,10 @@ const TemplateList: React.FC<TemplateListProps> = ({
     <Box>
       <Box mb={3}>
         <Typography variant="h5" component="h2" gutterBottom>
-          Danh sách Template Hợp đồng
+          {t('pages.contracts.templateList.title')}
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          Quản lý và tạo mới các mẫu hợp đồng
+          {t('pages.contracts.templateList.subtitle')}
         </Typography>
       </Box>
 
@@ -217,7 +219,7 @@ const TemplateList: React.FC<TemplateListProps> = ({
         
         {loading ? (
           <Box py={4} textAlign="center">
-            <Typography>Đang tải dữ liệu...</Typography>
+            <Typography>{t('pages.contracts.templateList.loading')}</Typography>
           </Box>
         ) : (
           <TemplateTable

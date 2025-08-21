@@ -1,21 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Box, IconButton, Paper, TextField, Typography, Avatar, Button } from '@mui/material';
 import { Close, Send as SendIcon, SmartToy as SmartToyIcon } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
-// Mock data for demo responses
-const MOCK_RESPONSES: Record<string, string> = {
-  'Các deal chưa chốt': 'Đây là danh sách các deal chưa chốt của bạn trong tháng 7:\n```\n| Tên Deal | Khách hàng | Giá trị |\n|----------|-------------|---------|\n| Deal 1   | Công ty A   | 100M    |\n| Deal 2   | Công ty B   | 80M     |\n```',
-  'Tổng giá trị deal đã chốt': 'Tổng giá trị đã chốt của bạn trong tháng này là 377.043.143 ₫',
-  'Tạo nhắc việc cho Công ty B': 'Đã tạo nhắc việc cho Deal của Công ty B vào ngày mai. Bạn có muốn thêm ghi chú không?',
-  'Viết email cảm ơn khách hàng': 'Chào quý khách,\n\nCảm ơn anh/chị đã tin tưởng sử dụng dịch vụ của chúng tôi. Chúng tôi rất trân trọng sự hợp tác này...',
+// Localized suggestions and responses (not a React Hook)
+const getAssistantSidebarContent = (t: any) => {
+  const suggestions = [
+    t('pages.assistant.suggestions.dealsNotClosedThisMonth'),
+    t('pages.assistant.suggestions.totalClosedValue'),
+    t('pages.assistant.suggestions.createReminderCompanyB'),
+    t('pages.assistant.suggestions.writeThankYouEmail'),
+  ];
+  const responses: Record<string, string> = {
+    [t('pages.assistant.suggestions.dealsNotClosedThisMonth')]: t('pages.assistant.responses.dealsNotClosedThisMonth'),
+    [t('pages.assistant.suggestions.totalClosedValue')]: t('pages.assistant.responses.totalClosedValue'),
+    [t('pages.assistant.suggestions.createReminderCompanyB')]: t('pages.assistant.responses.createReminderCompanyB'),
+    [t('pages.assistant.suggestions.writeThankYouEmail')]: t('pages.assistant.responses.writeThankYouEmail'),
+  };
+  return { suggestions, responses };
 };
-
-const DEFAULT_SUGGESTIONS = [
-  'Các deal chưa chốt trong tháng này',
-  'Tổng giá trị deal đã chốt',
-  'Tạo nhắc việc cho Công ty B',
-  'Viết email cảm ơn khách hàng'
-];
 
 interface Message {
   id: number;
@@ -31,21 +34,24 @@ interface AIAssistantSidebarProps {
 }
 
 export const AIAssistantSidebar = ({ open, onClose }: AIAssistantSidebarProps) => {
+  const { t, i18n } = useTranslation();
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const locale = i18n.language && i18n.language.startsWith('ja') ? 'ja-JP' : 'en-US';
+  const { suggestions, responses } = useMemo(() => getAssistantSidebarContent(t), [t, i18n.language]);
 
   // Initial bot greeting
   useEffect(() => {
     setMessages([
       {
         id: 1,
-        text: 'Xin chào! Tôi là trợ lý ảo của CRM. Tôi có thể giúp gì cho bạn?',
+        text: t('pages.assistant.greeting'),
         isUser: false,
         timestamp: new Date(),
       },
     ]);
-  }, []);
+  }, [t, i18n.language]);
 
   // Auto-scroll to bottom of messages
   useEffect(() => {
@@ -70,7 +76,7 @@ export const AIAssistantSidebar = ({ open, onClose }: AIAssistantSidebarProps) =
     setTimeout(() => {
       const botResponse: Message = {
         id: Date.now() + 1,
-        text: MOCK_RESPONSES[input] || 'Xin lỗi, tôi chưa hiểu yêu cầu của bạn. Bạn có thể thử lại không?',
+        text: responses[input] || t('pages.assistant.noUnderstand'),
         isUser: false,
         timestamp: new Date(),
       };
@@ -83,7 +89,7 @@ export const AIAssistantSidebar = ({ open, onClose }: AIAssistantSidebarProps) =
   };
 
   const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('vi-VN', {
+    return new Intl.DateTimeFormat(locale, {
       hour: '2-digit',
       minute: '2-digit',
     }).format(date);
@@ -137,7 +143,7 @@ export const AIAssistantSidebar = ({ open, onClose }: AIAssistantSidebarProps) =
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <SmartToyIcon color="primary" />
-            <Typography variant="subtitle1" fontWeight="bold">Trợ lý thông minh CRM ITV</Typography>
+            <Typography variant="subtitle1" fontWeight="bold">{t('pages.assistant.title')}</Typography>
           </Box>
           <IconButton onClick={onClose} size="small">
             <Close />
@@ -185,7 +191,7 @@ export const AIAssistantSidebar = ({ open, onClose }: AIAssistantSidebarProps) =
                     </Avatar>
                   )}
                   <Typography variant="caption" color="text.secondary">
-                    {message.isUser ? 'Bạn' : 'Trợ lý AI'} • {formatDate(message.timestamp)}
+                    {message.isUser ? t('pages.assistant.you') : t('pages.assistant.assistant')} • {formatDate(message.timestamp)}
                   </Typography>
                 </Box>
                 <Paper
@@ -211,10 +217,10 @@ export const AIAssistantSidebar = ({ open, onClose }: AIAssistantSidebarProps) =
         {messages.length <= 1 && (
           <Box sx={{ mb: 2, borderTop: '1px solid #e0e0e0', pt: 2 }}>
             <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-              Bạn có thể hỏi:
+              {t('pages.assistant.youCanAsk')}
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {DEFAULT_SUGGESTIONS.map((suggestion, index) => (
+              {suggestions.map((suggestion, index) => (
                 <Button
                   key={index}
                   variant="outlined"
@@ -245,7 +251,7 @@ export const AIAssistantSidebar = ({ open, onClose }: AIAssistantSidebarProps) =
               <TextField
                 fullWidth
                 variant="outlined"
-                placeholder="Nhập tin nhắn..."
+                placeholder={t('pages.assistant.inputPlaceholder')}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={(e) => {

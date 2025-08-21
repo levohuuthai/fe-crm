@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -28,8 +29,8 @@ import RequirementForm from './components/RequirementForm';
 import RequirementDetail from './components/RequirementDetail';
 
 // Fake data
-const fakeCustomers = ['Công ty A', 'Công ty B', 'Công ty C', 'Công ty D'];
-const fakeAssignees = ['Nguyễn Văn A', 'Trần Thị B', 'Lê Văn C', 'Phạm Thị D'];
+const fakeCustomers = ['Company A', 'Company B', 'Company C', 'Company D'];
+const fakeAssignees = ['User A', 'User B', 'User C', 'User D'];
 
 const generateFakeRequirements = (count: number): Requirement[] => {
   return Array.from({ length: count }, (_, i) => ({
@@ -44,12 +45,13 @@ const generateFakeRequirements = (count: number): Requirement[] => {
 };
 
 const statusOptions = [
-  { value: 'pending', label: 'Chờ xử lý' },
-  { value: 'in_discussion', label: 'Đang thảo luận' },
-  { value: 'confirmed', label: 'Đã xác nhận' }
+  { value: 'pending', labelKey: 'pages.requirements.status.pending' },
+  { value: 'in_discussion', labelKey: 'pages.requirements.status.in_discussion' },
+  { value: 'confirmed', labelKey: 'pages.requirements.status.confirmed' }
 ];
 
 const RequirementManagement = () => {
+  const { t } = useTranslation();
   // Pagination and filtering states
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -170,7 +172,7 @@ const RequirementManagement = () => {
     <Box sx={{ p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
         <Typography variant="h4" component="h1">
-          Quản lý Requirement
+          {t('pages.requirements.title')}
         </Typography>
         <Stack direction="row" spacing={2} sx={{ flexWrap: 'wrap', gap: 1 }}>
           <Button 
@@ -178,7 +180,7 @@ const RequirementManagement = () => {
             startIcon={<ExportIcon />}
             onClick={() => console.log('Export to Excel')}
           >
-            Xuất Excel
+            {t('pages.requirements.actions.exportExcel')}
           </Button>
           <Button 
             variant="contained" 
@@ -186,7 +188,7 @@ const RequirementManagement = () => {
             startIcon={<AddIcon />}
             onClick={handleCreateRequirement}
           >
-            Tạo Requirement
+            {t('pages.requirements.actions.createRequirement')}
           </Button>
         </Stack>
       </Box>
@@ -195,7 +197,7 @@ const RequirementManagement = () => {
         <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap' }}>
           <TextField
             variant="outlined"
-            placeholder="Tìm kiếm theo tên requirement..."
+            placeholder={t('pages.requirements.searchPlaceholder')}
             size="small"
             value={searchTerm}
             onChange={handleSearch}
@@ -211,7 +213,7 @@ const RequirementManagement = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Khách hàng"
+                label={t('pages.requirements.filters.customer')}
                 size="small"
                 sx={{ minWidth: 200 }}
                 InputProps={{
@@ -228,7 +230,7 @@ const RequirementManagement = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Người phụ trách"
+                label={t('pages.requirements.filters.assignee')}
                 size="small"
                 sx={{ minWidth: 200 }}
                 InputProps={{
@@ -239,17 +241,17 @@ const RequirementManagement = () => {
             )}
           />
           <FormControl sx={{ minWidth: 200 }} size="small">
-            <InputLabel>Trạng thái</InputLabel>
+            <InputLabel>{t('pages.requirements.filters.status')}</InputLabel>
             <Select
               value={statusFilter}
-              label="Trạng thái"
+              label={t('pages.requirements.filters.status')}
               onChange={handleStatusFilterChange}
               startAdornment={<FilterIcon fontSize="small" sx={{ color: 'action.active', mr: 1 }} />}
             >
-              <MenuItem value="all">Tất cả</MenuItem>
+              <MenuItem value="all">{t('pages.requirements.filters.all')}</MenuItem>
               {statusOptions.map((status) => (
                 <MenuItem key={status.value} value={status.value}>
-                  {status.label}
+                  {t(status.labelKey as string)}
                 </MenuItem>
               ))}
             </Select>
@@ -274,8 +276,8 @@ const RequirementManagement = () => {
         open={deleteDialogOpen}
         onClose={handleCloseDeleteDialog}
         onConfirm={handleConfirmDelete}
-        title="Xác nhận xóa"
-        content="Bạn có chắc chắn muốn xóa yêu cầu này?"
+        title={t('pages.requirements.dialogs.deleteConfirmTitle')}
+        content={t('pages.requirements.dialogs.deleteConfirmText')}
       />
 
       {/* Requirement Detail Dialog */}

@@ -3,6 +3,7 @@ import { Box, Typography, Tabs, Tab, Paper, Table, TableBody, TableCell, TableCo
 import { Add, Edit, Delete, Visibility } from '@mui/icons-material';
 import CreateTemplateDialog from './CreateTemplateDialog';
 import CreateAppendixDialog from './CreateAppendixDialog';
+import { useTranslation } from 'react-i18next';
 
 // Tab value
 type ContractAppendicesTab = 'templates' | 'appendices';
@@ -32,6 +33,7 @@ interface ContractAppendix {
 }
 
 const ContractAppendices: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [currentTab, setCurrentTab] = useState<ContractAppendicesTab>('templates');
   const [templates, setTemplates] = useState<AppendixTemplate[]>([]);
   const [appendices, setAppendices] = useState<ContractAppendix[]>([]);
@@ -87,7 +89,7 @@ const ContractAppendices: React.FC = () => {
     setCreateTemplateDialogOpen(false);
     setSnackbar({
       open: true,
-      message: 'Mẫu phụ lục đã được tạo thành công!',
+      message: t('pages.appendices.notifications.createTemplateSuccess'),
       severity: 'success',
     });
   };
@@ -109,7 +111,12 @@ const ContractAppendices: React.FC = () => {
     setCreateAppendixDialogOpen(false);
     setSnackbar({
       open: true,
-      message: `Phụ lục đã được ${action === 'draft' ? 'lưu nháp' : action === 'submit' ? 'gửi duyệt' : 'ký'} thành công!`,
+      message:
+        action === 'draft'
+          ? t('pages.appendices.notifications.saveDraftSuccess')
+          : action === 'submit'
+          ? t('pages.appendices.notifications.submitSuccess')
+          : t('pages.appendices.notifications.signSuccess'),
       severity: 'success',
     });
   };
@@ -177,7 +184,7 @@ const ContractAppendices: React.FC = () => {
         console.error('Error loading data:', error);
         setSnackbar({
           open: true,
-          message: 'Có lỗi xảy ra khi tải dữ liệu. Vui lòng thử lại.',
+          message: t('pages.appendices.notifications.loadError'),
           severity: 'error',
         });
       } finally {
@@ -192,7 +199,7 @@ const ContractAppendices: React.FC = () => {
     <Box sx={{ p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" gutterBottom>
-          Quản lý phụ lục hợp đồng
+          {t('pages.appendices.title')}
         </Typography>
       </Box>
       
@@ -202,8 +209,8 @@ const ContractAppendices: React.FC = () => {
           onChange={handleTabChange}
           aria-label="contract appendices tabs"
         >
-          <Tab label="Mẫu phụ lục hợp đồng" value="templates" />
-          <Tab label="Phụ lục hợp đồng" value="appendices" />
+          <Tab label={t('pages.appendices.tabs.templates')} value="templates" />
+          <Tab label={t('pages.appendices.tabs.appendices')} value="appendices" />
         </Tabs>
       </Box>
       
@@ -211,7 +218,7 @@ const ContractAppendices: React.FC = () => {
         <Paper sx={{ p: 3 }}>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
             <Typography variant="h6" gutterBottom>
-              Danh sách mẫu phụ lục hợp đồng
+              {t('pages.appendices.templates.title')}
             </Typography>
             <Button 
               variant="contained" 
@@ -219,26 +226,26 @@ const ContractAppendices: React.FC = () => {
               startIcon={<Add />}
               onClick={handleOpenCreateTemplateDialog}
             >
-              Tạo mẫu phụ lục mới
+              {t('pages.appendices.actions.createTemplate')}
             </Button>
           </Box>
           
           {loading ? (
             <Typography color="textSecondary" paragraph>
-              Đang tải danh sách mẫu phụ lục...
+              {t('pages.appendices.loading.templates')}
             </Typography>
           ) : (
             <TableContainer>
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Mã</TableCell>
-                    <TableCell>Tên mẫu phụ lục</TableCell>
-                    <TableCell>Mô tả</TableCell>
-                    <TableCell>Loại</TableCell>
-                    <TableCell>Ngày tạo</TableCell>
-                    <TableCell>Trạng thái</TableCell>
-                    <TableCell>Hành động</TableCell>
+                    <TableCell>{t('pages.appendices.templates.columns.code')}</TableCell>
+                    <TableCell>{t('pages.appendices.templates.columns.name')}</TableCell>
+                    <TableCell>{t('pages.appendices.templates.columns.description')}</TableCell>
+                    <TableCell>{t('pages.appendices.templates.columns.type')}</TableCell>
+                    <TableCell>{t('pages.appendices.templates.columns.createdAt')}</TableCell>
+                    <TableCell>{t('pages.appendices.templates.columns.status')}</TableCell>
+                    <TableCell>{t('pages.appendices.templates.columns.actions')}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -252,23 +259,23 @@ const ContractAppendices: React.FC = () => {
                       <TableCell>{template.name}</TableCell>
                       <TableCell>{template.description}</TableCell>
                       <TableCell>{template.type}</TableCell>
-                      <TableCell>{new Date(template.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell>{new Date(template.createdAt).toLocaleDateString(i18n.language)}</TableCell>
                       <TableCell>
                         <Chip 
-                          label={template.status === 'active' ? 'Hoạt động' : 'Không hoạt động'}
+                          label={template.status === 'active' ? t('pages.appendices.status.active') : t('pages.appendices.status.inactive')}
                           color={template.status === 'active' ? 'success' : 'default'}
                           size="small"
                         />
                       </TableCell>
                       <TableCell>
                         <Box sx={{ display: 'flex', gap: 1 }}>
-                          <IconButton size="small" color="primary" title="Xem">
+                          <IconButton size="small" color="primary" title={t('common.viewDetails')}>
                             <Visibility fontSize="small" />
                           </IconButton>
-                          <IconButton size="small" color="secondary" title="Sửa">
+                          <IconButton size="small" color="secondary" title={t('common.edit')}>
                             <Edit fontSize="small" />
                           </IconButton>
-                          <IconButton size="small" color="error" title="Xoá">
+                          <IconButton size="small" color="error" title={t('common.delete')}>
                             <Delete fontSize="small" />
                           </IconButton>
                         </Box>
@@ -284,7 +291,7 @@ const ContractAppendices: React.FC = () => {
         <Paper sx={{ p: 3 }}>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
             <Typography variant="h6" gutterBottom>
-              Danh sách phụ lục hợp đồng
+              {t('pages.appendices.appendices.title')}
             </Typography>
             <Button 
               variant="contained" 
@@ -292,26 +299,26 @@ const ContractAppendices: React.FC = () => {
               startIcon={<Add />}
               onClick={handleOpenCreateAppendixDialog}
             >
-              Tạo phụ lục mới
+              {t('pages.appendices.actions.createAppendix')}
             </Button>
           </Box>
           
           {loading ? (
             <Typography color="textSecondary" paragraph>
-              Đang tải danh sách phụ lục hợp đồng...
+              {t('pages.appendices.loading.appendices')}
             </Typography>
           ) : (
             <TableContainer>
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Mã PL</TableCell>
-                    <TableCell>Tên phụ lục</TableCell>
-                    <TableCell>Mã HĐ</TableCell>
-                    <TableCell>Tên hợp đồng</TableCell>
-                    <TableCell>Ngày tạo</TableCell>
-                    <TableCell>Trạng thái</TableCell>
-                    <TableCell>Hành động</TableCell>
+                    <TableCell>{t('pages.appendices.appendices.columns.code')}</TableCell>
+                    <TableCell>{t('pages.appendices.appendices.columns.name')}</TableCell>
+                    <TableCell>{t('pages.appendices.appendices.columns.contractId')}</TableCell>
+                    <TableCell>{t('pages.appendices.appendices.columns.contractName')}</TableCell>
+                    <TableCell>{t('pages.appendices.appendices.columns.createdAt')}</TableCell>
+                    <TableCell>{t('pages.appendices.appendices.columns.status')}</TableCell>
+                    <TableCell>{t('pages.appendices.appendices.columns.actions')}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -325,14 +332,14 @@ const ContractAppendices: React.FC = () => {
                       <TableCell>{appendix.name}</TableCell>
                       <TableCell>{appendix.contractId}</TableCell>
                       <TableCell>{appendix.contractName}</TableCell>
-                      <TableCell>{new Date(appendix.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell>{new Date(appendix.createdAt).toLocaleDateString(i18n.language)}</TableCell>
                       <TableCell>
                         <Chip 
                           label={
-                            appendix.status === 'signed' ? 'Đã ký' :
-                            appendix.status === 'pending' ? 'Chờ ký' :
-                            appendix.status === 'draft' ? 'Bản nháp' :
-                            'Đã hủy'
+                            appendix.status === 'signed' ? t('pages.appendices.status.signed') :
+                            appendix.status === 'pending' ? t('pages.appendices.status.pending') :
+                            appendix.status === 'draft' ? t('pages.appendices.status.draft') :
+                            t('pages.appendices.status.cancelled')
                           }
                           color={
                             appendix.status === 'signed' ? 'success' :
@@ -345,13 +352,13 @@ const ContractAppendices: React.FC = () => {
                       </TableCell>
                       <TableCell>
                         <Box sx={{ display: 'flex', gap: 1 }}>
-                          <IconButton size="small" color="primary" title="Xem">
+                          <IconButton size="small" color="primary" title={t('common.viewDetails')}>
                             <Visibility fontSize="small" />
                           </IconButton>
-                          <IconButton size="small" color="secondary" title="Sửa">
+                          <IconButton size="small" color="secondary" title={t('common.edit')}>
                             <Edit fontSize="small" />
                           </IconButton>
-                          <IconButton size="small" color="error" title="Xoá">
+                          <IconButton size="small" color="error" title={t('common.delete')}>
                             <Delete fontSize="small" />
                           </IconButton>
                         </Box>

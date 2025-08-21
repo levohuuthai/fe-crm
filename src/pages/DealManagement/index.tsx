@@ -13,6 +13,7 @@ import DealFilters from './components/DealFilters';
 import DealForm from './components/DealForm';
 import DealStats from './components/DealStats';
 import DealReminders from './components/DealReminders';
+import { useTranslation } from 'react-i18next';
 
 // Tạo dữ liệu giả
 const createFakeDeals = (count: number): Deal[] => {
@@ -37,6 +38,7 @@ const createFakeDeals = (count: number): Deal[] => {
 };
 
 const DealManagement: React.FC = () => {
+  const { t } = useTranslation();
   // Khởi tạo dữ liệu giả
   const [deals, setDeals] = useState<Deal[]>(() => createFakeDeals(20));
   
@@ -261,7 +263,7 @@ const DealManagement: React.FC = () => {
     <Box sx={{ p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" component="h1">
-          Quản lý Deal
+          {t('pages.deals.title')}
         </Typography>
         <Button
           variant="contained"
@@ -269,7 +271,7 @@ const DealManagement: React.FC = () => {
           startIcon={<AddIcon />}
           onClick={handleAddNewDeal}
         >
-          Thêm Deal
+          {t('pages.deals.ui.addDeal')}
         </Button>
       </Box>
       
@@ -283,7 +285,7 @@ const DealManagement: React.FC = () => {
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Typography variant="h6" component="div">
             <FilterListIcon sx={{ verticalAlign: 'middle', mr: 1 }} />
-            Bộ lọc
+            {t('pages.deals.ui.filters')}
           </Typography>
           <Box sx={{ display: 'flex', gap: 1 }}>
             <Button 
@@ -292,7 +294,7 @@ const DealManagement: React.FC = () => {
               onClick={handleResetFilters}
               startIcon={<FilterListIcon />}
             >
-              Đặt lại bộ lọc
+              {t('pages.deals.ui.resetFilters')}
             </Button>
             <Button 
               variant="outlined"
@@ -300,7 +302,7 @@ const DealManagement: React.FC = () => {
               startIcon={<SmartToyIcon />}
               onClick={handleSmartFilterOpen}
             >
-              Lọc thông minh
+              {t('pages.deals.ui.smartFilter')}
             </Button>
           </Box>
         </Box>
@@ -314,7 +316,7 @@ const DealManagement: React.FC = () => {
       {/* Tab điều hướng */}
       <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
         <Tabs value={currentTab} onChange={handleTabChange} aria-label="deal tabs">
-          <Tab label={`Tất cả Deal (${filteredDeals.length})`} />
+          <Tab label={t('pages.deals.ui.tabs.allDeals', { count: filteredDeals.length })} />
           <Tab 
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -326,7 +328,7 @@ const DealManagement: React.FC = () => {
                 >
                   <NotificationsIcon />
                 </Badge>
-                <Box component="span">Nhắc việc</Box>
+                <Box component="span">{t('pages.deals.ui.tabs.reminders')}</Box>
               </Box>
             } 
           />
@@ -337,7 +339,7 @@ const DealManagement: React.FC = () => {
         <Box sx={{ mb: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography variant="body2" color="text.secondary">
-              Đang lọc:
+              {t('pages.deals.ui.filtering')}
             </Typography>
             <Chip 
               label={currentFilter} 
@@ -353,7 +355,7 @@ const DealManagement: React.FC = () => {
             onClick={handleClearFilter}
             color="inherit"
           >
-            Xóa bộ lọc
+            {t('pages.deals.ui.clearFilter')}
           </Button>
         </Box>
       )}
@@ -363,7 +365,7 @@ const DealManagement: React.FC = () => {
         <>
           {/* Hiển thị số lượng kết quả */}
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Tìm thấy {filteredDeals.length} deal phù hợp
+            {t('pages.deals.ui.foundMatching', { count: filteredDeals.length })}
           </Typography>
           
           {/* Danh sách deal */}
@@ -406,7 +408,7 @@ const DealManagement: React.FC = () => {
         onClose={handleCloseForm}
         onSubmit={handleSubmitDeal}
         initialData={editingDeal || undefined}
-        title={editingDeal ? 'Chỉnh sửa Deal' : 'Thêm Deal mới'}
+        title={editingDeal ? t('pages.deals.ui.form.editTitle') : t('pages.deals.ui.form.createTitle')}
       />
 
       {/* Dialog bộ lọc thông minh */}
@@ -422,18 +424,18 @@ const DealManagement: React.FC = () => {
         open={deleteConfirmOpen}
         onClose={() => setDeleteConfirmOpen(false)}
       >
-        <DialogTitle>Xác nhận xóa</DialogTitle>
+        <DialogTitle>{t('pages.deals.ui.dialogs.deleteConfirmTitle')}</DialogTitle>
         <DialogContent>
-          <Typography>Bạn có chắc chắn muốn xóa deal này không?</Typography>
+          <Typography>{t('pages.deals.ui.dialogs.deleteConfirmText')}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteConfirmOpen(false)}>Hủy</Button>
+          <Button onClick={() => setDeleteConfirmOpen(false)}>{t('common.cancel')}</Button>
           <Button 
             onClick={handleConfirmDelete} 
             color="error"
             variant="contained"
           >
-            Xóa
+            {t('common.delete')}
           </Button>
         </DialogActions>
       </Dialog>

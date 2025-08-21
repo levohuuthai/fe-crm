@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Box, 
   Typography, 
@@ -50,6 +51,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
   onDelete,
   onEdit
 }) => {
+  const { t, i18n } = useTranslation();
   const [deleteConfirmOpen, setDeleteConfirmOpen] = React.useState(false);
 
   const getStatusColor = (status: string) => {
@@ -64,8 +66,10 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
   };
 
   const formatDate = (dateString: string) => {
-    if (!dateString) return 'Chưa xác định';
-    return new Date(dateString).toLocaleDateString('vi-VN');
+    if (!dateString) return t('common.unknown');
+    const lang = i18n.language || 'en';
+    const locale = lang.startsWith('ja') ? 'ja-JP' : lang.startsWith('vi') ? 'vi-VN' : 'en-US';
+    return new Date(dateString).toLocaleDateString(locale);
   };
 
   return (
@@ -75,7 +79,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
           <ArrowBack />
         </IconButton>
         <Typography variant="h5">
-          Chi tiết hợp đồng: {contract.name}
+          {t('pages.contracts.detail.title', 'Contract details')}: {contract.name}
         </Typography>
         <Chip 
           label={contract.status.toUpperCase()} 
@@ -88,21 +92,23 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
       <Paper sx={{ p: 3, mb: 3 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3, flexWrap: 'wrap', gap: 2 }}>
           <Box>
-            <Typography variant="h6" gutterBottom>Thông tin chung</Typography>
+            <Typography variant="h6" gutterBottom>
+              {t('pages.contracts.detail.generalInfo', 'General information')}
+            </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
               <Box sx={{ flex: '1 1 300px' }}>
-                <Typography><strong>Mã hợp đồng:</strong> {contract.id}</Typography>
-                <Typography><strong>Mẫu hợp đồng:</strong> {contract.templateName}</Typography>
-                <Typography><strong>Ngày tạo:</strong> {formatDate(contract.createdAt)}</Typography>
+                <Typography><strong>{t('pages.contracts.detail.fields.contractId', 'Contract ID')}:</strong> {contract.id}</Typography>
+                <Typography><strong>{t('pages.contracts.detail.fields.templateName', 'Template name')}:</strong> {contract.templateName}</Typography>
+                <Typography><strong>{t('pages.contracts.detail.fields.createdAt', 'Created at')}:</strong> {formatDate(contract.createdAt)}</Typography>
               </Box>
               <Box sx={{ flex: '1 1 300px' }}>
-                <Typography><strong>Người tạo:</strong> {contract.createdBy}</Typography>
-                <Typography><strong>Cập nhật lần cuối:</strong> {formatDate(contract.updatedAt)}</Typography>
+                <Typography><strong>{t('pages.contracts.detail.fields.createdBy', 'Created by')}:</strong> {contract.createdBy}</Typography>
+                <Typography><strong>{t('pages.contracts.detail.fields.updatedAt', 'Updated at')}:</strong> {formatDate(contract.updatedAt)}</Typography>
                 {contract.signedAt && (
-                  <Typography><strong>Ngày ký:</strong> {formatDate(contract.signedAt)}</Typography>
+                  <Typography><strong>{t('pages.contracts.detail.fields.signedAt', 'Signed at')}:</strong> {formatDate(contract.signedAt)}</Typography>
                 )}
                 {contract.expiresAt && (
-                  <Typography><strong>Ngày hết hạn:</strong> {formatDate(contract.expiresAt)}</Typography>
+                  <Typography><strong>{t('pages.contracts.detail.fields.expiresAt', 'Expires at')}:</strong> {formatDate(contract.expiresAt)}</Typography>
                 )}
               </Box>
             </Box>
@@ -110,13 +116,13 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
           
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
             <Button variant="outlined" startIcon={<Download />} size="small">
-              Tải xuống
+              {t('common.download', 'Download')}
             </Button>
             <Button variant="outlined" startIcon={<Print />} size="small">
-              In
+              {t('pages.contracts.detail.actions.print', 'Print')}
             </Button>
             <Button variant="outlined" startIcon={<Share />} size="small">
-              Chia sẻ
+              {t('pages.contracts.detail.actions.share', 'Share')}
             </Button>
             <Button 
               variant="contained" 
@@ -125,7 +131,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
               onClick={() => onEdit(contract.id)}
               size="small"
             >
-              Chỉnh sửa
+              {t('common.edit', 'Edit')}
             </Button>
             <Button 
               variant="outlined" 
@@ -134,7 +140,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
               onClick={() => setDeleteConfirmOpen(true)}
               size="small"
             >
-              Xóa
+              {t('common.delete', 'Delete')}
             </Button>
           </Box>
         </Box>
@@ -142,36 +148,38 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
         <Divider sx={{ my: 3 }} />
 
         <Box sx={{ mb: 4 }}>
-          <Typography variant="h6" gutterBottom>Thông tin các bên</Typography>
+          <Typography variant="h6" gutterBottom>
+            {t('pages.contracts.detail.partiesInfo', 'Parties information')}
+          </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
             <Box sx={{ flex: '1 1 300px' }}>
               <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
                 <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                  Bên A (Bên giao kết hợp đồng)
+                  {t('pages.contracts.detail.partyA.title', 'Party A (Contracting party)')}
                 </Typography>
                 {contract.contractData ? (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                    <Typography><strong>Tên công ty:</strong> {contract.contractData.tenBenA}</Typography>
-                    <Typography><strong>Địa chỉ:</strong> {contract.contractData.diaChiA}</Typography>
-                    <Typography><strong>Điện thoại:</strong> {contract.contractData.dienThoaiA}</Typography>
-                    <Typography><strong>Mã số thuế:</strong> {contract.contractData.maSoThueA}</Typography>
-                    <Typography><strong>Người đại diện:</strong> {contract.contractData.nguoiDaiDienA}</Typography>
-                    <Typography><strong>Chức vụ:</strong> {contract.contractData.chucVuA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.companyName', 'Company name')}:</strong> {contract.contractData.tenBenA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.address', 'Address')}:</strong> {contract.contractData.diaChiA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.phone', 'Phone')}:</strong> {contract.contractData.dienThoaiA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.taxId', 'Tax ID')}:</strong> {contract.contractData.maSoThueA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.representative', 'Representative')}:</strong> {contract.contractData.nguoiDaiDienA}</Typography>
+                    <Typography><strong>{t('pages.contracts.detail.party.position', 'Position')}:</strong> {contract.contractData.chucVuA}</Typography>
                   </Box>
                 ) : (
-                  <Typography>Không có thông tin chi tiết</Typography>
+                  <Typography>{t('common.noData', 'No data')}</Typography>
                 )}
               </Paper>
             </Box>
             <Box sx={{ flex: '1 1 300px' }}>
               <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
                 <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                  Bên B (Đối tác)
+                  {t('pages.contracts.detail.partyB.title', 'Party B (Partner)')}
                 </Typography>
                 {contract.contractData ? (
-                  <Typography><strong>Tên công ty:</strong> {contract.contractData.tenBenB}</Typography>
+                  <Typography><strong>{t('pages.contracts.detail.party.companyName', 'Company name')}:</strong> {contract.contractData.tenBenB}</Typography>
                 ) : (
-                  <Typography>Không có thông tin chi tiết</Typography>
+                  <Typography>{t('common.noData', 'No data')}</Typography>
                 )}
               </Paper>
             </Box>
@@ -179,13 +187,15 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
         </Box>
 
         <Box>
-          <Typography variant="h6" gutterBottom>Nội dung hợp đồng</Typography>
+          <Typography variant="h6" gutterBottom>
+            {t('pages.contracts.detail.contractContent', 'Contract content')}
+          </Typography>
           <Paper variant="outlined" sx={{ p: 3 }}>
             <Typography variant="h5" align="center" gutterBottom>
-              HỢP ĐỒNG DỊCH VỤ
+              {t('pages.contracts.detail.sample.heading', 'SERVICE CONTRACT')}
             </Typography>
             <Typography paragraph align="center">
-              Số: {contract.id}
+              {t('pages.contracts.detail.sample.code', 'No.')}: {contract.id}
             </Typography>
             
             <Typography paragraph align="center">
@@ -198,11 +208,11 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
             </Typography>
             
             <Typography paragraph>
-              <strong>BÊN A:</strong> {contract.contractData?.tenBenA || contract.partyA}
+              <strong>{t('pages.contracts.detail.sample.partyA', 'PARTY A')}:</strong> {contract.contractData?.tenBenA || contract.partyA}
             </Typography>
             
             <Typography paragraph>
-              <strong>BÊN B:</strong> {contract.contractData?.tenBenB || contract.partyB}
+              <strong>{t('pages.contracts.detail.sample.partyB', 'PARTY B')}:</strong> {contract.contractData?.tenBenB || contract.partyB}
             </Typography>
             
             <Typography paragraph>
@@ -247,12 +257,12 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
 
       {/* Delete confirmation dialog */}
       <Dialog open={deleteConfirmOpen} onClose={() => setDeleteConfirmOpen(false)}>
-        <DialogTitle>Xác nhận xóa hợp đồng</DialogTitle>
+        <DialogTitle>{t('pages.contracts.detail.deleteDialog.title', 'Confirm contract deletion')}</DialogTitle>
         <DialogContent>
-          <Typography>Bạn có chắc chắn muốn xóa hợp đồng này? Hành động này không thể hoàn tác.</Typography>
+          <Typography>{t('pages.contracts.detail.deleteDialog.text', 'Are you sure you want to delete this contract? This action cannot be undone.')}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteConfirmOpen(false)}>Hủy</Button>
+          <Button onClick={() => setDeleteConfirmOpen(false)}>{t('common.cancel', 'Cancel')}</Button>
           <Button 
             onClick={() => {
               onDelete(contract.id);
@@ -261,7 +271,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({
             color="error"
             variant="contained"
           >
-            Xác nhận xóa
+            {t('pages.contracts.detail.deleteDialog.confirm', 'Delete')}
           </Button>
         </DialogActions>
       </Dialog>

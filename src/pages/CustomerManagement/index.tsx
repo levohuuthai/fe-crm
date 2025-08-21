@@ -30,29 +30,33 @@ import {
   DialogActions,
   DialogContentText
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
-// Fake data
+// Status codes
+const statusOptions = ['all', 'potential', 'nurturing', 'signed'] as const;
+type StatusCode = typeof statusOptions[number];
+
+// Fake data (status uses codes; createdAt stored as ISO string)
 const fakeCustomers = Array.from({ length: 25 }, (_, i) => ({
   id: i + 1,
   name: `Khách hàng ${i + 1}`,
   phone: `0987${Math.floor(100000 + Math.random() * 900000)}`,
   email: `customer${i + 1}@example.com`,
   company: `Công ty ${String.fromCharCode(65 + (i % 5))}`,
-  status: ['Tiềm năng', 'Đang chăm sóc', 'Đã ký hợp đồng'][Math.floor(Math.random() * 3)],
+  status: (['potential', 'nurturing', 'signed'] as const)[Math.floor(Math.random() * 3)],
   owner: `Nhân viên ${String.fromCharCode(65 + (i % 5))}`,
-  createdAt: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toLocaleDateString(),
+  createdAt: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
   notes: `Ghi chú cho khách hàng ${i + 1}`
 }));
-
-const statusOptions = ['Tất cả', 'Tiềm năng', 'Đang chăm sóc', 'Đã ký hợp đồng'];
 
 type Customer = typeof fakeCustomers[0];
 
 const CustomerManagement = () => {
+  const { t, i18n } = useTranslation();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('Tất cả');
+  const [statusFilter, setStatusFilter] = useState<StatusCode>('all');
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
@@ -61,7 +65,7 @@ const CustomerManagement = () => {
     phone: '', 
     email: '', 
     company: '', 
-    status: 'Tiềm năng',
+    status: 'potential' as Customer['status'],
     owner: 'Nhân viên A',
     notes: '' 
   });
@@ -84,7 +88,7 @@ const CustomerManagement = () => {
         phone: '', 
         email: '', 
         company: '', 
-        status: 'Tiềm năng',
+        status: 'potential' as Customer['status'],
         owner: 'Nhân viên A',
         notes: '' 
       });
@@ -139,7 +143,7 @@ const CustomerManagement = () => {
   };
 
   const handleStatusFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStatusFilter(event.target.value);
+    setStatusFilter(event.target.value as StatusCode);
     setPage(0);
   };
 
@@ -149,7 +153,7 @@ const CustomerManagement = () => {
       customer.phone.includes(searchTerm) ||
       customer.email.toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesStatus = statusFilter === 'Tất cả' || customer.status === statusFilter;
+    const matchesStatus = statusFilter === 'all' || customer.status === statusFilter;
     
     return matchesSearch && matchesStatus;
   });
@@ -163,7 +167,7 @@ const CustomerManagement = () => {
     <Box sx={{ p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" component="h1">
-          Quản lý khách hàng
+          {t('pages.customers.title')}
         </Typography>
         <Button 
           variant="contained" 
@@ -171,7 +175,7 @@ const CustomerManagement = () => {
           startIcon={<AddIcon />}
           onClick={() => handleOpenDialog()}
         >
-          Thêm khách hàng
+          {t('pages.customers.addCustomer')}
         </Button>
       </Box>
 
@@ -179,7 +183,7 @@ const CustomerManagement = () => {
         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
           <TextField
             variant="outlined"
-            placeholder="Tìm kiếm theo tên, SĐT, email..."
+            placeholder={t('pages.customers.searchPlaceholder')}
             size="small"
             fullWidth
             value={searchTerm}
@@ -201,7 +205,7 @@ const CustomerManagement = () => {
           >
             {statusOptions.map((option) => (
               <MenuItem key={option} value={option}>
-                {option}
+                {t(`pages.customers.filters.status.${option}`)}
               </MenuItem>
             ))}
           </TextField>
@@ -211,14 +215,14 @@ const CustomerManagement = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Tên</TableCell>
-                <TableCell>Số điện thoại</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Công ty</TableCell>
-                <TableCell>Trạng thái</TableCell>
-                <TableCell>Người phụ trách</TableCell>
-                <TableCell>Ngày tạo</TableCell>
-                <TableCell>Thao tác</TableCell>
+                <TableCell>{t('pages.customers.columns.name')}</TableCell>
+                <TableCell>{t('pages.customers.columns.phone')}</TableCell>
+                <TableCell>{t('pages.customers.columns.email')}</TableCell>
+                <TableCell>{t('pages.customers.columns.company')}</TableCell>
+                <TableCell>{t('pages.customers.columns.status')}</TableCell>
+                <TableCell>{t('pages.customers.columns.owner')}</TableCell>
+                <TableCell>{t('pages.customers.columns.createdAt')}</TableCell>
+                <TableCell>{t('pages.customers.columns.actions')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -234,17 +238,17 @@ const CustomerManagement = () => {
                       sx={{
                         p: '4px 8px',
                         borderRadius: '4px',
-                        bgcolor: customer.status === 'Đã ký hợp đồng' ? '#e8f5e9' : 
-                                 customer.status === 'Đang chăm sóc' ? '#e3f2fd' : '#fff3e0',
-                        color: customer.status === 'Đã ký hợp đồng' ? '#2e7d32' :
-                               customer.status === 'Đang chăm sóc' ? '#1565c0' : '#e65100',
+                        bgcolor: customer.status === 'signed' ? '#e8f5e9' : 
+                                 customer.status === 'nurturing' ? '#e3f2fd' : '#fff3e0',
+                        color: customer.status === 'signed' ? '#2e7d32' :
+                               customer.status === 'nurturing' ? '#1565c0' : '#e65100',
                       }}
                     >
-                      {customer.status}
+                      {t(`pages.customers.status.${customer.status}`)}
                     </Box>
                   </TableCell>
                   <TableCell>{customer.owner}</TableCell>
-                  <TableCell>{customer.createdAt}</TableCell>
+                  <TableCell>{new Date(customer.createdAt).toLocaleDateString(i18n.language)}</TableCell>
                   <TableCell>
                     <IconButton size="small" onClick={() => handleOpenDialog(customer)}>
                       <EditIcon fontSize="small" color="primary" />
@@ -267,9 +271,9 @@ const CustomerManagement = () => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          labelRowsPerPage="Số dòng mỗi trang:"
+          labelRowsPerPage={t('pages.customers.pagination.rowsPerPage')}
           labelDisplayedRows={({ from, to, count }) => 
-            `${from}-${to} trong số ${count}`
+            t('pages.customers.pagination.displayedRows', { from, to, count })
           }
         />
       </Paper>
@@ -277,12 +281,12 @@ const CustomerManagement = () => {
       {/* Dialog thêm/sửa khách hàng */}
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
         <form onSubmit={handleSubmit}>
-          <DialogTitle>{selectedCustomer ? 'Chỉnh sửa khách hàng' : 'Thêm khách hàng mới'}</DialogTitle>
+          <DialogTitle>{selectedCustomer ? t('pages.customers.dialogs.editTitle') : t('pages.customers.dialogs.createTitle')}</DialogTitle>
           <DialogContent>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
               <TextField
                 name="name"
-                label="Tên khách hàng"
+                label={t('pages.customers.form.name')}
                 value={formData.name}
                 onChange={handleFormChange}
                 fullWidth
@@ -292,7 +296,7 @@ const CustomerManagement = () => {
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <TextField
                   name="phone"
-                  label="Số điện thoại"
+                  label={t('pages.customers.form.phone')}
                   value={formData.phone}
                   onChange={handleFormChange}
                   fullWidth
@@ -301,7 +305,7 @@ const CustomerManagement = () => {
                 />
                 <TextField
                   name="email"
-                  label="Email"
+                  label={t('pages.customers.form.email')}
                   type="email"
                   value={formData.email}
                   onChange={handleFormChange}
@@ -313,7 +317,7 @@ const CustomerManagement = () => {
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <TextField
                   name="company"
-                  label="Công ty"
+                  label={t('pages.customers.form.company')}
                   value={formData.company}
                   onChange={handleFormChange}
                   fullWidth
@@ -322,7 +326,7 @@ const CustomerManagement = () => {
                 <TextField
                   name="owner"
                   select
-                  label="Người phụ trách"
+                  label={t('pages.customers.form.owner')}
                   value={formData.owner}
                   onChange={handleFormChange}
                   fullWidth
@@ -338,21 +342,21 @@ const CustomerManagement = () => {
               <TextField
                 name="status"
                 select
-                label="Trạng thái"
+                label={t('pages.customers.form.status')}
                 value={formData.status}
                 onChange={handleFormChange}
                 fullWidth
                 margin="normal"
               >
-                {statusOptions.filter(opt => opt !== 'Tất cả').map((option) => (
+                {(['potential','nurturing','signed'] as const).map((option) => (
                   <MenuItem key={option} value={option}>
-                    {option}
+                    {t(`pages.customers.status.${option}`)}
                   </MenuItem>
                 ))}
               </TextField>
               <TextField
                 name="notes"
-                label="Ghi chú"
+                label={t('pages.customers.form.notes')}
                 value={formData.notes}
                 onChange={handleFormChange}
                 fullWidth
@@ -363,9 +367,9 @@ const CustomerManagement = () => {
             </Box>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseDialog}>Hủy</Button>
+            <Button onClick={handleCloseDialog}>{t('common.cancel')}</Button>
             <Button type="submit" variant="contained" color="primary">
-              {selectedCustomer ? 'Cập nhật' : 'Thêm mới'}
+              {selectedCustomer ? t('pages.customers.form.update') : t('pages.customers.form.save')}
             </Button>
           </DialogActions>
         </form>
@@ -376,16 +380,16 @@ const CustomerManagement = () => {
         open={deleteConfirmOpen}
         onClose={() => setDeleteConfirmOpen(false)}
       >
-        <DialogTitle>Xác nhận xóa</DialogTitle>
+        <DialogTitle>{t('pages.customers.dialogs.deleteTitle')}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Bạn có chắc chắn muốn xóa khách hàng <strong>{selectedCustomer?.name}</strong>? Hành động này không thể hoàn tác.
+            {t('pages.customers.dialogs.deleteText', { name: selectedCustomer?.name })}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteConfirmOpen(false)}>Hủy</Button>
+          <Button onClick={() => setDeleteConfirmOpen(false)}>{t('common.cancel')}</Button>
           <Button onClick={handleDeleteConfirm} color="error" variant="contained">
-            Xóa
+            {t('common.delete')}
           </Button>
         </DialogActions>
       </Dialog>

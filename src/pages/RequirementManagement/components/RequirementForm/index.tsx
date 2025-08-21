@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
@@ -70,6 +71,7 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
   customers,
   assignees,
 }) => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   // Form state
   const [newRequirement, setNewRequirement] = useState<Partial<Requirement>>({
@@ -313,10 +315,10 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
     >
       <DialogTitle>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant="h6">Tạo Requirement mới (AI)</Typography>
+          <Typography variant="h6">{t('pages.requirements.form.title')}</Typography>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography variant="body2" color="text.secondary" sx={{ mr: 1 }}>
-              {activeStep === 0 ? 'Bước 1/2' : 'Bước 2/2'}
+              {t('pages.requirements.form.steps.indicator', { current: activeStep + 1 })}
             </Typography>
             <Box sx={{ width: 100, display: 'flex', alignItems: 'center' }}>
               <Box
@@ -345,26 +347,26 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
             {/* Step 1: Basic Information */}
             <Step>
               <StepLabel>
-                <Typography variant="subtitle1">Nhập thông tin cơ bản</Typography>
+                <Typography variant="subtitle1">{t('pages.requirements.form.steps.step1')}</Typography>
               </StepLabel>
               <StepContent>
                 <Card variant="outlined" sx={{ mb: 2 }}>
                   <CardContent>
                     <TextField
-                      label="Tên Requirement"
+                      label={t('pages.requirements.form.fields.name')}
                       fullWidth
                       required
                       value={newRequirement.name || ''}
                       onChange={(e) => setNewRequirement({...newRequirement, name: e.target.value})}
                       margin="normal"
                       size="small"
-                      placeholder="Nhập tên yêu cầu"
+                      placeholder={t('pages.requirements.form.placeholders.name')}
                     />
                     <FormControl fullWidth margin="normal" size="small" required>
-                      <InputLabel>Loại Requirement</InputLabel>
+                      <InputLabel>{t('pages.requirements.form.fields.type')}</InputLabel>
                       <Select
                         value={newRequirement.type || ''}
-                        label="Loại Requirement"
+                        label={t('pages.requirements.form.fields.type')}
                         onChange={(e) => setNewRequirement({...newRequirement, type: e.target.value})}
                       >
                         <MenuItem value="RFI">RFI</MenuItem>
@@ -382,7 +384,7 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="Khách hàng"
+                            label={t('pages.requirements.form.fields.customer')}
                             size="small"
                             sx={{ minWidth: 250, flex: 1 }}
                             required
@@ -396,7 +398,7 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="Người phụ trách"
+                            label={t('pages.requirements.form.fields.assignee')}
                             size="small"
                             sx={{ minWidth: 250 }}
                             required
@@ -404,7 +406,7 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                         )}
                       />
                       <TextField
-                        label="Hạn chót"
+                        label={t('pages.requirements.form.fields.deadline')}
                         type="date"
                         size="small"
                         sx={{ minWidth: 200 }}
@@ -424,7 +426,7 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                     onClick={handleNext}
                     disabled={!isStep1Valid()}
                   >
-                    Tiếp theo
+                    {t('pages.requirements.form.actions.next')}
                   </Button>
                 </Box>
               </StepContent>
@@ -433,20 +435,20 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
             {/* Step 2: Requirement Creation Method */}
             <Step>
               <StepLabel>
-                <Typography variant="subtitle1">Chọn cách tạo yêu cầu</Typography>
+                <Typography variant="subtitle1">{t('pages.requirements.form.steps.step2')}</Typography>
               </StepLabel>
               <StepContent>
                 <Card variant="outlined" sx={{ mb: 2 }}>
                   <CardContent>
                     <FormControl component="fieldset" sx={{ mb: 2 }}>
-                      <FormLabel component="legend">Cách tạo</FormLabel>
+                      <FormLabel component="legend">{t('pages.requirements.form.method.group')}</FormLabel>
                       <RadioGroup 
                         row 
                         value={creationMethod} 
                         onChange={(e) => setCreationMethod(e.target.value as 'manual' | 'upload')}
                       >
-                        <FormControlLabel value="manual" control={<Radio />} label="Nhập mô tả thủ công" />
-                        <FormControlLabel value="upload" control={<Radio />} label="Upload file đặc tả (.pdf, .docx)" />
+                        <FormControlLabel value="manual" control={<Radio />} label={t('pages.requirements.form.method.manual')} />
+                        <FormControlLabel value="upload" control={<Radio />} label={t('pages.requirements.form.method.upload')} />
                       </RadioGroup>
                     </FormControl>
                     
@@ -455,7 +457,7 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                         multiline
                         rows={4}
                         fullWidth
-                        placeholder="Ví dụ: Tôi cần một hệ thống quản lý kho với chức năng nhập xuất tồn, cảnh báo tồn kho tối thiểu..."
+                        placeholder={t('pages.requirements.form.placeholders.manualDescription')}
                         variant="outlined"
                         sx={{ mb: 2 }}
                         value={newRequirement.description || ''}
@@ -486,18 +488,18 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                             variant="outlined" 
                             component="span"
                           >
-                            Chọn file (.pdf, .docx)
+                            {t('pages.requirements.form.method.uploadButton')}
                           </Button>
                         </label>
                         <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
-                          Hỗ trợ file .pdf, .docx
+                          {t('pages.requirements.form.method.uploadHelp')}
                         </Typography>
                       </Box>
                     )}
                   </CardContent>
                 </Card>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-                  <Button onClick={handleBack}>Quay lại</Button>
+                  <Button onClick={handleBack}>{t('pages.requirements.form.actions.back')}</Button>
                   <Button
                     variant="contained"
                     color="primary"
@@ -505,7 +507,7 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                     disabled={!isStep2Valid() || isLoading}
                     startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
                   >
-                    {isLoading ? 'Đang xử lý...' : 'Tạo yêu cầu tự động (AI)'}
+                    {isLoading ? t('pages.requirements.form.actions.generating') : t('pages.requirements.form.actions.generate')}
                   </Button>
                 </Box>
               </StepContent>
@@ -516,14 +518,14 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
           {showAiResult && activeStep === 1 && (
             <Box ref={aiResultRef} sx={{ mt: 2, mb: 3, border: '1px solid #e0e0e0', borderRadius: 1, p: 2 }}>
               <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span>Kết quả phân tích từ AI:</span>
+                <span>{t('pages.requirements.form.ai.resultTitle')}</span>
                 <Button 
                   variant="outlined" 
                   size="small"
                   startIcon={<RefreshIcon />}
                   onClick={handleRegenerate}
                 >
-                  Tạo lại
+                  {t('pages.requirements.form.actions.regenerate')}
                 </Button>
               </Typography>
               <Typography variant="body1" gutterBottom>
@@ -537,12 +539,12 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                   variant="scrollable"
                   scrollButtons="auto"
                 >
-                  <Tab label="Yêu cầu chức năng" />
-                  <Tab label="Yêu cầu phi chức năng" />
-                  <Tab label="Yêu cầu kiểm thử" />
-                  <Tab label="UI Mockup/mô tả" />
-                  <Tab label="Mô hình dữ liệu" />
-                  <Tab label="Yêu cầu tích hợp" />
+                  <Tab label={t('pages.requirements.form.tabs.functional')} />
+                  <Tab label={t('pages.requirements.form.tabs.nonFunctional')} />
+                  <Tab label={t('pages.requirements.form.tabs.tests')} />
+                  <Tab label={t('pages.requirements.form.tabs.uiMockups')} />
+                  <Tab label={t('pages.requirements.form.tabs.dataModel')} />
+                  <Tab label={t('pages.requirements.form.tabs.integration')} />
                 </Tabs>
               </Box>
               
@@ -552,10 +554,10 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                   <Table size="small">
                     <TableHead>
                       <TableRow>
-                        <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>Feature</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>Detail</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '40%' }}>Description</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '15%' }}>Notes</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>{t('pages.requirements.form.tableHeaders.feature')}</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>{t('pages.requirements.form.tableHeaders.detail')}</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '40%' }}>{t('pages.requirements.form.tableHeaders.description')}</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '15%' }}>{t('pages.requirements.form.tableHeaders.notes')}</TableCell>
                         <TableCell sx={{ width: '5%' }}></TableCell>
                       </TableRow>
                     </TableHead>
@@ -683,7 +685,7 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                             size="small"
                             sx={{ mr: 1 }}
                           >
-                            Thêm dòng mới
+                            {t('pages.requirements.form.actions.addRow')}
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -698,8 +700,8 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                   <Table size="small">
                     <TableHead>
                       <TableRow>
-                        <TableCell sx={{ fontWeight: 'bold', width: '30%' }}>Loại yêu cầu</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '70%' }}>Chi tiết</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '30%' }}>{t('pages.requirements.form.tableHeaders.requirementType')}</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '70%' }}>{t('pages.requirements.form.tableHeaders.value')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -720,9 +722,9 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                   <Table size="small">
                     <TableHead>
                       <TableRow>
-                        <TableCell sx={{ fontWeight: 'bold', width: '30%' }}>Test case</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '30%' }}>Điều kiện</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '40%' }}>Kết quả mong đợi</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '30%' }}>{t('pages.requirements.form.tableHeaders.testCase')}</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '30%' }}>{t('pages.requirements.form.tableHeaders.condition')}</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '40%' }}>{t('pages.requirements.form.tableHeaders.expectedResult')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -749,7 +751,7 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                           secondary={
                             mockup.figmaLink && (
                               <Link href={mockup.figmaLink} target="_blank" rel="noopener">
-                                Xem thiết kế trên Figma
+                                {t('pages.requirements.form.links.viewOnFigma')}
                               </Link>
                             )
                           }
@@ -766,9 +768,9 @@ const RequirementForm: React.FC<RequirementFormProps> = ({
                   <Table size="small">
                     <TableHead>
                       <TableRow>
-                        <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>Thực thể</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '40%' }}>Trường dữ liệu</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '40%' }}>Mô tả</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '20%' }}>{t('pages.requirements.form.tableHeaders.entity')}</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '40%' }}>{t('pages.requirements.form.tableHeaders.fields')}</TableCell>
+                        <TableCell sx={{ fontWeight: 'bold', width: '40%' }}>{t('pages.requirements.form.tableHeaders.modelDescription')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
